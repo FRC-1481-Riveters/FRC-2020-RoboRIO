@@ -1,0 +1,33 @@
+step 1--
+     stage 2
+        spin the wheel
+            greater than 3
+            less than 5
+            in 4 seconds
+            no greater than 1 rotation per second
+    stage 3
+        detect color
+            received by wifi (field management system)
+            land on specific color
+            in 2 seconds
+step 2--
+    inputs
+       2 buttons tbd
+            rotation control
+            position control
+        color sensor
+        encoder (for counting rotations)
+        fms communication system
+    outputs
+        use case 1
+            motor
+                motor starts by pressing and holding button
+                    over the course of 4 seconds
+                motor turns off automatically between 3-5 rotations
+                vibrates controller for 1 second
+        use case 2
+            in case wheel is spun incomplete number of times
+                motor starts by pressing and holding button
+                motor stops after releasing button
+    vibrate controller
+            vibrates between 3-5 rotations to indicate release of button
