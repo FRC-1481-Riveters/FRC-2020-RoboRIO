@@ -8,7 +8,7 @@ step 1--
     stage 3
         detect color
             received by wifi (field management system)
-            land on specific color
+            land on specific color (under bar sensor not by robot)
             in 2 seconds
 step 2--
     inputs
@@ -19,15 +19,28 @@ step 2--
         encoder (for counting rotations)
         fms communication system
     outputs
-        use case 1
+        use case 1(rotational control)
             motor
                 motor starts by pressing and holding button
                     over the course of 4 seconds
                 motor turns off automatically between 3-5 rotations
                 vibrates controller for 1 second
-        use case 2
+        use case 2(rotational control)
             in case wheel is spun incomplete number of times
                 motor starts by pressing and holding button
                 motor stops after releasing button
+        use case 3(position control)
+            motor
+                motor starts by pressing and holding button
+                    over the course of 2 seconds
+                motor will turn off when color is on designated color from FMS
+                vibrates  controller for one second (or disco lights) 
+
     vibrate controller
             vibrates between 3-5 rotations to indicate release of button
+Step 3
+    COMPLETE
+Step 4
+    COMPLETE
+Step 5
+    

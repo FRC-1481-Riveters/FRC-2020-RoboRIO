@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+import edu.wpi.first.wpilibj.I2C;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -16,4 +17,25 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public double controlPanelWheelEncoderCountsToRPM(int encoderCounts){
+        double RPM;
+        RPM = encoderCounts /1.0; //TODO: determine current constant to use here
+        return RPM; 
+    
+        
+    }
+    public static int driverController = 0;
+    public static int operatorController = 1;
+   
+    public static int controlPanelMotorControllerCANId = 1;
+    public static int rotationControlButton = 5;
+    public static int positionControlButton = 6;
+    public static I2C.Port i2cPortColorSensor = I2C.Port.kOnboard; //use for color sensor
+    public static double controlPanelSpeedMax = 60.0; //RPM
+    public static double controlPanelMaxAcceleration = 60.0; //RPM/s
+    public static double controlPanelStopMotor = 0.0;
+    public static int controlPanelEncoderCounts = 4000; //hypothetical value between 3-5 rotations --more than 3//
+    public static double controlPanelVibrationTime = 1.0; //seconds
+    
 }
+ 
