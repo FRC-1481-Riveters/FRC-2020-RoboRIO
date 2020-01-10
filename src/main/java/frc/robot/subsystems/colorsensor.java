@@ -8,12 +8,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
@@ -31,23 +29,41 @@ public class colorsensor extends SubsystemBase {
   private final ColorMatch m_colorMatcher = new ColorMatch();
   private final HashMap<Color, String> colorMap = new HashMap<Color, String>();
 
-  private final Color kBlueTarget = ColorMatch.makeColor(.18, 0.44, 0.36);
+  private final Color kBlueTarget = ColorMatch.makeColor(0.18, 0.44, 0.36);
   private final Color kGreenTarget = ColorMatch.makeColor(0.2, 0.53, 0.25);
   private final Color kRedTarget = ColorMatch.makeColor(0.43, 0.39, 0.18);
   private final Color kYellowTarget = ColorMatch.makeColor(0.31, 0.53, 0.15);
 
   public colorsensor() {
 
+    /*
+     * Create a hashmap of Colors and a string that describes them. This map is just
+     * a thing that connects a Color to a string (a name). It's only for humans to
+     * use, since the computer *already* knows what "color" it's found in a Color
+     * variable (the return value from matchClosestColor). This is just for the
+     * humans to connect an object like kBlueTarget to a string that can be printed
+     * on e.g. SmartDashboard as "Blue". It's not necessary for the RoboRIO to do
+     * its job in finding a color match.
+     */
     colorMap.put(kBlueTarget, "Blue");
-    m_colorMatcher.addColorMatch(kBlueTarget);
     colorMap.put(kGreenTarget, "Green");
-    m_colorMatcher.addColorMatch(kGreenTarget);
     colorMap.put(kRedTarget, "Red");
-    m_colorMatcher.addColorMatch(kRedTarget);
     colorMap.put(kYellowTarget, "Yellow");
-    m_colorMatcher.addColorMatch(kYellowTarget);
 
-    SmartDashboard.putNumber("Confidence", 0.5);
+    /*
+     * Setup the color matches. The matchClosestColor() function will ONLY look at
+     * colors that have been "registered" (stored) with the function
+     * addColorMatch(). This line of code gets each color we know about (like
+     * kBlueTarget) and adds it to the colorMatcher matching array so
+     * matchClosestColor can match it.
+     * 
+     * If you don't add a given color with addColorMatch() then matchClosestColor()
+     * WILL NEVER FIND THAT MISSING COLOR!
+     */
+
+    colorMap.forEach((key, value) -> m_colorMatcher.addColorMatch(key));
+
+
   }
 
   @Override
@@ -77,8 +93,29 @@ public class colorsensor extends SubsystemBase {
     SmartDashboard.putNumber("Green", detectedColor.green);
     SmartDashboard.putNumber("Blue", detectedColor.blue);
 
+    /*
+     * Make the m_colorMatcher find the closest color that matches the numbers in
+     * detectedColor. Since the numbers won't be *exactly* the same as the pure
+     * color, matchClosestColor looks at each of the colors that were "registered"
+     * (stored) with addColorMatch() and finds the one that matches the best. It
+     * then puts that closest match into colorMatchResult, along with a "confidence"
+     * value that represents how sure the software is that this is the a good match.
+     * The higher the confidence (which is between 0.0 and 1.0), the better the
+     * confidence. Think of it like a percent match. 100% is a pretty good match,
+     * but 50% not so much.
+     */
     ColorMatchResult colorMatchResult = m_colorMatcher.matchClosestColor(detectedColor);
 
+    /*
+     * Use the hashmap colorMap to "get" (lookup) the string associated with this
+     * colorMatchResult and display it so humans can see which color the RoboRIO
+     * detected with the color sensor.
+     * 
+     * Also, put the confidence up there so the humans know how "good" of a match
+     * the color sensor found. Correct matches (like "red is red") with low
+     * confidence numbers means the RGB numbers (coordinates) used to describe
+     * kRedTarget need some work.
+     */
     SmartDashboard.putString("Color guess", colorMap.get(colorMatchResult.color));
     SmartDashboard.putNumber("Color guess confidence", colorMatchResult.confidence);
 
