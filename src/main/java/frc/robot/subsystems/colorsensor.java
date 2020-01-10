@@ -53,14 +53,14 @@ public class colorsensor extends SubsystemBase {
     /*
      * Setup the color matches. The matchClosestColor() function will ONLY look at
      * colors that have been "registered" (stored) with the function
-     * addColorMatch(). This also means that matchClosestColor() will only return color
-     * matches that registered; it doesn't know about any colors that you don't tell it about.
-     * This line of code gets each color we know about (like kBlueTarget) that was put() 
-     * (the function put() stores a color and its string name into a map, like colorMap) 
-     * and adds it to the colorMatcher matching array so matchClosestColor can match it. 
-     * You can't see colorMatcher's color matching array; it's a private variable that
-     * colorMatcher keeps to itself, but you can add new colors to it
-     * using the addColorMatch() function.
+     * addColorMatch(). This also means that matchClosestColor() will only return
+     * color matches that registered; it doesn't know about any colors that you
+     * don't tell it about. This line of code gets each color we know about (like
+     * kBlueTarget) that was put() (the function put() stores a color and its string
+     * name into a map, like colorMap) and adds it to the colorMatcher matching
+     * array so matchClosestColor can match it. You can't see colorMatcher's color
+     * matching array; it's a private variable that colorMatcher keeps to itself,
+     * but you can add new colors to it using the addColorMatch() function.
      * 
      * If you don't add a given color with addColorMatch() then matchClosestColor()
      * WILL NEVER MATCH THAT MISSING COLOR!
@@ -121,7 +121,13 @@ public class colorsensor extends SubsystemBase {
      * confidence numbers means the RGB numbers (coordinates) used to describe
      * kRedTarget need some work.
      */
-    SmartDashboard.putString("Color guess", colorMap.get(colorMatchResult.color));
+
+    try {
+      SmartDashboard.putString("Color guess", colorMap.get(colorMatchResult.color));
+    } catch (Exception ex) {
+      SmartDashboard.putString("Color guess", "Unknown");
+    }
+
     SmartDashboard.putNumber("Color guess confidence", colorMatchResult.confidence);
 
     SmartDashboard.putNumber("IR", IR);
