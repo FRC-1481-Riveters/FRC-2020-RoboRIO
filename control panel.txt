@@ -43,4 +43,44 @@ Step 3
 Step 4
     COMPLETE
 Step 5
-    
+    RotateOrJogControlPanelCommand: rotates control panel 3>5 times either pressing or holding 
+    PositionControlPanelCommand: rotates control panel based on the color chosen by FMS 
+Step 6
+steps to a commands life: 
+Constructor
+    calls "addRequirements" for a subsystem
+Initiate 
+    only gets called once when button is held, motor starts 
+Execute 
+    spins control panel
+End
+    motor stops
+Is Finished 
+    when encoder counts are reached
+    start controller vibrates
+    return true 
+
+    while button is held, execute RotateOrJogControlCommand
+        button is held, motor starts at controlPanelSpeedMax
+        when controlPanelEncoderCounts is finished
+         start vibrate controller controlPanelVibrationTime 
+        motor stops 
+
+Constructor
+    calls "addPrequirements" for a subsystem
+Initiate
+    only gets called once when button is held
+    read color sensor
+    compute big brain angle 
+    motor starts
+Execute
+    spins control panel
+End
+    motor stops
+Is Finished
+    when designated color is 90 degrees from our sensor  
+    controller vibrates
+    returns true 
+
+
+
