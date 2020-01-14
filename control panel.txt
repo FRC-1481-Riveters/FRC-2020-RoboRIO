@@ -38,14 +38,14 @@ step 2--
 
     vibrate controller
             vibrates between 3-5 rotations to indicate release of button
-Step 3
+Step 3--
     COMPLETE
-Step 4
+Step 4--
     COMPLETE
-Step 5
+Step 5--
     RotateOrJogControlPanelCommand: rotates control panel 3>5 times either pressing or holding 
     PositionControlPanelCommand: rotates control panel based on the color chosen by FMS 
-Step 6
+Step 6--
 steps to a commands life: 
 Constructor
     calls "addRequirements" for a subsystem
@@ -65,13 +65,13 @@ Is Finished
         when controlPanelEncoderCounts is finished
          start vibrate controller controlPanelVibrationTime 
         motor stops 
-
+ 
 Constructor
     calls "addPrequirements" for a subsystem
 Initiate
     only gets called once when button is held
     read color sensor
-    compute big brain angle 
+    compute "big brain" angle 
     motor starts
 Execute
     spins control panel
@@ -80,7 +80,11 @@ End
 Is Finished
     when designated color is 90 degrees from our sensor  
     controller vibrates
-    returns true 
+    returns true
+Step 7--
+COMPLETE
+Step 8--
+
 
 
 
