@@ -48,17 +48,17 @@ Step 5--
 Step 6--
 steps to a commands life: 
 Constructor
-    calls "addRequirements" for a subsystem
+    calls "addRequirements" for a subsystem :)
 Initiate 
-    only gets called once when button is held, motor starts 
+    only gets called once when button is held, motor starts :)
 Execute 
-    spins control panel
+    spins control panel :) prob nothing lmao
 End
-    motor stops
+    motor stops :) bRAD STOP 
 Is Finished 
-    when encoder counts are reached
-    start controller vibrates
-    return true 
+    when encoder counts are reached :)
+    start controller vibrates :)
+    return true :)
 
     while button is held, execute RotateOrJogControlCommand
         button is held, motor starts at controlPanelSpeedMax
@@ -71,7 +71,7 @@ Constructor
 Initiate
     only gets called once when button is held
     read color sensor
-    compute "big brain" angle 
+    compute "big brain" angle   
     motor starts
 Execute
     spins control panel

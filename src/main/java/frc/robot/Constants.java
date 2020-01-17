@@ -7,6 +7,7 @@
 
 package frc.robot;
 import edu.wpi.first.wpilibj.I2C;
+import frc.robot.Gains;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -35,7 +36,8 @@ public final class Constants {
     public static double controlPanelMaxAcceleration = 60.0; //RPM/s
     public static double controlPanelStopMotor = 0.0;
     public static int controlPanelEncoderCounts = 4000; //hypothetical value between 3-5 rotations --more than 3//
-    public static double controlPanelVibrationTime = 1.0; //seconds
+    public static int controlPanelVibrationTime = 1000; //miliseconds
+    public static int acceptableErrorControlPanel = 100; //acceptable error for control panel spinning
     /**
 
  * Simple class containing constants used throughout project
@@ -104,7 +106,8 @@ public final class Constants {
 
      */
 
-   // static final Gains kGains = new Gains(0.15, 0.0, 1.0, 0.0, 0, 1.0); //
+   public static final Gains kGains = new Gains(0.15, 0.0, 1.0, 0.0, 0, 1.0); //
+
 
 }
 

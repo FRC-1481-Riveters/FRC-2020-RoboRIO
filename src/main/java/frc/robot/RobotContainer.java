@@ -33,11 +33,41 @@ public class RobotContainer {
   private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  XboxController m_driverController = new XboxController(Constants.driverController);
-  XboxController m_operatorController = new XboxController(Constants.operatorController);
+  RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
+  RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
+  
+
+  public class RumbleTimerJoystick extends XboxController{
+
+    private long m_timeStampTimeout;
+
+    public RumbleTimerJoystick(int port) {
+        super(port);
+    }
+
+    public void rumbleTime(long durationMilliseconds) {
+
+        long newTimestamp = durationMilliseconds + System.currentTimeMillis();
+
+        m_timeStampTimeout = Math.max(m_timeStampTimeout, newTimestamp);
+
+        setRumble(RumbleType.kLeftRumble, 1.0);
+        setRumble(RumbleType.kRightRumble, 1.0);
+
+    }
+
+    public void periodic() {
+        if (m_timeStampTimeout != 0 && System.currentTimeMillis() > m_timeStampTimeout) {
+            setRumble(RumbleType.kLeftRumble, 0);
+            setRumble(RumbleType.kRightRumble, 0);
+            m_timeStampTimeout = 0;
+        }
+    }
+}
+
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
@@ -52,7 +82,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
   // Grab the hatch when the 'A' button is pressed.
   new JoystickButton(m_driverController, Button.kA.value).whileHeld(new ExampleCommand(m_exampleSubsystem));
- new JoystickButton(m_operatorController, Button.kY.value).whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny)); 
+ new JoystickButton(m_operatorController, Button.kY.value).whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController)); 
   }
 
 
@@ -65,4 +95,5 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
   }
+
 }

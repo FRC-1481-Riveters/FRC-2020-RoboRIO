@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.*;
 import frc.robot.Constants;
+import frc.robot.Gains;
 
 public class wheelOfFortuneColorSpinny extends SubsystemBase {
   private static WPI_TalonSRX m_controlPanelMotorControlBrad = new WPI_TalonSRX(Constants.controlPanelMotorControllerCANId);
@@ -80,9 +81,21 @@ m_controlPanelMotorControlBrad.setInverted(Constants.kMotorInvert);
 public void spinToPosition(int encoderCount){
   m_controlPanelMotorControlBrad.set(ControlMode.Position, encoderCount);
 }
+
+public void stopBrad(){
+  m_controlPanelMotorControlBrad.set(ControlMode.PercentOutput, 0);
+}
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+  public int getActualPosition() {
+    /*
+     * This value is converted with a negative sign to switch the way the sensor
+     * reports rotation. It's backwards compared to how the code expects the sensor
+     * to rotate.
+     */
+    return m_controlPanelMotorControlBrad.getSelectedSensorPosition();
   }
 }
 
