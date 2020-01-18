@@ -45,10 +45,10 @@ public class colorsensor extends SubsystemBase {
      * on e.g. SmartDashboard as "Blue". It's not necessary for the RoboRIO to do
      * its job in finding a color match.
      */
-    colorMap.put(kBlueTarget, "Blue");
-    colorMap.put(kGreenTarget, "Green");
-    colorMap.put(kRedTarget, "Red");
-    colorMap.put(kYellowTarget, "Yellow");
+    colorMap.put(kBlueTarget, "B");
+    colorMap.put(kGreenTarget, "G");
+    colorMap.put(kRedTarget, "R");
+    colorMap.put(kYellowTarget, "Y");
 
     /*
      * Setup the color matches. The matchClosestColor() function will ONLY look at
@@ -147,5 +147,15 @@ public class colorsensor extends SubsystemBase {
 
     SmartDashboard.putNumber("Proximity", proximity);
 
+  }
+  public String getOurColorSensor() {
+    Color detectedColor = m_colorSensor.getColor();
+    ColorMatchResult colorMatchResult = m_colorMatcher.matchClosestColor(detectedColor);
+
+    try {
+      return(colorMap.get(colorMatchResult.color));
+    } catch (Exception ex) {
+      return("Unknown");
+    }
   }
 }

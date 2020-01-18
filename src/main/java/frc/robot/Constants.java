@@ -21,10 +21,13 @@ public final class Constants {
     public double controlPanelWheelEncoderCountsToRPM(int encoderCounts){
         double RPM;
         RPM = encoderCounts /1.0; //TODO: determine current constant to use here
-        return RPM; 
-    
-        
-    }
+		return RPM; 
+	}
+	public int controlPanelWheelAngleToEncoderCounts(int degrees){
+		int encoderCounts;
+		encoderCounts = degrees * 200; //TODO: find out the number because we dont know
+		return encoderCounts;
+	}
     public static int driverController = 0;
     public static int operatorController = 1;
    

@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.PositionControlPanelCommand;
 import frc.robot.commands.RotateOrJogControlPanelCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.colorsensor;
 import frc.robot.subsystems.wheelOfFortuneColorSpinny;
-import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 
 /**
@@ -83,6 +83,7 @@ public class RobotContainer {
   // Grab the hatch when the 'A' button is pressed.
   new JoystickButton(m_driverController, Button.kA.value).whileHeld(new ExampleCommand(m_exampleSubsystem));
  new JoystickButton(m_operatorController, Button.kY.value).whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController)); 
+ new JoystickButton(m_operatorController, Button.kB.value).whileHeld(new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
   }
 
 

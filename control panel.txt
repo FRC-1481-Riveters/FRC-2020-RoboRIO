@@ -67,7 +67,7 @@ Is Finished
         motor stops 
  
 Constructor
-    calls "addPrequirements" for a subsystem
+    calls "addPrequirements" for colorsensor and wheelOfFortune subsystem
 Initiate
     only gets called once when button is held
     read color sensor

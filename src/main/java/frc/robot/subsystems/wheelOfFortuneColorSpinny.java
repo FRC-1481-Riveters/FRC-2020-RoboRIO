@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.*;
 import frc.robot.Constants;
-import frc.robot.Gains;
 
 public class wheelOfFortuneColorSpinny extends SubsystemBase {
   private static WPI_TalonSRX m_controlPanelMotorControlBrad = new WPI_TalonSRX(
@@ -73,6 +72,10 @@ public class wheelOfFortuneColorSpinny extends SubsystemBase {
      * reports rotation. It's backwards compared to how the code expects the sensor
      * to rotate.
      */
-    return m_controlPanelMotorControlBrad.getSelectedSensorPosition();
+    int getSelectedSensorPosition =  m_controlPanelMotorControlBrad.getSelectedSensorPosition();
+    return getSelectedSensorPosition;
+  }
+  public void zeroPosition() {
+    m_controlPanelMotorControlBrad.getSensorCollection().setQuadraturePosition(0, Constants.kTimeoutMs);
   }
 }
