@@ -9,10 +9,13 @@ package frc.robot.subsystems;
 
 import java.util.ArrayList;
 
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import io.github.pseudoresonance.pixy2api.Pixy2;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
+
+import frc.robot.fastSPILink;
 
 public class CameraSubsystem extends SubsystemBase {
 
@@ -23,7 +26,7 @@ public class CameraSubsystem extends SubsystemBase {
    * Creates a new PixyCameraSubsystem.
    */
   public CameraSubsystem() {
-    pixycam = Pixy2.createInstance(Pixy2.LinkType.SPI);
+    pixycam = Pixy2.createInstance(new fastSPILink(1_000_000));
     pixycam.init(0);
   }
 
@@ -49,8 +52,8 @@ public class CameraSubsystem extends SubsystemBase {
         SmartDashboard.putString("Data", data);
 
       }
-      
-    SmartDashboard.putNumber("blocks detected", blocks.size()); // push to dashboard how many targets are detected
+
+      SmartDashboard.putNumber("blocks detected", blocks.size()); // push to dashboard how many targets are detected
     }
 
   }
