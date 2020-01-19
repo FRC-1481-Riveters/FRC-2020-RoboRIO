@@ -91,7 +91,7 @@ public class RobotContainer {
         .whileHeld(new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
   }
 
-
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -100,6 +100,11 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
+  }
+
+  public void periodic() {
+    m_driverController.periodic();
+    m_operatorController.periodic();
   }
 
 }
