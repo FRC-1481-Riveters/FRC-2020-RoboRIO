@@ -18,6 +18,7 @@ import frc.robot.subsystems.CameraSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.colorsensor;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.wheelOfFortuneColorSpinny;
 import frc.robot.Constants;
 
@@ -34,6 +35,7 @@ public class RobotContainer {
   private final colorsensor m_colorsensor = new colorsensor();
   private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
   private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
+  private final Shooter m_shooter = new Shooter();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
