@@ -31,7 +31,7 @@ public final class Constants {
     public static int driverController = 0;
     public static int operatorController = 1;
    
-    public static int controlPanelMotorControllerCANId = 1;
+    public static int controlPanelMotorControllerCANId = 4;
     public static int rotationControlButton = 5;
     public static int positionControlButton = 6;
     public static I2C.Port i2cPortColorSensor = I2C.Port.kOnboard; //use for color sensor
@@ -42,7 +42,14 @@ public final class Constants {
     public static int controlPanelVibrationTime = 1000; //miliseconds
 	public static int acceptableErrorControlPanel = 100; //acceptable error for control panel spinning
 	
-	public static int intakeMotorControllerCANId = 4;
+	public static int intakeMotorControllerCANId = 5;
+	public static int indexerMotorControllerCANId = 6;
+	public static int kickerMotorControllerCANId = 7;
+	public static int shooterMotorControllerCANId = 8;
+	public static double intakeMotorSpeed = 60.0; //RPM/s
+	public static double indexerMotorSpeed = 60.0; //RPM/s
+	public static double kickerMotorSpeed = 60.0; //RPM/s
+	public static double shooterMotorSpeed = 60.0; //RPM/s
     /**
 
  * Simple class containing constants used throughout project

@@ -1,8 +1,13 @@
 Input / Output Sheet - for 2020 Infinite Recharge
 -------------------------------------------------------------------------------------------------------------------------------
-CAN ID 1 = Control Panel
-CAN ID 2 = 
-CAN ID 3 = 
-CAN ID 4 =
-CAN ID 5 =
-CAN ID 6 =
+CAN ID 1 = Front Left drive
+CAN ID 2 = Rear left drive
+CAN ID 3 = middle Left drive
+CAN ID 4 = control panel
+CAN ID 5 = intake motor
+CAN ID 6 = indexer motor 
+CAN ID 7 = kicker motor
+CAN ID 8 = shooter motor
+CAN ID 13 = middle right drive
+CAN ID 14 = rear right drive
+CAN ID 15 = front right drive
