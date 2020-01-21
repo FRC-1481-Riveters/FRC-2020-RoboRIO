@@ -111,6 +111,18 @@ public final class Constants {
 
    public static final Gains kGains = new Gains(0.15, 0.0, 1.0, 0.0, 0, 1.0); //
 
+public static int frontLeftMotor = 1;
+public static int rearLeftMotor = 2;
+public static int middleLeftMotor = 3;
+public static int frontRightMotor = 15;
+public static int rearRightMotor = 14;
+public static int middleRightMotor = 13;
+
+//public static int neoEncoderLeft = 5;
+//public static int neoEncoderRight = 6;
+
+public static int driverControllerAxisFrontAndBack = 1;
+public static int driverControllerAxisLeftAndRight = 4;
 
 }
 
