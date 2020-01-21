@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -20,14 +21,17 @@ public class DriveTrain extends SubsystemBase {
    * The DriveTrain subsystem incorporates the sensors and actuators attached to the robots chassis.
    * These include four drive motors, a left and right encoder and a gyro.
    */
-  TalonSRX _leftMaster = new TalonSRX(2);
-  TalonSRX _rightMaster = new TalonSRX(1);
+ // TalonSRX _leftMaster = new TalonSRX(15);
+  //TalonSRX _rightMaster = new TalonSRX(1);
   WPI_TalonSRX m_frontLeft = new WPI_TalonSRX(Constants.frontLeftMotor);
-	WPI_TalonSRX m_midLeft = new WPI_TalonSRX(Constants.middleLeftMotor);
-  WPI_TalonSRX m_rearLeft = new WPI_TalonSRX(Constants.rearLeftMotor);
+  WPI_VictorSPX m_midLeft = new WPI_VictorSPX(Constants.middleLeftMotor);
+	WPI_VictorSPX m_rearLeft = new WPI_VictorSPX(Constants.rearLeftMotor);
   WPI_TalonSRX m_frontRight = new WPI_TalonSRX(Constants.frontRightMotor);
-	WPI_TalonSRX m_midRight = new WPI_TalonSRX(Constants.middleRightMotor);
-	WPI_TalonSRX m_rearRight = new WPI_TalonSRX(Constants.rearRightMotor);
+	WPI_VictorSPX m_midRight = new WPI_VictorSPX(Constants.middleRightMotor);
+	WPI_VictorSPX m_rearRight = new WPI_VictorSPX(Constants.rearRightMotor);
+
+  
+  
 
   //private final SpeedController m_leftMotor;
       //new SpeedControllerGroup(new PWMVictorSPX(0), new PWMVictorSPX(1));
