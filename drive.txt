@@ -1,0 +1,42 @@
+STEP 1--
+Drives robot
+    Uses drive motors
+    Input of driver joystick
+        Drives robot forward, backwards, left and right
+    Includes sensors for different autoassists
+    Can use encoders to drive certain distances
+STEP 2--
+Inputs- controller, encoder
+Outputs- motor spins
+STEP 3--
+COMPLETE
+STEP 4--
+COMPLETE
+STEP 5--
+driveCommandAuton
+    distance = m
+    speed = m/s
+    turning = radians
+driveCommandJoystick
+    drive backwards at joystick speed = -1
+    rest = 0
+    drive forward at joystick speed = 1
+    drive left at joystick speed = -1
+    rest = 0
+    drive right at joystick speed = 1
+operator interfaces are Joystick and Auton
+subsystem is drive
+STEP 6--
+let forwardReverseSpeed = driverControllerAxisFrontAndBack
+let LeftRightSpeed = 0
+let Turning/RotationSpeed = driverControllerAxisRotating
+If ( driveCommandAuton = false ) then
+    driveCommandJoystick ( forwardReverseSpeed, LeftRightSpeed, Turning/RotationSpeed )
+Else
+driveCommandAuton = true
+driveCommandAuton ( distance, speed, turning )
+STEP 7--
+Briana gave a thumbs up and her favorite letter is B
+STEP 8--
+driveCommandJoystick :)
+driveCommandAuton 

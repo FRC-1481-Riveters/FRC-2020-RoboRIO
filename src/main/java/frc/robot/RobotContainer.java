@@ -10,11 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PositionControlPanelCommand;
 import frc.robot.commands.RotateOrJogControlPanelCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
+import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.colorsensor;
@@ -36,10 +38,11 @@ public class RobotContainer {
   private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
   private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
   private final Shooter m_shooter = new Shooter();
-
+  private final DriveTrain m_drive = new DriveTrain(); 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
   RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -52,6 +55,8 @@ public class RobotContainer {
     public RumbleTimerJoystick(int port) {
       super(port);
     }
+    public double getX(Hand hand) {return super.getX (hand); }
+    public double getY(Hand hand) {return super.getY (hand); }
 
     public void rumbleTime(long durationMilliseconds) {
 
@@ -91,6 +96,8 @@ public class RobotContainer {
         .whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController));
     new JoystickButton(m_operatorController, Button.kB.value)
         .whileHeld(new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
+         // Assign default commands
+    m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
   }
 
   
