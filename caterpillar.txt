@@ -1,0 +1,54 @@
+step 1
+    intake
+        roller takes balls off the ground/from the lower human player station 
+            sends them to the indexer
+       requirement load 5 balls in 5 seconds
+        motor 1 775 
+        optical sensor senses how many balls
+    indexer transports balls from intake to shooter
+        loads and lines up balls onto conveyor system
+        uses 2 belts and a motor
+        button jogs balls to top to kicker
+       requirement load no more than 5 balls
+        1 or 2 motors-- bag or 775
+    kicker
+        heavy roller
+        mechanical pinch point
+        takes balls from indexer by rolling
+        passes ball to shooter
+            rolls at the same time with shooter
+        motor 1 bag or 775
+    shooter
+        heavy roller
+        maneuvers balls through hood
+        launches ball
+        Requirement speed to take Syd's head off (her request not mine) 
+        from target zone (week 1) or trench (week 6)
+        motor 1 neo for week 1, maybe 2 neos  for week 6/states/worlds
+step 2
+    inputs
+        intake/indexer
+            2 buttons for operator
+                one in
+                one out if jammed
+            optical sensor
+                keeps track of number of balls
+        kicker/shooter
+            1 button for operator
+                one out to fire
+    outputs
+        intake
+            motor
+                spins
+        indexer
+            motor(s)
+                spin indexer motor
+            lights
+                turn green light bar if 5 balls inside
+                maybe turn red if jammed
+        shooter
+            motor
+                spins 
+                    indexer
+                    kicker
+                    shooter

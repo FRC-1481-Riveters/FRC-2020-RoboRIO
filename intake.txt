@@ -1,3 +1,0 @@
-step 1
-    intake is going to take balls off the ground/from the lower human player station and send them the indexer.
-        roller brings ball into indexer 

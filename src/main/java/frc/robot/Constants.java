@@ -40,7 +40,9 @@ public final class Constants {
     public static double controlPanelStopMotor = 0.0;
     public static int controlPanelEncoderCounts = 4000; //hypothetical value between 3-5 rotations --more than 3//
     public static int controlPanelVibrationTime = 1000; //miliseconds
-    public static int acceptableErrorControlPanel = 100; //acceptable error for control panel spinning
+	public static int acceptableErrorControlPanel = 100; //acceptable error for control panel spinning
+	
+	public static int intakeMotorControllerCANId = 4;
     /**
 
  * Simple class containing constants used throughout project

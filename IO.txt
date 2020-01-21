@@ -1,0 +1,8 @@
+Input / Output Sheet - for 2020 Infinite Recharge
+-------------------------------------------------------------------------------------------------------------------------------
+CAN ID 1 = Control Panel
+CAN ID 2 = 
+CAN ID 3 = 
+CAN ID 4 =
+CAN ID 5 =
+CAN ID 6 =
