@@ -52,3 +52,54 @@ step 2
                     indexer
                     kicker
                     shooter
+step 3 
+    complete 1/20/20
+step 4
+    complete 1/23/20
+step  5
+    IntakeIndexerInCommand.java
+    IntakeIndexerOutCommand.java
+    IndexerKickerShooterCommannd.java //name is correct don't fight us on that
+step 6
+    IntakeIndexerInCommand.java
+        Constructor
+            adds prerequirements for intake and indexer
+        Initiate
+            only gets called once when button is held
+        execute
+            starts motor
+            spins intake and indexer motors
+        end
+            motors stop 
+        is  finished
+            motors stop when optical sensor detects 5 balls or button is released
+
+    IntakeIndexerOutCommand.java
+        Constructor
+            adds prerequirements for intake and indexer
+        Initiate
+            only gets called once when button is held
+        execute
+            starts motor
+            spins intake and indexer motors
+        end
+            motors stop 
+        is  finished
+            motors stop when button is released, balls are released
+
+    IndexerKickerShooterCommannd.jav
+        Constructor
+            adds prerequirements for indexer, kicker, and shooter
+        Initiate
+            only gets called once when button is held
+            starts motors
+        execute
+            spins indexer to move ball to kicker
+            spins kicker to move ball to shooter
+            spins shooter, yeets ball \\ throws in continuous loop until all balls are yoted (hella) 
+            light turns off
+            balls are yoted (yeeted) & Clobby  Privel 
+        end
+            motors stop 
+        is  finished
+            motors stop when button is released, 
