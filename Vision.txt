@@ -1,0 +1,36 @@
+step 1
+    vision
+        detects target using infared camera and aligns the robot to correctly shoot the power call into the upper port
+            how it will do it:
+            driver will press button in order to use  align the robot, the infared camera detects reflection tape
+           and move into a good spot and shoot from protected target zone and initiation line. 
+           use case 1: button gets pressed and robot aligns and shoots fpr upper port
+           use case 2: during auton, robot shall use alignment command 
+                       then will shoot the power cell from trench
+step 2 
+    inputs: infared camera, joystick, RPI, gyroscope
+    outputs: reflection tape, shows target on screen, infared light??
+step 3
+    yess did it
+step 4
+    Constants:
+    visionCameraPort = 0;
+step 5
+    autoassistAlignment: helps align robot so the driver doesn't have to; helps align for better aim
+step 6
+    Constructor
+        calls "addRequirements" for subsystem
+    Initiate 
+        button gets pressed,
+        camera reads matrix,
+        choses best contour from restrictions
+        makes contour most desirable the target
+    Execute
+        uses gyroscope to find heading and then PID makes heading equal to desired angle 
+        turns to desired angle when driver drives robot forward
+    End
+        stop running command without stopping drive subsystem
+    Is Finished 
+        when robot is at desired angle 
+
+        
