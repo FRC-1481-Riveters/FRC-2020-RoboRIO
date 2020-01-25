@@ -46,10 +46,13 @@ public final class Constants {
 	public static int indexerMotorControllerCANId = 6;
 	public static int kickerMotorControllerCANId = 7;
 	public static int shooterMotorControllerCANId = 8;
-	public static double intakeMotorSpeed = 60.0; //RPM/s
-	public static double indexerMotorSpeed = 60.0; //RPM/s
-	public static double kickerMotorSpeed = 60.0; //RPM/s
-	public static double shooterMotorSpeed = 60.0; //RPM/s
+	public static double intakeMotorSpeed = 60.0; //RPM
+	public static double indexerMotorSpeed = 60.0; //RPM
+	public static double kickerMotorSpeed = 60.0; //RPM
+	public static double shooterMotorSpeed = 60.0; //RPM
+	public static double shooterIntendedSpeed = 3000.0; //RPM
+	//TODO: find actual speeds of motors
+	public static int visionCameraPort = 0;
     /**
 
  * Simple class containing constants used throughout project

@@ -31,8 +31,6 @@ step 2
             2 buttons for operator
                 one in
                 one out if jammed
-            optical sensor
-                keeps track of number of balls
         kicker/shooter
             1 button for operator
                 one out to fire
@@ -46,6 +44,12 @@ step 2
             lights
                 turn green light bar if 5 balls inside
                 maybe turn red if jammed
+        kicker
+            motor
+                spin kicker motor
+            optical sensor
+                says when ball is in
+                stops kicker
         shooter
             motor
                 spins 
@@ -63,43 +67,51 @@ step  5
 step 6
     IntakeIndexerInCommand.java
         Constructor
-            adds prerequirements for intake and indexer
+            adds prerequirements for intake, indexer, and kicker
         Initiate
             only gets called once when button is held
         execute
-            starts motor
-            spins intake and indexer motors
+            starts intake, indexer, and kicker motors
+            intake roller spins
+            takes in balls and sends them to indexer 
+            indexer spins and moves balls up the belt until they reach kicker
+            kicker spins and takes ball up to shooter
         end
-            motors stop 
+            motors stop when button is released
         is  finished
-            motors stop when optical sensor detects 5 balls or button is released
+            n/a
 
     IntakeIndexerOutCommand.java
         Constructor
             adds prerequirements for intake and indexer
         Initiate
             only gets called once when button is held
-        execute
             starts motor
-            spins intake and indexer motors
+        execute
+            indexer spins in hope to unjam balls
+            intake roller spins to release balls if still jammed
         end
             motors stop 
         is  finished
-            motors stop when button is released, balls are released
+            n/a
 
     IndexerKickerShooterCommannd.jav
         Constructor
             adds prerequirements for indexer, kicker, and shooter
         Initiate
             only gets called once when button is held
-            starts motors
+           starts motor
         execute
-            spins indexer to move ball to kicker
-            spins kicker to move ball to shooter
-            spins shooter, yeets ball \\ throws in continuous loop until all balls are yoted (hella) 
+            3. measure speed of shooter
+            4. wait for shooter to spin at shooterIntendedSpeed
+            1. spins indexer to move ball to kicker
+            2. spins kicker to move ball to shooter
+            
+            5. spins shooter, yeets ball \\ throws in continuous loop until all balls are yote (hella)
+            6. repeat steps 1-5  
             light turns off
             balls are yoted (yeeted) & Clobby  Privel 
         end
-            motors stop 
+            motors stop when button is released
         is  finished
-            motors stop when button is released, 
+            n/a
