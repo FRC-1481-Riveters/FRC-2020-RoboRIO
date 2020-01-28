@@ -22,13 +22,6 @@ public class ArcadeDrive extends CommandBase {
   private final DriveTrain m_drivetrain;
   RumbleTimerJoystick m_RumbleTimerJoystick;
 
-  /**
-   * Creates a new TankDrive command.
-   *
-   * @param left       The control input for the left side of the drive
-   * @param right      The control input for the right sight of the drive
-   * @param drivetrain The drivetrain subsystem to drive
-   */
 
   public ArcadeDrive(DriveTrain drivetrain, RumbleTimerJoystick Joystick) {
     m_drivetrain = drivetrain;

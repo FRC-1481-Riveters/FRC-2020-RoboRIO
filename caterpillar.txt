@@ -61,57 +61,134 @@ step 3
 step 4
     complete 1/23/20
 step  5
-    IntakeIndexerInCommand.java
-    IntakeIndexerOutCommand.java
-    IndexerKickerShooterCommannd.java //name is correct don't fight us on that
+    subsystems
+        intake
+            intakePickupCommand
+            intakeDropOffCommand
+        indexer
+            indexerCarryUpCommand
+            indexerSpitOutCommand
+        kicker
+            kickerStoreCommand
+            kickerAdvanceCommand
+        shooter
+            shooterYeetCommand
+    multicommands
+        powerCellYeeterCommand
+        powerCellSlurpCommand
+        powerCellLoosenerCommand
 step 6
-    IntakeIndexerInCommand.java
-        Constructor
-            adds prerequirements for intake, indexer, and kicker
-        Initiate
-            only gets called once when button is held
-        execute
-            starts intake, indexer, and kicker motors
-            intake roller spins
-            takes in balls and sends them to indexer 
-            indexer spins and moves balls up the belt until they reach kicker
-            kicker spins and takes ball up to shooter
-        end
-            motors stop when button is released
-        is  finished
-            n/a
+    intake
+        intakePickupCommand
+            Constructor
+                adds prerequirements for intake
+            Initiate
+                only gets called once when button is held
+                starts intake motor
+            execute
+                picks up balls to send to the indexer
+            end
+                motors stop when button is released
+            is  finished
+                 when indexer inventory is full
+        intakeDropOffCommand
+            Constructor
+                adds prerequirements for intake
+            Initiate
+                only gets called once when button is held
+                starts intake motor in the reverse direction
+            execute
+                takes balls from indexer
+                spits them out in the case of a jam
+            end
+                motors stop when button is released
+            is  finished
+                n/a
+    indexer
+        indexerCarryUpCommand
+            Constructor
+                adds prerequirements for indexer
+            Initiate
+                only gets called once when button is held
+                starts indexer motor
+            execute
+                use case 1
+                    picks up balls from intake to send to the top of indexer
+                    add ball to kicker
+                use case 2
+                    balls sent from indexer to kicker to yeet the balls
+            end
+                motors stop when button is released    
+            is  finished
+                n/a
 
-    IntakeIndexerOutCommand.java
-        Constructor
-            adds prerequirements for intake and indexer
-        Initiate
-            only gets called once when button is held
-            starts motor
-        execute
-            indexer spins in hope to unjam balls
-            intake roller spins to release balls if still jammed
-        end
-            motors stop 
-        is  finished
-            n/a
-
-    IndexerKickerShooterCommannd.jav
-        Constructor
-            adds prerequirements for indexer, kicker, and shooter
-        Initiate
-            only gets called once when button is held
-           starts motor
-        execute
-            3. measure speed of shooter
-            4. wait for shooter to spin at shooterIntendedSpeed
-            1. spins indexer to move ball to kicker
-            2. spins kicker to move ball to shooter
-            
-            5. spins shooter, yeets ball \\ throws in continuous loop until all balls are yote (hella)
-            6. repeat steps 1-5  
-            light turns off
-            balls are yoted (yeeted) & Clobby  Privel 
-        end
-            motors stop when button is released
-        is  finished
-            n/a
+        indexerSpitOutCommand
+            Constructor
+                adds prerequirements for indexer
+            Initiate
+                only gets called once when button is held
+                starts indexer motor
+            execute
+                indexer sends balls downward toward/into intake in case of jam
+            end
+                motors stop when button is released
+            is  finished
+                n/a   
+    kicker
+        kickerStoreCommand
+            Constructor
+                adds prerequirements for kicker
+            Initiate
+                only gets called once when button is held
+                starts kicker motor
+            execute
+                takes one(1) ball from indexer to store due to limited size of indexer
+            end
+                optical sensor- senses when ball is present
+                motor turns off
+            is  finished
+                finishes when optical sensor sees ball in kicker
+        kickerAdvanceCommand
+            Constructor
+                adds prerequirements for kicker
+            Initiate
+                only gets called once when button is held
+                starts kicker motor
+            execute
+                sends present ball to shooter to yeet
+                takes balls from indexer
+                sends those balls to shooter to yeet
+            end
+                motors stop when button is released
+            is  finished
+                optical sensor senses no balls
+    shooter
+        shooterYeetCommand
+            Constructor
+                adds prerequirements for shooter
+            Initiate
+                only gets called once when button is held
+                starts shooter motor
+            execute
+                while button held
+                    motor speeds up to Constants.shooterIntendedSpeed
+                    takes balls from kicker
+                    yeets balls 
+            end
+                motors stop when button is released or no more balls
+            is  finished
+                n/a
+    multicommands
+        powerCellSlurpCommand
+            intakePickupCommand
+            indexerCarryUpCommand
+            kickerStoreCommand
+        powerCellLoosenerCommand
+            intakeDropOffCommand
+            indexerSpitOutCommand
+        powerCellYeeterCommand
+            indexerCarryUpCommand
+            kickerAdvanceCommand
+            shooterYeetCommand
+step 7
+    COMPLETE
