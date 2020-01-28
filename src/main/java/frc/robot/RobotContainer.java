@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -23,6 +24,7 @@ import frc.robot.subsystems.colorsensor;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.wheelOfFortuneColorSpinny;
 import frc.robot.Constants;
+import edu.wpi.cscore.UsbCamera;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -81,6 +83,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+      camera.setResolution(640, 480);
   }
 
   /**
@@ -115,5 +119,4 @@ public class RobotContainer {
     m_driverController.periodic();
     m_operatorController.periodic();
   }
-
 }

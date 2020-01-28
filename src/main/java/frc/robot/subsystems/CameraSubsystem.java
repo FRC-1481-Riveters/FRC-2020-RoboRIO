@@ -28,6 +28,8 @@ public class CameraSubsystem extends SubsystemBase {
   public CameraSubsystem() {
     pixycam = Pixy2.createInstance(new fastSPILink(1_000_000));
     pixycam.init(0);
+
+  //   UsbCamera front = CameraServer.getInstance().startAutomaticCapture(0)
   }
 
   @Override
@@ -55,6 +57,5 @@ public class CameraSubsystem extends SubsystemBase {
 
       SmartDashboard.putNumber("blocks detected", blocks.size()); // push to dashboard how many targets are detected
     }
-
   }
 }

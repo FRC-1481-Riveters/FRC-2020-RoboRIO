@@ -53,6 +53,8 @@ public final class Constants {
 	public static double shooterIntendedSpeed = 3000.0; //RPM
 	//TODO: find actual speeds of motors
 	public static int visionCameraPort = 0;
+	public static int frontCamera = 1;
+	public static int rearCamera = 2;
     /**
 
  * Simple class containing constants used throughout project
