@@ -11,7 +11,9 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.BreakInGearboxCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PositionControlPanelCommand;
 import frc.robot.commands.RotateOrJogControlPanelCommand;
@@ -45,6 +47,7 @@ public class RobotContainer {
   RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
   RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
 
+  private final BreakInGearboxCommand m_breakInGearboxCommand = new BreakInGearboxCommand(m_drive);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -85,6 +88,8 @@ public class RobotContainer {
     configureButtonBindings();
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
       camera.setResolution(640, 480);
+
+      SmartDashboard.putData(m_breakInGearboxCommand);
   }
 
   /**
