@@ -9,11 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class IndexerKickerShooterCommannd extends CommandBase {
+public class IndexerSpitOutCommand extends CommandBase {
   /**
-   * Creates a new IndexerKickerShooterCommannd.
+   * Creates a new indexerSpitOutCommand.
    */
-  public IndexerKickerShooterCommannd() {
+  public IndexerSpitOutCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

@@ -9,11 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class IntakeIndexerInCommand extends CommandBase {
+public class KickerCaptureCommand extends CommandBase {
   /**
-   * Creates a new IntakeIndexerInCommand.
+   * Creates a new KickerCaptureCommand.
    */
-  public IntakeIndexerInCommand() {
+  public KickerCaptureCommand() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
