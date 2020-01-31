@@ -89,6 +89,7 @@ public class RobotContainer {
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
       camera.setResolution(640, 480);
 
+
       SmartDashboard.putData(m_breakInGearboxCommand);
   }
 
