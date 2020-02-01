@@ -166,13 +166,13 @@ step 6
         shooterYeetCommand
             Constructor
                 adds prerequirements for shooter
+                
             Initiate
                 only gets called once when button is held
                 starts shooter motor
             execute
                 while button held
-                    motor speeds up to Constants.shooterIntendedSpeed
-                    takes balls from kicker
+                    motor speeds up to shooterIntendedSpeed
                     yeets balls 
             end
                 motors stop when button is released or no more balls

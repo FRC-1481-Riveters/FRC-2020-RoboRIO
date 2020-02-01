@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -16,8 +18,6 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Shooter extends SubsystemBase {
-
-  private static final int deviceID = 10;
   private CANSparkMax m_motor;
   private CANPIDController m_pidController;
   private CANEncoder m_encoder;
@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
 
     // initialize motor
-    m_motor = new CANSparkMax(deviceID, MotorType.kBrushless);
+    m_motor = new CANSparkMax(Constants.shooterMotorControllerCANId, MotorType.kBrushless);
 
     /**
      * The RestoreFactoryDefaults method can be used to reset the configuration
@@ -141,8 +141,6 @@ public class Shooter extends SubsystemBase {
       kMinOutput = min;
       kMaxOutput = max;
     }
-
-    setClosedLoopSpeed(SmartDashboard.getNumber("SetPoint",0.0));
 
     SmartDashboard.putNumber("ProcessVariable", getSpeed());
   }

@@ -54,8 +54,8 @@ public final class Constants {
 	public static double intakeMotorSpeed = 60.0; // RPM
 	public static double indexerMotorSpeed = 60.0; // RPM
 	public static double kickerMotorSpeed = 60.0; // RPM
-	public static double shooterMotorSpeed = 60.0; // RPM
 	public static double shooterIntendedSpeed = 3000.0; // RPM
+	public static double shooterIntendedSpeedTolerance = 0.05;
 	// TODO: find actual speeds of motors
 	public static int visionCameraPort = 0;
 	public static int frontCamera = 1;

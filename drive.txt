@@ -39,5 +39,6 @@ STEP 7--
 Briana gave a thumbs up and her favorite letter is B
 STEP 8--
 driveCommandJoystick :)
-switch to neos
+switch to neos (DONE and tested 3,12)
+    need to test follower neos once electrical board is done
 driveCommandAuton 
