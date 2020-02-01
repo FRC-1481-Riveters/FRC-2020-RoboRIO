@@ -34,7 +34,7 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.  
   @Override
   public void execute() {
-    m_drivetrain.drive(m_RumbleTimerJoystick.getX(Hand.kRight), m_RumbleTimerJoystick.getY(Hand.kLeft));
+    m_drivetrain.drive(m_RumbleTimerJoystick.getY(Hand.kLeft), m_RumbleTimerJoystick.getX(Hand.kRight));
   }
 
  // Called once the command ends or is interrupted.

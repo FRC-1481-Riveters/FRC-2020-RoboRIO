@@ -95,10 +95,10 @@ public final class Constants {
 	 */
 	public static final Gains kGains = new Gains(0.15, 0.0, 1.0, 0.0, 0, 1.0);
 
-	public static int frontLeftMotor = 3;
-	public static int rearLeftMotor = 2;
-	public static int frontRightMotor = 12;
-	public static int rearRightMotor = 13;
+	public static int frontLeftMotor = 13;
+	public static int rearLeftMotor = 12;
+	public static int frontRightMotor = 2;
+	public static int rearRightMotor = 3;
 
 	// public static int neoEncoderLeft = 5;
 	// public static int neoEncoderRight = 6;
