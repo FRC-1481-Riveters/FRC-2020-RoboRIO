@@ -135,7 +135,7 @@ step 6
             is  finished
                 n/a   
     kicker
-        kickerStoreCommand
+        kickerCaptureCommand
             Constructor
                 adds prerequirements for kicker
             Initiate
