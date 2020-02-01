@@ -63,8 +63,8 @@ public class RobotContainer {
     public RumbleTimerJoystick(int port) {
       super(port);
     }
-    public double getX(Hand hand) {return super.getX (hand); }
     public double getY(Hand hand) {return super.getY (hand); }
+    public double getX(Hand hand) {return super.getX (hand); }
 
     public void rumbleTime(long durationMilliseconds) {
 
