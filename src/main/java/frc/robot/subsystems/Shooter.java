@@ -80,6 +80,10 @@ public class Shooter extends SubsystemBase {
 
   }
 
+  public double getSpeed() {
+    return m_encoder.getVelocity();
+  }
+
   public void setClosedLoopSpeed(double RPM) {
     /**
      * PIDController objects are commanded to a set point using the SetReference()
@@ -140,6 +144,6 @@ public class Shooter extends SubsystemBase {
 
     setClosedLoopSpeed(SmartDashboard.getNumber("SetPoint",0.0));
 
-    SmartDashboard.putNumber("ProcessVariable", m_encoder.getVelocity());
+    SmartDashboard.putNumber("ProcessVariable", getSpeed());
   }
 }
