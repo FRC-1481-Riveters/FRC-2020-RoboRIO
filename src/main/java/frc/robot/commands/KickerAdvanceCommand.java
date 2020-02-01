@@ -8,33 +8,42 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Kicker;
 
 public class KickerAdvanceCommand extends CommandBase {
+  private Kicker m_kicker;
   /**
    * Creates a new KickerAdvanceCommand.
    */
-  public KickerAdvanceCommand() {
+  public KickerAdvanceCommand(Kicker subsystem) {
+    m_kicker = subsystem;
+    addRequirements(subsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+  //start kicker motor
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+  //take balls from indexer, sends ball to shooter
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    //button released
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
+    //optical sensor senses no balls
   }
 }
