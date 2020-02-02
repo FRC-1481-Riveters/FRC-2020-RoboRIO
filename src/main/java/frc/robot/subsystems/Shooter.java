@@ -17,6 +17,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+
 public class Shooter extends SubsystemBase {
   private CANSparkMax m_motor;
   private CANPIDController m_pidController;
@@ -109,6 +110,11 @@ public class Shooter extends SubsystemBase {
     }
   }
 
+  public long getTotalYeets() {
+    return 0;
+  }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -149,8 +155,10 @@ public class Shooter extends SubsystemBase {
       kMinOutput = min;
       kMaxOutput = max;
     }
+    
+    double currentRPM = getSpeed();
 
-    SmartDashboard.putNumber("Shooter Actual Speed", getSpeed());
+    SmartDashboard.putNumber("Shooter Actual Speed", currentRPM);
   }
 
 }
