@@ -22,6 +22,7 @@ public class Shooter extends SubsystemBase {
   private CANPIDController m_pidController;
   private CANEncoder m_encoder;
   private double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
+  private double m_shooterIntendedSpeed = 10000.0;
 
   /**
    * Creates a new sparkMaxTest.
@@ -57,7 +58,6 @@ public class Shooter extends SubsystemBase {
     kMaxOutput = 1;
     kMinOutput = -1;
 
-
     // set PID coefficients
     m_pidController.setP(kP);
     m_pidController.setI(kI);
@@ -67,17 +67,15 @@ public class Shooter extends SubsystemBase {
     m_pidController.setOutputRange(kMinOutput, kMaxOutput);
 
     // display PID coefficients on SmartDashboard
-    SmartDashboard.putNumber("P Gain", kP);
-    SmartDashboard.putNumber("I Gain", kI);
-    SmartDashboard.putNumber("D Gain", kD);
-    SmartDashboard.putNumber("I Zone", kIz);
-    SmartDashboard.putNumber("Feed Forward", kFF);
-    SmartDashboard.putNumber("Max Output", kMaxOutput);
-    SmartDashboard.putNumber("Min Output", kMinOutput);
+    SmartDashboard.putNumber("Shooter P Gain", kP);
+    SmartDashboard.putNumber("Shooter I Gain", kI);
+    SmartDashboard.putNumber("Shooter D Gain", kD);
+    SmartDashboard.putNumber("Shooter I Zone", kIz);
+    SmartDashboard.putNumber("Shooter Feed Forward", kFF);
+    SmartDashboard.putNumber("Shooter Max Output", kMaxOutput);
+    SmartDashboard.putNumber("Shooter Min Output", kMinOutput);
 
-    SmartDashboard.putNumber("SetPoint", 0.0);
     setClosedLoopSpeed(0.0);
-
   }
 
   public double getSpeed() {
@@ -97,8 +95,18 @@ public class Shooter extends SubsystemBase {
      * com.revrobotics.ControlType.kPosition com.revrobotics.ControlType.kVelocity
      * com.revrobotics.ControlType.kVoltage
      */
-    double setPoint = RPM;
-    m_pidController.setReference(setPoint, ControlType.kVelocity);
+    m_shooterIntendedSpeed = RPM;
+    m_pidController.setReference(RPM, ControlType.kVelocity);
+    SmartDashboard.putNumber("Shooter Intended Speed", RPM);
+  }
+
+  public boolean isAtSpeed() {
+    if (Math.abs(
+        (getSpeed() - m_shooterIntendedSpeed) / m_shooterIntendedSpeed) <= Constants.shooterIntendedSpeedTolerance) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @Override
@@ -106,13 +114,13 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // read PID coefficients from SmartDashboard
-    double p = SmartDashboard.getNumber("P Gain", 0);
-    double i = SmartDashboard.getNumber("I Gain", 0);
-    double d = SmartDashboard.getNumber("D Gain", 0);
-    double iz = SmartDashboard.getNumber("I Zone", 0);
-    double ff = SmartDashboard.getNumber("Feed Forward", 0);
-    double max = SmartDashboard.getNumber("Max Output", 0);
-    double min = SmartDashboard.getNumber("Min Output", 0);
+    double p = SmartDashboard.getNumber("Shooter P Gain", 0);
+    double i = SmartDashboard.getNumber("Shooter I Gain", 0);
+    double d = SmartDashboard.getNumber("Shooter D Gain", 0);
+    double iz = SmartDashboard.getNumber("Shooter I Zone", 0);
+    double ff = SmartDashboard.getNumber("Shooter Feed Forward", 0);
+    double max = SmartDashboard.getNumber("Shooter Max Output", 0);
+    double min = SmartDashboard.getNumber("Shooter Min Output", 0);
 
     // if PID coefficients on SmartDashboard have changed, write new values to
     // controller
@@ -142,6 +150,7 @@ public class Shooter extends SubsystemBase {
       kMaxOutput = max;
     }
 
-    SmartDashboard.putNumber("ProcessVariable", getSpeed());
+    SmartDashboard.putNumber("Shooter Actual Speed", getSpeed());
   }
+
 }

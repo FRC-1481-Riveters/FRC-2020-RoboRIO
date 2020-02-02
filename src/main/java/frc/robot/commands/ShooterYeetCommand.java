@@ -44,11 +44,6 @@ public class ShooterYeetCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-      if (Math.abs((m_shooter.getSpeed() - m_shooterIntendedSpeed) / m_shooterIntendedSpeed) <= Constants.shooterIntendedSpeedTolerance){
-    return true;
-      }
-      else {
-        return false;
-      }
+    return m_shooter.isAtSpeed();
   }
 }
