@@ -15,10 +15,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.BreakInGearboxCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.KickerAdvanceCommand;
 import frc.robot.commands.PositionControlPanelCommand;
 import frc.robot.commands.RotateOrJogControlPanelCommand;
 import frc.robot.commands.ShooterYeetCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Kicker;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,6 +46,7 @@ public class RobotContainer {
   private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
   private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
   private final Shooter m_shooter = new Shooter();
+  private final Kicker m_kicker = new Kicker();
   private final DriveTrain m_drive = new DriveTrain(); 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final PowerCellYeeterMulticommand m_powerCellYeeter = new PowerCellYeeterMulticommand();
@@ -110,7 +113,7 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kB.value)
         .whileHeld(new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
     new JoystickButton(m_driverController, Button.kB.value)
-        .whenPressed(new PowerCellYeeterMulticommand());
+        .whileHeld(new PowerCellYeeterMulticommand());
     new JoystickButton(m_driverController, Button.kB.value)
         .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
          // Assign default commands
@@ -139,7 +142,7 @@ public class RobotContainer {
     public PowerCellYeeterMulticommand() {
       // Add your commands in the super() call, e.g.
       // super(new FooCommand(), new BarCommand());
-      super(new ShooterYeetCommand(m_shooter, 1000.0));
+      super(new ShooterYeetCommand(m_shooter, 1000.0), new KickerAdvanceCommand(m_kicker, m_shooter));
     }
   }
 }

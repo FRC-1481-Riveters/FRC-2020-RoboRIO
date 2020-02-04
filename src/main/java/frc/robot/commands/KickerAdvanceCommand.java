@@ -8,15 +8,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Kicker;
+import frc.robot.subsystems.Shooter;
 
 public class KickerAdvanceCommand extends CommandBase {
   private Kicker m_kicker;
+  private Shooter m_shooter;
+  private long previousCellsYeeted;
   /**
    * Creates a new KickerAdvanceCommand.
    */
-  public KickerAdvanceCommand(Kicker subsystem) {
+  public KickerAdvanceCommand(Kicker subsystem, Shooter subsystemShooterTime) {
     m_kicker = subsystem;
+    m_shooter = subsystemShooterTime;
     addRequirements(subsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -25,6 +30,8 @@ public class KickerAdvanceCommand extends CommandBase {
   @Override
   public void initialize() {
   //start kicker motor
+  m_kicker.setClosedLoopSpeed(Constants.kickerMotorSpeed);
+  previousCellsYeeted = m_shooter.getTotalYeets();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,13 +44,18 @@ public class KickerAdvanceCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //button released
+   //button released
+    m_kicker.setClosedLoopSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (m_shooter.getTotalYeets() > previousCellsYeeted){
+      return true;
+    }
+    else {
+      return false;}
     //optical sensor senses no balls
   }
 }
