@@ -61,6 +61,25 @@ public final class Constants {
 	public static int frontCamera = 1;
 	public static int rearCamera = 2;
 
+	//elevator
+	public static int maxWinchEncodercounts =  10000 ; //get winch value
+	public static int minWinchEncodercounts = 0 ;
+	//public static int winchEncoderchannel  = 0;
+	public static int raiseElevatorButton = 1; //get buttons value from SAD
+	public static int lowerElevatorButton = 1;
+	public static int engageUntitledGooseButton = 1;
+	public static int disengageUntitledGooseButton = 1;
+	public static double latchReleaseEncoderCount = 500.0; //(automatic???)
+
+	public static int raiseElevatorButtonjoystick = 1; // 1 for operator, 0 for driver, tbd
+	public static int lowerElevatorButtonjoystick = 1;
+	public static int engageUntitledGooseButtonjoystick = 1;
+	public static int disengageUntitledGooseButtonjoystick = 1;
+
+	public static int winchMotorAlphaCANId = 7;
+	public static int winchMotorBetaCANId = 8;
+	public static int untitledGooseMotorCANId = 9;
+
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2
 	 * or 3. Only the first two (0,1) are visible in web-based configuration.
@@ -99,6 +118,7 @@ public final class Constants {
 	public static int rearLeftMotor = 12;
 	public static int frontRightMotor = 2;
 	public static int rearRightMotor = 3;
+	public static double closedLoopRampRate = 0.1; // Volts / ms
 
 	// public static int neoEncoderLeft = 5;
 	// public static int neoEncoderRight = 6;

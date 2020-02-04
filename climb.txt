@@ -1,0 +1,143 @@
+Overview
+2 775 motors  in the bottom of the robot
+    3 motors possible 4 by states
+turns axle connected to pullies on the axle
+turn axle to shorten chord and raise elevator
+encoder on winch
+
+Hook powered by snow blower motor
+    ton of torque- can break
+hook is moving vertically ~20 inches by throw of elevator
+spring between hook and motor
+bidirectional movement to reset when needed
+latch keeps robot from falling after power is off
+
+Step 1
+elevator
+    2 775  motors used to turn axle
+        axle is conneced to pullies
+        axle shortens cord to raise elevator
+        axle unwinds cord to lower elevator
+    encoder on winch
+        tells how far wound up on winch
+        do not overwind winch to avoid breaking robot
+    latch keeps robot from falling after power is off
+    bidirectional movement to reset if needed
+hook
+    powered by snow blower motor
+    ton of torque- can break
+    moves ~20 inches vertically by throw of elevator
+        keep in mind when wiring
+    spring between hook and motor
+    bidirectional movement to reset if needed
+
+    Step 2--
+    inputs
+       encoder on winch
+       button to raise elevator
+       button to lower elevator 
+       button to engage hook
+       button to disengage hook
+       winchEncoderReset limit switch
+
+    outputs
+     2 775 motors
+     snow blower motor
+     latch
+        (possible automatic latch release)
+     
+     Step 3--
+     DONE
+     
+     Step 4--
+     DONE
+
+     Step 5--
+     raiseElevator-- raises elevator, lowers robot
+     (automatic latch release)
+     lowerElevator --lower elevator, raises robot
+     engageUntitledGooseMotor --  engages hook (goose)
+     disengageUntitledGooseMotor --  disengages hook (goose)
+
+     Step 6--
+raiseElevator
+    Constructor
+    Initiate 
+        winch starts moving
+        only gets called once when button is held, motor starts
+        when button pressed move
+        when button released stop
+    Execute 
+        if
+            button still held
+        then
+            keep moving
+
+        if
+            encoder count = ~500
+        then
+            release latch
+    End
+        motor stops when reaching max
+            reset counter when reaching top
+        or when button released
+    Is Finished
+
+lowerElevator
+    Constructor
+    Initiate 
+        winch starts moving
+        only gets called once when button is held, motor starts
+        when button pressed move
+        when button released stop
+    Execute 
+        if
+            button still held
+        then
+            keep moving
+    End
+        motor stops when reaching min
+        or when button released
+    Is Finished
+        reset counter when reaching bottom
+        limit switch/encoder monitors position
+
+engageUntitledGooseMotor
+    Constructor
+    Initiate
+         hook starts moving vertically
+        only gets called once when button is held, motor starts
+        when button pressed move
+        when button released stop
+    Execute 
+        if
+            button still held
+        then
+            keep moving
+    End
+        motor stops when reaching max count/limit switch
+            talk to FAD/Mr. Gaines about getting encoder/limit switch
+        or when button released
+    Is Finished
+disengageUntitledGooseMotor
+    Constructor
+    Initiate
+         hook starts moving horizontally
+        only gets called once when button is held, motor starts
+        when button pressed move
+        when button released stop
+    Execute 
+        if
+            button still held
+        then
+            keep moving
+    End
+        motor stops when reaching min
+            talk to FAD about getting encoder/limit switch
+        or when button released
+    Is Finished
+        
+
+        
+     
+

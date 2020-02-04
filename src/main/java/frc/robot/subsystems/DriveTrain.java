@@ -45,6 +45,11 @@ public class DriveTrain extends SubsystemBase {
     m_rightFollower.restoreFactoryDefaults();
     m_rightLead.restoreFactoryDefaults();
 
+    m_leftLead.setClosedLoopRampRate(Constants.closedLoopRampRate);
+    m_rightLead.setClosedLoopRampRate(Constants.closedLoopRampRate);
+
+    
+
     m_leftFollower.follow(m_leftLead);
     m_rightFollower.follow(m_rightLead);
 
