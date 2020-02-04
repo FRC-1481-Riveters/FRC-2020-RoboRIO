@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer.RumbleTimerJoystick;
+import frc.robot.RumbleTimerJoystick;
 import frc.robot.subsystems.colorsensor;
 import frc.robot.subsystems.wheelOfFortuneColorSpinny;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -92,7 +92,7 @@ public class PositionControlPanelCommand extends CommandBase {
     } else {
       angleToRotate = 0;
       // Code for no data received yet
-      //TODO: offset to be added
+      // TODO: offset to be added
     }
     m_targetPosition = new Constants().controlPanelWheelAngleToEncoderCounts(angleToRotate);
     m_wheelOfFortuneColorSpinny.spinToPosition(m_targetPosition);
@@ -112,8 +112,9 @@ public class PositionControlPanelCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Math.abs(m_wheelOfFortuneColorSpinny.getActualPosition() - m_targetPosition) <= Constants.acceptableErrorControlPanel) {
-      
+    if (Math.abs(
+        m_wheelOfFortuneColorSpinny.getActualPosition() - m_targetPosition) <= Constants.acceptableErrorControlPanel) {
+
       m_RumbleTimerJoystick.rumbleTime(Constants.controlPanelVibrationTime);
       return true;
     } else {

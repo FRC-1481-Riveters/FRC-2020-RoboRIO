@@ -14,12 +14,10 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.BreakInGearboxCommand;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.KickerAdvanceCommand;
 import frc.robot.commands.PositionControlPanelCommand;
 import frc.robot.commands.RotateOrJogControlPanelCommand;
 import frc.robot.commands.ShooterYeetCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Kicker;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveTrain;
@@ -41,14 +39,16 @@ import edu.wpi.cscore.UsbCamera;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final colorsensor m_colorsensor = new colorsensor();
   private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
+
+  @SuppressWarnings("unused")
   private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
   private final Shooter m_shooter = new Shooter();
   private final Kicker m_kicker = new Kicker();
-  private final DriveTrain m_drive = new DriveTrain(); 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final DriveTrain m_drive = new DriveTrain();
+
+  @SuppressWarnings("unused")
   private final PowerCellYeeterMulticommand m_powerCellYeeter = new PowerCellYeeterMulticommand();
   RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
   RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
@@ -57,37 +57,6 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-
-
-  public class RumbleTimerJoystick extends XboxController {
-
-    private long m_timeStampTimeout;
-
-    public RumbleTimerJoystick(int port) {
-      super(port);
-    }
-    public double getY(Hand hand) {return super.getY (hand); }
-    public double getX(Hand hand) {return super.getX (hand); }
-
-    public void rumbleTime(long durationMilliseconds) {
-
-      long newTimestamp = durationMilliseconds + System.currentTimeMillis();
-
-      m_timeStampTimeout = Math.max(m_timeStampTimeout, newTimestamp);
-
-      setRumble(RumbleType.kLeftRumble, 1.0);
-      setRumble(RumbleType.kRightRumble, 1.0);
-
-    }
-
-    public void periodic() {
-      if (m_timeStampTimeout != 0 && System.currentTimeMillis() > m_timeStampTimeout) {
-        setRumble(RumbleType.kLeftRumble, 0);
-        setRumble(RumbleType.kRightRumble, 0);
-        m_timeStampTimeout = 0;
-      }
-    }
-  }
 
   public RobotContainer() {
     // Configure the button bindings
@@ -106,8 +75,7 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Grab the hatch when the 'A' button is pressed.
-    new JoystickButton(m_driverController, Button.kA.value).whileHeld(new ExampleCommand(m_exampleSubsystem));
+
     new JoystickButton(m_operatorController, Button.kY.value)
         .whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController));
     new JoystickButton(m_operatorController, Button.kB.value)
@@ -127,14 +95,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+
+    return null;
   }
 
-  public void periodic() {
-    m_driverController.periodic();
-    m_operatorController.periodic();
-  }
   public class PowerCellYeeterMulticommand extends SequentialCommandGroup {
     /**
      * Creates a new PowerCellYeeterMulticommand.
