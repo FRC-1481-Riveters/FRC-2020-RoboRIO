@@ -157,6 +157,9 @@ public class Shooter extends SubsystemBase {
     double currentRPM = getSpeed();
 
     SmartDashboard.putNumber("Shooter Actual Speed", currentRPM);
+
+    SmartDashboard.putNumber("Shooter applied output percentage", m_motor.getAppliedOutput());
+
   }
 
 }
