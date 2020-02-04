@@ -7,35 +7,27 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class DriveTrain extends SubsystemBase {
   /**
-   * The DriveTrain subsystem incorporates the  actuators attached to the robots chassis.
+   * The DriveTrain subsystem incorporates the actuators attached to the robots
+   * chassis.
    */
- // TalonSRX _leftMaster = new TalonSRX(15);
-  //TalonSRX _rightMaster = new TalonSRX(1);
-  CANSparkMax m_leftLead = new CANSparkMax(Constants.frontLeftMotor, MotorType.kBrushless );
-	CANSparkMax m_leftFollower = new CANSparkMax(Constants.rearLeftMotor, MotorType.kBrushless);
+  // TalonSRX _leftMaster = new TalonSRX(15);
+  // TalonSRX _rightMaster = new TalonSRX(1);
+  CANSparkMax m_leftLead = new CANSparkMax(Constants.frontLeftMotor, MotorType.kBrushless);
+  CANSparkMax m_leftFollower = new CANSparkMax(Constants.rearLeftMotor, MotorType.kBrushless);
   CANSparkMax m_rightLead = new CANSparkMax(Constants.frontRightMotor, MotorType.kBrushless);
   CANSparkMax m_rightFollower = new CANSparkMax(Constants.rearRightMotor, MotorType.kBrushless);
-  
 
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftLead, m_rightLead);
 
- 
   /**
    * Create a new drive train subsystem.
    */
@@ -48,13 +40,10 @@ public class DriveTrain extends SubsystemBase {
     m_leftLead.setClosedLoopRampRate(Constants.closedLoopRampRate);
     m_rightLead.setClosedLoopRampRate(Constants.closedLoopRampRate);
 
-    
-
     m_leftFollower.follow(m_leftLead);
     m_rightFollower.follow(m_rightLead);
 
-
-    }
+  }
 
   /**
    * Arcade style driving for the DriveTrain.
@@ -68,6 +57,6 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-  // This method will be called once per scheduler run
+    // This method will be called once per scheduler run
   }
 }
