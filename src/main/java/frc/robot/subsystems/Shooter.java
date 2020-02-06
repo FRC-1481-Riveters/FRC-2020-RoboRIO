@@ -39,6 +39,13 @@ public class Shooter extends SubsystemBase {
      */
     m_motor.restoreFactoryDefaults();
 
+    /*
+     * Common interface for inverting direction of a speed controller.
+     * 
+     * Parameters: isInverted - The state of inversion, true is inverted.
+     */
+    m_motor.setInverted(false);
+
     /**
      * In order to use PID functionality for a controller, a CANPIDController object
      * is constructed by calling the getPIDController() method on an existing
