@@ -7,19 +7,28 @@
 
 package frc.robot.commands;
 
+import java.lang.invoke.ConstantBootstraps;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.Kicker;
 
 public class KickerCaptureCommand extends CommandBase {
+  private Kicker m_kicker;
+
   /**
    * Creates a new KickerCaptureCommand.
    */
-  public KickerCaptureCommand() {
+  public KickerCaptureCommand(Kicker subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_kicker.setSpeed(Constants.kickerCaptureSpeed);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.

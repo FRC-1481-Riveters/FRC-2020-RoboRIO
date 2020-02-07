@@ -30,7 +30,7 @@ public class KickerAdvanceCommand extends CommandBase {
   @Override
   public void initialize() {
   //start kicker motor
-  m_kicker.setClosedLoopSpeed(Constants.kickerMotorSpeed);
+  m_kicker.setSpeed(Constants.kickerMotorSpeed);
   previousCellsYeeted = m_shooter.getTotalYeets();
   }
 
@@ -45,7 +45,7 @@ public class KickerAdvanceCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
    //button released
-    m_kicker.setClosedLoopSpeed(0);
+    m_kicker.setSpeed(0);
   }
 
   // Returns true when the command should end.

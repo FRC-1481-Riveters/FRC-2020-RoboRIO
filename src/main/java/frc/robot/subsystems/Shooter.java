@@ -44,7 +44,7 @@ public class Shooter extends SubsystemBase {
      * 
      * Parameters: isInverted - The state of inversion, true is inverted.
      */
-    m_motor.setInverted(false);
+    m_motor.setInverted(true);
 
     /**
      * In order to use PID functionality for a controller, a CANPIDController object
