@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import javax.lang.model.util.ElementScanner6;
+
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
@@ -34,7 +36,24 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.  
   @Override
   public void execute() {
-    m_drivetrain.drive(m_RumbleTimerJoystick.getY(Hand.kLeft), m_RumbleTimerJoystick.getX(Hand.kRight));
+    final double m_leftJoystickValue;
+    final double m_rightJoystickValue;
+    final double m_leftJoystickSquare;
+    final double m_rightJoystickSquare;
+    m_leftJoystickValue = m_RumbleTimerJoystick.getY(Hand.kLeft);
+    m_rightJoystickValue = m_RumbleTimerJoystick.getX(Hand.kRight);
+    if (m_leftJoystickValue >= 0){
+    m_leftJoystickSquare = m_leftJoystickValue * m_leftJoystickValue; }
+    else {
+    m_leftJoystickSquare = -(m_leftJoystickValue * m_leftJoystickValue); 
+  }
+    if (m_rightJoystickValue >= 0){
+    m_rightJoystickSquare = m_rightJoystickValue * m_rightJoystickValue;}
+    else {
+    m_rightJoystickSquare = -(m_rightJoystickValue * m_rightJoystickValue);
+  }
+    m_drivetrain.drive(m_leftJoystickSquare, m_rightJoystickSquare);
+ 
   }
 
  // Called once the command ends or is interrupted.

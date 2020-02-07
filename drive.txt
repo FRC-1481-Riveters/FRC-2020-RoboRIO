@@ -42,3 +42,14 @@ driveCommandJoystick :)
 switch to neos (DONE and tested 3,12)
     need to test follower neos once electrical board is done
 driveCommandAuton 
+
+TODO: new drive commands
+square DONE!
+-finer controls 
+-multiply by itself to give finer control over driving
+ramp rate
+-accelerating
+-set current ramp lower for smoother accelerating/ easier control
+coast
+-don't skid to a stop
+-have robot slow down before stopping

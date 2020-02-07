@@ -18,6 +18,7 @@ import frc.robot.commands.KickerAdvanceCommand;
 import frc.robot.commands.PositionControlPanelCommand;
 import frc.robot.commands.RotateOrJogControlPanelCommand;
 import frc.robot.commands.ShooterYeetCommand;
+import frc.robot.commands.raiseElevator;
 import frc.robot.subsystems.Kicker;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveTrain;
@@ -29,6 +30,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.wheelOfFortuneColorSpinny;
 import frc.robot.Constants;
 import edu.wpi.cscore.UsbCamera;
+import frc.robot.subsystems.Elevator;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -47,6 +49,7 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Kicker m_kicker = new Kicker();
   private final DriveTrain m_drive = new DriveTrain();
+  private final Elevator m_elevator = new Elevator();
 
   @SuppressWarnings("unused")
   private final PowerCellYeeterMulticommand m_powerCellYeeter = new PowerCellYeeterMulticommand();
@@ -85,6 +88,9 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kB.value)
         .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
          // Assign default commands
+    new JoystickButton(m_operatorController, Button.kA.value)
+        .whileHeld(new raiseElevator(m_elevator));
+
     m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
   }
 

@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.revrobotics.CANError;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class DriveTrain extends SubsystemBase {
@@ -37,6 +39,18 @@ public class DriveTrain extends SubsystemBase {
     m_rightFollower.restoreFactoryDefaults();
     m_rightLead.restoreFactoryDefaults();
 
+    m_leftLead.setIdleMode(IdleMode.kCoast);
+    m_leftLead.setOpenLoopRampRate(Constants.driveMotorRampRate); // numbers = seconds until full speed
+
+    m_rightLead.setIdleMode(IdleMode.kCoast);
+    m_rightLead.setOpenLoopRampRate(Constants.driveMotorRampRate); // numbers = seconds until full speed
+
+    m_leftFollower.setIdleMode(IdleMode.kCoast);
+    m_leftFollower.setOpenLoopRampRate(Constants.driveMotorRampRate); // numbers = seconds until full speed
+
+    m_rightFollower.setIdleMode(IdleMode.kCoast);
+    m_rightFollower.setOpenLoopRampRate(Constants.driveMotorRampRate); //numbers = seconds until full speed
+
     m_leftLead.setClosedLoopRampRate(Constants.closedLoopRampRate);
     m_rightLead.setClosedLoopRampRate(Constants.closedLoopRampRate);
 
@@ -52,7 +66,7 @@ public class DriveTrain extends SubsystemBase {
    * @param right Speed in range [-1,1]
    */
   public void drive(double left, double right) {
-    m_drive.arcadeDrive(left, -right);
+    m_drive.arcadeDrive(left, right);
   }
 
   @Override

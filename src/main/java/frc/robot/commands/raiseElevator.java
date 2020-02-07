@@ -8,18 +8,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RumbleTimerJoystick;
+import frc.robot.subsystems.Elevator;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class raiseElevator extends CommandBase {
+  public Elevator m_Elevator;
   /**
    * Creates a new raiseElevator.
    */
-  public raiseElevator() {
+  public raiseElevator(Elevator Subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_Elevator =  Subsystem;
+    addRequirements(Subsystem);
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+  //  m_elevatorPosition 
   }
 
   // Called every time the scheduler runs while the command is scheduled.

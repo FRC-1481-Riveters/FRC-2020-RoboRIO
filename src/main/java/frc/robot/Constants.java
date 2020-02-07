@@ -76,9 +76,10 @@ public final class Constants {
 	public static int engageUntitledGooseButtonjoystick = 1;
 	public static int disengageUntitledGooseButtonjoystick = 1;
 
-	public static int winchMotorAlphaCANId = 7;
-	public static int winchMotorBetaCANId = 8;
+	public static int winchMotorElevatorCANId = 7;
 	public static int untitledGooseMotorCANId = 9;
+
+	public static double driveMotorRampRate = 0.125; //number = seconds till full speed
 
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2
