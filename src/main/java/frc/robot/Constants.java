@@ -80,7 +80,8 @@ public final class Constants {
 	public static int winchMotorElevatorCANId = 7;
 	public static int untitledGooseMotorCANId = 9;
 
-	public static double driveMotorRampRate = 0.125; //number = seconds till full speed
+	public static double driveMotorRampRate = 0.5; //number = seconds till full speed
+	public static double rotationInQuarter = 0.4;
 
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2
