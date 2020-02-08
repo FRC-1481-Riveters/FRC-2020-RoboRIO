@@ -79,7 +79,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    new JoystickButton(m_operatorController, Button.kY.value)
+    new JoystickButton(m_operatorController, Button.kX.value)
         .whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController));
     new JoystickButton(m_operatorController, Button.kB.value)
         .whileHeld(new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
@@ -87,8 +87,16 @@ public class RobotContainer {
         .whileHeld(new PowerCellYeeterMulticommand());
     new JoystickButton(m_driverController, Button.kB.value)
         .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
-         // Assign default commands
+    new JoystickButton(m_operatorController, Button.kY.value)
+        .whileHeld(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedInitiation));
+    new JoystickButton(m_operatorController, Button.kY.value)
+        .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
     new JoystickButton(m_operatorController, Button.kA.value)
+        .whileHeld(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall));
+    new JoystickButton(m_operatorController, Button.kA.value)
+        .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
+         // Assign default commands
+    new JoystickButton(m_operatorController, Button.kB.value)
         .whileHeld(new raiseElevator(m_elevator));
 
     m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
@@ -113,6 +121,16 @@ public class RobotContainer {
       // Add your commands in the super() call, e.g.
       // super(new FooCommand(), new BarCommand());
       super(new ShooterYeetCommand(m_shooter, Constants.shooterIntendedSpeed), new KickerAdvanceCommand(m_kicker, m_shooter));
+    }
+  }
+  public class PowerCellSlurpMulticommand extends SequentialCommandGroup{
+    public PowerCellSlurpMulticommand() {
+      super();
+    }
+  }
+  public class PowerCellLoosenerMulticommand extends SequentialCommandGroup{
+    public PowerCellLoosenerMulticommand() {
+      super();
     }
   }
 }
