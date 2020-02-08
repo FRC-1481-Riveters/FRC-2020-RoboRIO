@@ -25,6 +25,9 @@ step 1
         Requirement speed to take Syd's head off (her request not mine) 
         from target zone (week 1) or trench (week 6)
         motor 1 neo for week 1, maybe 2 neos  for week 6/states/worlds
+        1 operator button to speed up at initiation line, 1 operator button to speed up for wall shot
+        1 driver button to shoot (move kicker/caterpillar)
+        continuous shooting as long as button is held
 step 2
     inputs
         intake/indexer

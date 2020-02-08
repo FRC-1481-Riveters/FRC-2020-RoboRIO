@@ -10,7 +10,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterYeetCommand extends CommandBase {
   private Shooter m_shooter;
@@ -23,14 +22,12 @@ public class ShooterYeetCommand extends CommandBase {
     m_shooter = subsystem;
     m_shooterIntendedSpeed = shooterIntendedSpeed;
     addRequirements(subsystem);
-    SmartDashboard.putNumber("Shooter Tuning Speed", m_shooterIntendedSpeed);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooterIntendedSpeed = SmartDashboard.getNumber("Shooter Tuning Speed", 0);
     m_shooter.setClosedLoopSpeed(m_shooterIntendedSpeed);
   }
 

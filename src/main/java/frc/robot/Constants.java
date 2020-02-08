@@ -57,6 +57,8 @@ public final class Constants {
 	public static double kickerCaptureSpeed = 0.61; // percent
 	public static double shooterIntendedSpeed = 2500.0; // RPM
 	public static double shooterIntendedSpeedTolerance = 0.05;
+	public static double shooterYeetSpeedInitiation = 4600.0; //RPM
+	public static double shooterYeetSpeedWall = 4000.0; //RPM
 	// TODO: find actual speeds of motors
 	public static int visionCameraPort = 0;
 	public static int frontCamera = 1;
