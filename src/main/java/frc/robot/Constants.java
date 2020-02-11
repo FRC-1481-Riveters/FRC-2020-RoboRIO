@@ -136,25 +136,25 @@ public final class Constants {
 	 * Kp = 5.12
 	 * 
 	 * The TalonSRX's measure velocity in units of encoder counts per interval of
-	 * 0.1 seconds. So, if you're spinning at 100 RPM, and your encoder has 2048
+	 * 0.1 seconds. So, if you're spinning at 100 RPM, and your encoder has 8192
 	 * counts per revolution, that's equal to:
 	 * 
-	 * CountsPerInterval(100 RPM) = 100 revolution/minute * 2048 counts/revolution *
+	 * CountsPerInterval(100 RPM) = 100 revolution/minute * 8192 counts/revolution *
 	 * minute/60 second * second/10 interval
 	 * 
-	 * CountsPerInterval(100 RPM) = (100 * 2048) / (60 * 10)
+	 * CountsPerInterval(100 RPM) = (100 * 8192) / (60 * 10)
 	 * 
-	 * CountsPerInterval(100 RPM) = 341.33 counts per interval
+	 * CountsPerInterval(100 RPM) = 1365.33 counts per interval
 	 * 
 	 * Put this all together to compute the Kp for a TalonSRX in Closed Loop
 	 * velocity mode with an encoder that has 2048 counts per revolution:
 	 * 
-	 * Kp = 1023.0 / 341.33
+	 * Kp = 1023.0 / 1365.33
 	 * 
-	 * Kp = 2.997
+	 * Kp = 0.75
 	 */
 
-	public static final Gains kGains_Indexer = new Gains(2.997, 0.0, 0.0, 0.0, 0, 1.0);
+	public static final Gains kGains_Indexer = new Gains(0.75, 0.0, 0.0, 0.0, 0, 1.0);
 
 	public static final int frontLeftMotor = 13;
 	public static final int rearLeftMotor = 12;
