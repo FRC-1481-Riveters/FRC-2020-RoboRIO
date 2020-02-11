@@ -37,7 +37,7 @@ public class Indexer extends SubsystemBase {
 		m_indexer.config_kP(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kP, Constants.kTimeoutMs);
 	  m_indexer.config_kI(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kI, Constants.kTimeoutMs);
 		m_indexer.config_kD(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kD, Constants.kTimeoutMs);
-
+    //TODO: reimport kGains command to constants... deleted by accident
     // m_indexer.setInverted(Constants.add constant here);
     setClosedLoopSpeed(0.0);
 
