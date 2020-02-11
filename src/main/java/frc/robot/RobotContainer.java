@@ -14,10 +14,13 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.BreakInGearboxCommand;
+import frc.robot.commands.GoosehookDisengage;
+import frc.robot.commands.GoosehookEngage;
 import frc.robot.commands.KickerAdvanceCommand;
 import frc.robot.commands.PositionControlPanelCommand;
 import frc.robot.commands.RotateOrJogControlPanelCommand;
 import frc.robot.commands.ShooterYeetCommand;
+import frc.robot.commands.lowerElevator;
 import frc.robot.commands.raiseElevator;
 import frc.robot.subsystems.Kicker;
 import frc.robot.subsystems.CameraSubsystem;
@@ -31,6 +34,8 @@ import frc.robot.subsystems.wheelOfFortuneColorSpinny;
 import frc.robot.Constants;
 import edu.wpi.cscore.UsbCamera;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Goosehook;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -50,6 +55,7 @@ public class RobotContainer {
   private final Kicker m_kicker = new Kicker();
   private final DriveTrain m_drive = new DriveTrain();
   private final Elevator m_elevator = new Elevator();
+  private final Goosehook m_goosehook = new Goosehook();
 
   @SuppressWarnings("unused")
   private final PowerCellYeeterMulticommand m_powerCellYeeter = new PowerCellYeeterMulticommand();
@@ -96,8 +102,14 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kA.value)
         .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
          // Assign default commands
-    new JoystickButton(m_operatorController, Button.kB.value)
+    new JoystickButton(m_driverController, Button.kX.value)
         .whileHeld(new raiseElevator(m_elevator));
+    new JoystickButton(m_driverController, Button.kA.value)
+        .whileHeld(new lowerElevator(m_elevator));
+    new  JoystickButton(m_driverController, Button.kBumperLeft.value)
+        .whileHeld(new GoosehookEngage(m_goosehook));
+    new  JoystickButton(m_driverController, Button.kBumperRight.value)
+        .whileHeld(new GoosehookDisengage(m_goosehook));
 
     m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
   }

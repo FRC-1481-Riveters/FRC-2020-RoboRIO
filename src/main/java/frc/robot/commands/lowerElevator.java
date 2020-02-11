@@ -14,14 +14,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
 
-public class raiseElevator extends CommandBase {
+public class lowerElevator extends CommandBase {
   public Elevator m_Elevator;
   public int m_targetElevatorPosition;
   public int m_currentElevatorPosition;
   /**
    * Creates a new raiseElevator.
    */
-  public raiseElevator(Elevator Subsystem) {
+  public lowerElevator(Elevator Subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_Elevator =  Subsystem;
     addRequirements(Subsystem);
@@ -31,7 +31,7 @@ public class raiseElevator extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  m_targetElevatorPosition = Constants.maxWinchEncoderCounts;
+  m_targetElevatorPosition = Constants.minWinchEncoderCounts;
   m_Elevator.climbToPosition(m_targetElevatorPosition);
   SmartDashboard.putNumber("Target Elevator Position",m_targetElevatorPosition);
  //m_currentElevatorPosition = m_Elevator.getSensorCollection().getQuadraturePosition(0, Constants.kTimeoutMs);

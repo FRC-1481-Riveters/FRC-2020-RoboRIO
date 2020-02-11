@@ -73,6 +73,7 @@ public final class Constants {
 	public static int engageUntitledGooseButton = 1;
 	public static int disengageUntitledGooseButton = 1;
 	public static double latchReleaseEncoderCount = 500.0; //(automatic???)
+	public static double goosehookMotorSpeed = 0.50;
 
 	public static int raiseElevatorButtonjoystick = 1; // 1 for operator, 0 for driver, tbd
 	public static int lowerElevatorButtonjoystick = 1;
@@ -81,7 +82,7 @@ public final class Constants {
 	public static boolean kElevatorSensorPhase = false;
 
 	public static int winchMotorElevatorCANId = 7; // change back to 7 for final bot
-	public static int untitledGooseMotorCANId = 9;
+	public static int untitledGooseMotorCANId = 9; //change back to 9
 
 	public static double driveMotorRampRate = 0.5; //number = seconds till full speed
 	public static double rotationInQuarter = 0.4;

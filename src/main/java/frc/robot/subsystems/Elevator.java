@@ -45,7 +45,9 @@ public class Elevator extends SubsystemBase {
   public void climbToPosition(int encoderCount) {
     m_elevator.set(ControlMode.Position, encoderCount);
   }
-    
+  public void stopElevator() {
+    m_elevator.set(ControlMode.PercentOutput, 0);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
