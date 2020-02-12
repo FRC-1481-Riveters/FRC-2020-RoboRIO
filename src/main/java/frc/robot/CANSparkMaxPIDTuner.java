@@ -24,16 +24,19 @@ public class CANSparkMaxPIDTuner extends CANSparkMax implements Sendable, AutoCl
 
     public class CANPIDControllerTunable extends CANPIDController {
 
-        CANSparkMax m_device;
+        ControlType m_lastControlType;
 
         public CANPIDControllerTunable(CANSparkMax device) {
             super(device);
-            m_device = device;
         }
 
-        public CANError setReference(double value, ControlType ctrl, int pidSlot, double arbFeedforward,
-                ArbFFUnits arbFFUnits) {
-            return CANError.kOk; //m_device.setpointCommand(value, ctrl, pidSlot, arbFeedforward, arbFFUnits.value);
+        public CANError setReference(double value, ControlType ctrl) {
+            m_lastControlType = ctrl;
+            return setReference(value, ctrl, 0);
+        }
+
+        public ControlType getLastControlType() {
+            return m_lastControlType;
         }
 
     }
@@ -61,23 +64,23 @@ public class CANSparkMaxPIDTuner extends CANSparkMax implements Sendable, AutoCl
     }
 
     public double getP() {
-        return this.getPIDController().getP();
+        return getPIDController().getP();
     }
 
     public void setP(double value) {
-        this.getPIDController().setP(value);
+        getPIDController().setP(value);
     }
 
     public double getI() {
-        return this.getPIDController().getI();
+        return getPIDController().getI();
     }
 
     public void setI(double value) {
-        this.getPIDController().setI(value);
+        getPIDController().setI(value);
     }
 
     public double getD() {
-        return this.getPIDController().getD();
+        return getPIDController().getD();
     }
 
     public void setD(double value) {
@@ -89,7 +92,9 @@ public class CANSparkMaxPIDTuner extends CANSparkMax implements Sendable, AutoCl
     }
 
     public void setSetpoint(double value) {
-        set(value);
+        CANPIDControllerTunable PIDController = getPIDController();
+
+        PIDController.setReference(value, PIDController.getLastControlType());
     }
 
     public void setNewEnable(boolean value) {
