@@ -12,12 +12,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Indexer;
 
 public class IndexerCarryUpCommand extends CommandBase {
-  private Indexer m_indexer;
+  private Indexer m_upperIndexer;
   /**
    * Creates a new indexerCarryUpCommand.
    */
   public IndexerCarryUpCommand(Indexer subsystem) {
-    m_indexer = subsystem;
+    m_upperIndexer = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -25,7 +25,7 @@ public class IndexerCarryUpCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_indexer.setClosedLoopSpeed(Constants.indexerMotorSpeed);
+    m_upperIndexer.setSpeed(Constants.indexerMotorSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,7 +36,7 @@ public class IndexerCarryUpCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_indexer.setClosedLoopSpeed(0.0);
+    m_upperIndexer.setSpeed(0.0);
   }
 
   // Returns true when the command should end.

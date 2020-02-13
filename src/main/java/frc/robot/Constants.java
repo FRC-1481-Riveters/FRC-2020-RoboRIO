@@ -36,7 +36,7 @@ public final class Constants {
 	public static final int driverController = 0;
 	public static final int operatorController = 1;
 
-	public static final int controlPanelMotorControllerCANId = 4;
+	public static final int controlPanelMotorControllerCANId = 4; // find actual value
 	public static final int rotationControlButton = 5;
 	public static final int positionControlButton = 6;
 	public static final I2C.Port i2cPortColorSensor = I2C.Port.kOnboard; // use for color sensor
@@ -48,12 +48,13 @@ public final class Constants {
 	public static final int controlPanelVibrationTime = 1000; // miliseconds
 	public static final int acceptableErrorControlPanel = 100; // acceptable error for control panel spinning
 
-	public static final int intakeMotorControllerCANId = 5;
-	public static final int indexerMotorControllerCANId = 6;
+	public static final int intakeMotorControllerCANId = 10;
+	public static final int indexerMotorControllerCANId = 9;
+	public static final int secondIndexerMotorControllerCANId = 11;
 	public static final int kickerMotorControllerCANId = 7;
-	public static final int shooterMotorControllerCANId = 8;
-	public static final double intakeMotorSpeed = 60.0; // RPM
-	public static final double indexerMotorSpeed = 60.0; // RPM
+	public static final int shooterMotorControllerCANId = 1;
+	public static final double intakeMotorSpeed = 0.75; // percent
+	public static final double indexerMotorSpeed = 0.75; // percent
 	public static final double kickerMotorSpeed = -1.0; // percent
 	public static final double kickerCaptureSpeed = 0.61; // percent
 	public static final double shooterIntendedSpeed = 2500.0; // RPM
@@ -83,7 +84,7 @@ public final class Constants {
 	public static final boolean kElevatorSensorPhase = false;
 
 	public static final int winchMotorElevatorCANId = 7; // change back to 7 for final bot
-	public static final int untitledGooseMotorCANId = 9; // change back to 9
+	public static final int untitledGooseMotorCANId = 4; // change back to 9
 
 	public static final double driveMotorRampRate = 0.5; // number = seconds till full speed
 	public static final double rotationInQuarter = 0.4;

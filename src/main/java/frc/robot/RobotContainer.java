@@ -16,6 +16,10 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.BreakInGearboxCommand;
 import frc.robot.commands.GoosehookDisengage;
 import frc.robot.commands.GoosehookEngage;
+import frc.robot.commands.IndexerCarryUpCommand;
+import frc.robot.commands.IndexerSpitOutCommand;
+import frc.robot.commands.IntakeDropOffCommand;
+import frc.robot.commands.IntakePickupCommand;
 import frc.robot.commands.KickerAdvanceCommand;
 import frc.robot.commands.PositionControlPanelCommand;
 import frc.robot.commands.RotateOrJogControlPanelCommand;
@@ -35,6 +39,8 @@ import frc.robot.Constants;
 import edu.wpi.cscore.UsbCamera;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Goosehook;
+import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intake;
 
 
 /**
@@ -56,9 +62,13 @@ public class RobotContainer {
   private final DriveTrain m_drive = new DriveTrain();
   private final Elevator m_elevator = new Elevator();
   private final Goosehook m_goosehook = new Goosehook();
+  private final Indexer m_indexer = new Indexer();
+  private final Intake m_intake = new Intake();
 
   @SuppressWarnings("unused")
   private final PowerCellYeeterMulticommand m_powerCellYeeter = new PowerCellYeeterMulticommand();
+  private final PowerCellSlurpMulticommand m_powerCellSlurp = new PowerCellSlurpMulticommand();
+  private final PowerCellLoosenerMulticommand m_powerCellLoosener = new PowerCellLoosenerMulticommand();
   RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
   RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
 
@@ -110,6 +120,10 @@ public class RobotContainer {
         .whileHeld(new GoosehookEngage(m_goosehook));
     new  JoystickButton(m_driverController, Button.kBumperRight.value)
         .whileHeld(new GoosehookDisengage(m_goosehook));
+    new JoystickButton (m_operatorController, Button.kBumperLeft.value)
+        .whileHeld(new PowerCellSlurpMulticommand());
+    new JoystickButton (m_operatorController, Button.kBumperRight.value)
+        .whileHeld(new PowerCellLoosenerMulticommand());
 
     m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
   }
@@ -137,12 +151,12 @@ public class RobotContainer {
   }
   public class PowerCellSlurpMulticommand extends SequentialCommandGroup{
     public PowerCellSlurpMulticommand() {
-      super();
+      super(new IntakePickupCommand(m_intake), new IndexerCarryUpCommand(m_indexer));
     }
   }
   public class PowerCellLoosenerMulticommand extends SequentialCommandGroup{
     public PowerCellLoosenerMulticommand() {
-      super();
+      super(new IntakeDropOffCommand(m_intake), new IndexerSpitOutCommand(m_indexer));
     }
   }
 }

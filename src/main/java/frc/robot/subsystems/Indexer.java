@@ -14,33 +14,45 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Indexer extends SubsystemBase {
-  private static WPI_TalonSRX m_indexer = new WPI_TalonSRX(Constants.indexerMotorControllerCANId);
+  private static WPI_TalonSRX m_upperIndexer = new WPI_TalonSRX(Constants.indexerMotorControllerCANId);
+  private static WPI_TalonSRX m_lowerIndexer = new WPI_TalonSRX(Constants.secondIndexerMotorControllerCANId);
+
+ 
 
   /**
    * Creates a new Indexer.
    */
  
-  public void setClosedLoopSpeed(double RPM) {
-    double targetVelocity_UnitsPer100ms = RPM  * 4096 / 600;
-    m_indexer.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
+  public void setSpeed(double Percent) {
+    m_upperIndexer.set(ControlMode.PercentOutput, Percent);
   }
 
   public Indexer() {
 
-    m_indexer.configNominalOutputForward(0, Constants.kTimeoutMs);
-    m_indexer.configNominalOutputReverse(0, Constants.kTimeoutMs);
-    m_indexer.configPeakOutputForward(1, Constants.kTimeoutMs);
-    m_indexer.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+    m_upperIndexer.configNominalOutputForward(0, Constants.kTimeoutMs);
+    m_upperIndexer.configNominalOutputReverse(0, Constants.kTimeoutMs);
+    m_upperIndexer.configPeakOutputForward(1, Constants.kTimeoutMs);
+    m_upperIndexer.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+
+    /*
+    m_lowerIndexer.configNominalOutputForward(0, Constants.kTimeoutMs);
+    m_lowerIndexer.configNominalOutputReverse(0, Constants.kTimeoutMs);
+    m_lowerIndexer.configPeakOutputForward(1, Constants.kTimeoutMs);
+    m_lowerIndexer.configPeakOutputReverse(-1, Constants.kTimeoutMs);
 
     /* Config the Velocity closed loop gains in slot0 */
-		m_indexer.config_kF(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kF, Constants.kTimeoutMs);
-		m_indexer.config_kP(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kP, Constants.kTimeoutMs);
-	  m_indexer.config_kI(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kI, Constants.kTimeoutMs);
-		m_indexer.config_kD(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kD, Constants.kTimeoutMs);
-    //TODO: reimport kGains command to constants... deleted by accident
+		m_upperIndexer.config_kF(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kF, Constants.kTimeoutMs);
+		m_upperIndexer.config_kP(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kP, Constants.kTimeoutMs);
+	  m_upperIndexer.config_kI(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kI, Constants.kTimeoutMs);
+    m_upperIndexer.config_kD(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kD, Constants.kTimeoutMs);
+    
+    m_lowerIndexer.config_kF(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kF, Constants.kTimeoutMs);
+		m_lowerIndexer.config_kP(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kP, Constants.kTimeoutMs);
+	  m_lowerIndexer.config_kI(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kI, Constants.kTimeoutMs);
+		m_lowerIndexer.config_kD(Constants.kPIDLoopIdx, Constants.kGains_Indexer.kD, Constants.kTimeoutMs);
     // m_indexer.setInverted(Constants.add constant here);
-    setClosedLoopSpeed(0.0);
-
+    m_lowerIndexer.follow(m_upperIndexer); //runs inverse
+    m_lowerIndexer.setInverted(true);
   }
 
   @Override
