@@ -92,10 +92,6 @@ public class IRSensor implements Sendable, DoubleSupplier {
     return m_anaInput.getVoltage();
   }
 
-  public double getRawCounts() {
-    return m_anaInput.getValue();
-  }
-
   public double getRangeCm() {
     double voltage = getRawVoltage();
 
@@ -119,7 +115,6 @@ public class IRSensor implements Sendable, DoubleSupplier {
     builder.setSmartDashboardType("IRSensor");
     builder.addDoubleProperty("Range (cm)", this::getRangeCm, null);
     builder.addDoubleProperty("RawVolts", this::getRawVoltage, null);
-    builder.addDoubleProperty("RawCounts", this::getRawCounts, null);
   }
 
 }
