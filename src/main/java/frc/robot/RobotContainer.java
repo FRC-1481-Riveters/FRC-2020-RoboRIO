@@ -30,6 +30,7 @@ import frc.robot.subsystems.Kicker;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.colorsensor;
@@ -149,12 +150,12 @@ public class RobotContainer {
       super(new ShooterYeetCommand(m_shooter, Constants.shooterIntendedSpeed), new KickerAdvanceCommand(m_kicker, m_shooter));
     }
   }
-  public class PowerCellSlurpMulticommand extends SequentialCommandGroup{
+  public class PowerCellSlurpMulticommand extends ParallelCommandGroup{
     public PowerCellSlurpMulticommand() {
       super(new IntakePickupCommand(m_intake), new IndexerCarryUpCommand(m_indexer));
     }
   }
-  public class PowerCellLoosenerMulticommand extends SequentialCommandGroup{
+  public class PowerCellLoosenerMulticommand extends ParallelCommandGroup{
     public PowerCellLoosenerMulticommand() {
       super(new IntakeDropOffCommand(m_intake), new IndexerSpitOutCommand(m_indexer));
     }
