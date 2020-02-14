@@ -142,7 +142,7 @@ public class IRSensor implements Sendable, DoubleSupplier {
       double distance = 1.0 / ((m_constants.a * Math.pow(voltage, 3.0)) + (m_constants.b * Math.pow(voltage, 2.0))
           + (m_constants.c * voltage) + m_constants.d);
 
-      return Math.min(distance, 0.0);
+      return Math.max(distance, 0.0);
 
     } catch (ArithmeticException ex) {
       System.out.printf("IRSensor couldn't compute range from voltage %3.2f. Returned 0.0: %s", voltage, ex.toString());
