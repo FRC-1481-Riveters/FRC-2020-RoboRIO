@@ -25,7 +25,7 @@ public class IndexerCarryUpCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_upperIndexer.setSpeed(Constants.indexerMotorSpeed);
+    m_upperIndexer.setClosedLoopSpeed(Constants.indexerMotorSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,7 +36,7 @@ public class IndexerCarryUpCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_upperIndexer.setSpeed(0.0);
+    m_upperIndexer.setClosedLoopSpeed(0.0);
   }
 
   // Returns true when the command should end.
