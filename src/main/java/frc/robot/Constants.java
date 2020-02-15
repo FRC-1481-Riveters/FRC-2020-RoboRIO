@@ -54,8 +54,8 @@ public final class Constants {
 	public static final int kickerMotorControllerCANId = 7;
 	public static final int shooterMotorControllerCANId = 1;
 	public static final double intakeMotorSpeed = 0.75; // percent
-	public static final double indexerMotorSpeed = 50.0; // RPM
-	public static final boolean kIndexerSensorPhase = false; 
+	public static final double indexerMotorSpeed = 800; // RPM
+	public static final boolean kIndexerSensorPhase = true; 
 	public static final double kickerMotorSpeed = -1.0; // percent
 	public static final double kickerCaptureSpeed = 0.61; // percent
 	public static final double shooterIntendedSpeed = 4600.0; // RPM
@@ -156,7 +156,7 @@ public final class Constants {
 	 * Kp = 0.75
 	 */
 
-	public static final Gains kGains_Indexer = new Gains(1.5, 0.0, 0.0, 0.0, 0, 1.0);
+	public static final Gains kGains_Indexer = new Gains(0.1, 0.0, 0.0, 0.0, 0, 1.0);
 
 	public static final int frontLeftMotor = 13;
 	public static final int rearLeftMotor = 12;
