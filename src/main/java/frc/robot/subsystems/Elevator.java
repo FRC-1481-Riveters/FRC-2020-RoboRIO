@@ -18,17 +18,20 @@ import frc.robot.Constants;
 public class Elevator extends SubsystemBase {
   private static WPI_TalonSRX m_elevator = new WPI_TalonSRX
   (Constants.winchMotorElevatorCANId);
+  private static WPI_TalonSRX m_elevator2 = new WPI_TalonSRX
+  (Constants.winchMotorElevator2CANId);
+  public int m_currentElevatorPosition;
   /**
    * Creates a new Elevator.
    */
   
   public Elevator() {
     SmartDashboard.putData(m_elevator);
-    m_elevator.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+    m_elevator.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
         Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 
         m_elevator.config_kF(0, 0.0);
-        m_elevator.config_kP(0, 0.2);
+        m_elevator.config_kP(0, 0.1);
         m_elevator.config_kI(0, 0.0);
         m_elevator.config_kD(0, 0.0);
             /* Ensure sensor is positive when output is positive */
@@ -38,18 +41,30 @@ public class Elevator extends SubsystemBase {
         m_elevator.configNominalOutputReverse(0, Constants.kTimeoutMs);
         m_elevator.configPeakOutputForward(1, Constants.kTimeoutMs);
         m_elevator.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+
+       // m_elevator2.setInverted(true);
+        m_elevator2.follow(m_elevator);
   }
-  public void zeroElevatorPosition() {
-    m_elevator.getSensorCollection().setQuadraturePosition(0, Constants.kTimeoutMs);
-  }
+  //public void zeroElevatorPosition() {
+  //  m_elevator.getSensorCollection().setQuadraturePosition(0, Constants.kTimeoutMs);
+  //}
   public void climbToPosition(int encoderCount) {
     m_elevator.set(ControlMode.Position, encoderCount);
   }
   public void stopElevator() {
     m_elevator.set(ControlMode.PercentOutput, 0);
   }
+  public int getActualPosition() {
+    /*
+     * This value is converted with a negative sign to switch the way the sensor
+     * reports rotation. It's backwards compared to how the code expects the sensor
+     * to rotate.
+     */
+    return m_elevator.getSelectedSensorPosition();
+  }
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    m_currentElevatorPosition = getActualPosition();
+    SmartDashboard.putNumber("Current Elevator Position",m_currentElevatorPosition);
   }
 }
