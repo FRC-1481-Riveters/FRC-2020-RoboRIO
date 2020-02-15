@@ -6,9 +6,15 @@ CAN ID 2 = front right drive
 CAN ID 3 = rear right drive
 CAN ID 4 = untitled goose motor
 CAN ID 5 = control panel
+<<<<<<< HEAD
+CAN ID 6 = winchMotorElevatorCANId2
+CAN ID 7 = kicker motor
+CAN ID 8 = winchMotorElevatorCANId
+=======
 CAN ID 6 = climb motor 1
 CAN ID 7 = kicker motor
 CAN ID 8 = climb motor 2
+>>>>>>> a05a4e2d0ce244f82e1cd7724ba21414edda27b4
 CAN ID 9 = upper indexer motor 
 CAN ID 10 = intake motor
 CAN ID 11 = lower indexer motor 

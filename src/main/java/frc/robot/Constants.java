@@ -68,11 +68,11 @@ public final class Constants {
 	public static final int rearCamera = 2;
 
 	// elevator
-	public static final int maxWinchEncoderCounts = 10000; // get winch value
+	public static final int maxWinchEncoderCounts = 15000; // get winch value
 	public static final int minWinchEncoderCounts = 0;
 	// public static int winchEncoderchannel = 0;
 	public static final int raiseElevatorButton = 1; // get buttons value from SAD
-	public static final int lowerElevatorButton = 1;
+	public static final int lowerElevatorButton = 2;
 	public static final int engageUntitledGooseButton = 1;
 	public static final int disengageUntitledGooseButton = 1;
 	public static final double latchReleaseEncoderCount = 500.0; // (automatic???)
@@ -84,7 +84,8 @@ public final class Constants {
 	public static final int disengageUntitledGooseButtonjoystick = 1;
 	public static final boolean kElevatorSensorPhase = false;
 
-	public static final int winchMotorElevatorCANId = 7; // change back to 7 for final bot
+	public static final int winchMotorElevatorCANId = 8;
+	public static final int winchMotorElevator2CANId = 6;
 	public static final int untitledGooseMotorCANId = 4; // change back to 9
 
 	public static final double driveMotorRampRate = 0.5; // number = seconds till full speed
