@@ -157,7 +157,7 @@ public final class Constants {
 	 * Kp = 0.75
 	 */
 
-	public static final Gains kGains_Indexer = new Gains(0.75, 0.0, 0.0, 0.0, 0, 1.0);
+	public static final Gains kGains_Indexer = new Gains(1.5, 0.0, 0.0, 0.0, 0, 1.0);
 
 	public static final int frontLeftMotor = 13;
 	public static final int rearLeftMotor = 12;
