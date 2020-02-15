@@ -46,7 +46,7 @@ public class Indexer extends SubsystemBase {
 
     m_upperIndexer.setSensorPhase(Constants.kIndexerSensorPhase);
 
-    m_upperIndexer.setInverted(false);
+    m_upperIndexer.setInverted(true);
 
     m_lowerIndexer.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,
     Constants.kPIDLoopIdx, Constants.kTimeoutMs);
@@ -58,7 +58,7 @@ public class Indexer extends SubsystemBase {
 
     m_lowerIndexer.setSensorPhase(Constants.kIndexerSensorPhase);
 
-    m_lowerIndexer.setInverted(true);
+    m_lowerIndexer.setInverted(false);
 
   }
 

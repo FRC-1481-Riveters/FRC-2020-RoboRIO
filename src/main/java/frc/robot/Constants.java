@@ -54,11 +54,11 @@ public final class Constants {
 	public static final int kickerMotorControllerCANId = 7;
 	public static final int shooterMotorControllerCANId = 1;
 	public static final double intakeMotorSpeed = 0.75; // percent
-	public static final double indexerMotorSpeed = 100; // RPM
+	public static final double indexerMotorSpeed = 50.0; // RPM
 	public static final boolean kIndexerSensorPhase = false; 
 	public static final double kickerMotorSpeed = -1.0; // percent
 	public static final double kickerCaptureSpeed = 0.61; // percent
-	public static final double shooterIntendedSpeed = 2500.0; // RPM
+	public static final double shooterIntendedSpeed = 4600.0; // RPM
 	public static final double shooterIntendedSpeedTolerance = 0.05;
 	public static final double shooterYeetSpeedInitiation = 4600.0; // RPM
 	public static final double shooterYeetSpeedWall = 4000.0; // RPM

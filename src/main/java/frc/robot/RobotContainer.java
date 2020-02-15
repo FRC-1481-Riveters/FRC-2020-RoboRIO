@@ -147,12 +147,12 @@ public class RobotContainer {
     public PowerCellYeeterMulticommand() {
       // Add your commands in the super() call, e.g.
       // super(new FooCommand(), new BarCommand());
-      super(new ShooterYeetCommand(m_shooter, Constants.shooterIntendedSpeed), new KickerAdvanceCommand(m_kicker, m_shooter));
+      super(new ShooterYeetCommand(m_shooter, Constants.shooterIntendedSpeed), new PowerCellSlurpMulticommand());
     }
   }
   public class PowerCellSlurpMulticommand extends ParallelCommandGroup{
     public PowerCellSlurpMulticommand() {
-      super(new IntakePickupCommand(m_intake), new IndexerCarryUpCommand(m_indexer));
+      super(new IntakePickupCommand(m_intake), new IndexerCarryUpCommand(m_indexer), new KickerAdvanceCommand (m_kicker, m_shooter));
     }
   }
   public class PowerCellLoosenerMulticommand extends ParallelCommandGroup{

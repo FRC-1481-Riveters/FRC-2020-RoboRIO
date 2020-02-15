@@ -30,6 +30,7 @@ public class Intake extends SubsystemBase {
     m_intake.configPeakOutputReverse(-1, Constants.kTimeoutMs);
 
     setSpeed(0.0);
+    m_intake.setInverted(true);
 
   }
 
