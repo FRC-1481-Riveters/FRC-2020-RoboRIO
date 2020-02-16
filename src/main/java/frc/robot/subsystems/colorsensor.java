@@ -86,18 +86,6 @@ public class colorsensor extends SubsystemBase {
      */
     Color detectedColor = m_colorSensor.getColor();
 
-    /**
-     * The sensor returns a raw IR value of the infrared light detected.
-     */
-    double IR = m_colorSensor.getIR();
-
-    /**
-     * Open Smart Dashboard or Shuffleboard to see the color detected by the sensor.
-     */
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-
     /*
      * Make the m_colorMatcher find the closest color that matches the numbers in
      * detectedColor. Since the numbers won't be *exactly* the same as the pure
@@ -129,8 +117,6 @@ public class colorsensor extends SubsystemBase {
     }
 
     SmartDashboard.putNumber("Color guess confidence", colorMatchResult.confidence);
-
-    SmartDashboard.putNumber("IR", IR);
 
     /**
      * In addition to RGB IR values, the color sensor can also return an infrared
