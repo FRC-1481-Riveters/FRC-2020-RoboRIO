@@ -33,6 +33,7 @@ import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.colorsensor;
 import frc.robot.subsystems.Shooter;
@@ -103,7 +104,7 @@ public class RobotContainer {
         .whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController));
     new JoystickButton(m_operatorController, Button.kB.value)
         .whileHeld(new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
-    new JoystickButton(m_driverController, Button.kB.value)
+    new JoystickButton(m_driverController, Button.kB.value) //initiation linev
         .whileHeld(new PowerCellYeeterMulticommand());
     new JoystickButton(m_driverController, Button.kB.value)
         .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
@@ -112,13 +113,14 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kY.value)
         .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
     new JoystickButton(m_operatorController, Button.kY.value)
-        .whileHeld(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedInitiation));
-    new JoystickButton(m_operatorController, Button.kY.value)
-        .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
+        .whileHeld(new IndexerCarryUpCommand(m_indexer));
     new JoystickButton(m_operatorController, Button.kA.value)
-        .whileHeld(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall));
-    new JoystickButton(m_operatorController, Button.kA.value)
-        .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
+        .whenReleased(new IndexerSpitOutCommand(m_indexer));
+    // new Joystick
+   // new JoystickButton(m_operatorController, Button.kA.value)
+       // .whileHeld(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall));
+    //new JoystickButton(m_operatorController, Button.kA.value)
+       // .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
          // Assign default commands
     new JoystickButton(m_driverController, Button.kX.value)
         .whileHeld(new raiseElevator(m_elevator));

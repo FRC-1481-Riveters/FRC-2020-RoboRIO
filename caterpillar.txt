@@ -195,3 +195,13 @@ step 6
             shooterYeetCommand
 step 7
     COMPLETE
+
+Indexer updates 2/16/20
+    IR Sensors 
+        purpose
+            2 sensors
+                1. view where power cell is prior to intaking another power cell
+                2. view where power cells will end up in indexer prior to shooterYeetCommand
+    Encoder counts
+        use encoders in order to determine current location of power cells within the indexer
+            reason: indexer gets jammed when too many power cells in indexer

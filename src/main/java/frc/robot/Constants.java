@@ -53,12 +53,12 @@ public final class Constants {
 	public static final int secondIndexerMotorControllerCANId = 11;
 	public static final int kickerMotorControllerCANId = 7;
 	public static final int shooterMotorControllerCANId = 1;
-	public static final double intakeMotorSpeed = 0.75; // percent
-	public static final double indexerMotorSpeed = 800; // RPM
+	public static final double intakeMotorSpeed = .75; // percent
+	public static final double indexerMotorSpeed = 400; // RPM
 	public static final boolean kIndexerSensorPhase = true; 
 	public static final double kickerMotorSpeed = -1.0; // percent
 	public static final double kickerCaptureSpeed = 0.61; // percent
-	public static final double shooterIntendedSpeed = 4600.0; // RPM
+	public static final double shooterIntendedSpeed = 3500.0; // RPM
 	public static final double shooterIntendedSpeedTolerance = 0.05;
 	public static final double shooterYeetSpeedInitiation = 4600.0; // RPM
 	public static final double shooterYeetSpeedWall = 4000.0; // RPM
@@ -89,7 +89,7 @@ public final class Constants {
 	public static final int untitledGooseMotorCANId = 4; // change back to 9
 
 	public static final double driveMotorRampRate = 0.5; // number = seconds till full speed
-	public static final double rotationInQuarter = 0.4;
+	public static final double rotationInQuarter = 0.7;
 
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2
