@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.BreakInGearboxCommand;
+import frc.robot.commands.CycleCameraFeedCommand;
 import frc.robot.commands.GoosehookDisengage;
 import frc.robot.commands.GoosehookEngage;
 import frc.robot.commands.IndexerCarryUpCommand;
@@ -74,6 +75,7 @@ public class RobotContainer {
   RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
 
   private final BreakInGearboxCommand m_breakInGearboxCommand = new BreakInGearboxCommand(m_drive);
+  private final CycleCameraFeedCommand m_cycleCameraFeedCommand = new CycleCameraFeedCommand(m_cameraSubsystem);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -86,6 +88,7 @@ public class RobotContainer {
 
 
       SmartDashboard.putData(m_breakInGearboxCommand);
+      SmartDashboard.putData(m_cycleCameraFeedCommand);
   }
 
   /**
