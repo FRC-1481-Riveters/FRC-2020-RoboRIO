@@ -107,6 +107,10 @@ public class RobotContainer {
         .whileHeld(new PowerCellYeeterMulticommand());
     new JoystickButton(m_driverController, Button.kB.value)
         .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
+    new JoystickButton(m_driverController, Button.kY.value)
+        .whileHeld(new PowerCellYeeterWallMulticommand());
+    new JoystickButton(m_driverController, Button.kY.value)
+        .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
     new JoystickButton(m_operatorController, Button.kY.value)
         .whileHeld(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedInitiation));
     new JoystickButton(m_operatorController, Button.kY.value)
@@ -151,6 +155,18 @@ public class RobotContainer {
       // Add your commands in the super() call, e.g.
       // super(new FooCommand(), new BarCommand());
       super(new ShooterYeetCommand(m_shooter, Constants.shooterIntendedSpeed), new PowerCellAdvanceMulticommand());
+      //intake, indexer, kicker, shooter
+      //initiates shooter, moves everything else when shooter is at intended speed
+    }
+  }
+  public class PowerCellYeeterWallMulticommand extends SequentialCommandGroup {
+    /**
+     * Creates a new PowerCellYeeterMulticommand.
+     */
+    public PowerCellYeeterWallMulticommand() {
+      // Add your commands in the super() call, e.g.
+      // super(new FooCommand(), new BarCommand());
+      super(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall), new PowerCellAdvanceMulticommand());
       //intake, indexer, kicker, shooter
       //initiates shooter, moves everything else when shooter is at intended speed
     }
