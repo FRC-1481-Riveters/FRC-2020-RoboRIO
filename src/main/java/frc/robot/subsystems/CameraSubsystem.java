@@ -26,7 +26,7 @@ public class CameraSubsystem extends SubsystemBase {
    * Creates a new PixyCameraSubsystem.
    */
   public CameraSubsystem() {
-    pixycam = Pixy2.createInstance(new fastSPILink(1_000_000));
+    pixycam = Pixy2.createInstance(new fastSPILink(1_500_000));
     pixycam.init(0);
 
   //   UsbCamera front = CameraServer.getInstance().startAutomaticCapture(0)
@@ -48,14 +48,13 @@ public class CameraSubsystem extends SubsystemBase {
 
         String data = blocks.get(0).toString(); // string containing target info
 
-        SmartDashboard.putBoolean("present", true); // show there is a target present
-        SmartDashboard.putNumber("Xccord", xcoord);
-        SmartDashboard.putNumber("Ycoord", ycoord);
-        SmartDashboard.putString("Data", data);
+        SmartDashboard.putNumber("Pixycam Xcoord", xcoord);
+        SmartDashboard.putNumber("Pixycam Ycoord", ycoord);
+        SmartDashboard.putString("Pixycam Data", data);
 
       }
 
-      SmartDashboard.putNumber("blocks detected", blocks.size()); // push to dashboard how many targets are detected
+      SmartDashboard.putNumber("Pixycam blocks detected", blocks.size()); // push to dashboard how many targets are detected
     }
   }
 }
