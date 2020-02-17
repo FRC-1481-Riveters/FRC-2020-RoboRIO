@@ -6,17 +6,30 @@ CAN ID 2 = front right drive
 CAN ID 3 = rear right drive
 CAN ID 4 = untitled goose motor
 CAN ID 5 = control panel
-<<<<<<< HEAD
-CAN ID 6 = winchMotorElevatorCANId2
-CAN ID 7 = kicker motor
-CAN ID 8 = winchMotorElevatorCANId
-=======
 CAN ID 6 = climb motor 1
 CAN ID 7 = kicker motor
 CAN ID 8 = climb motor 2
->>>>>>> a05a4e2d0ce244f82e1cd7724ba21414edda27b4
 CAN ID 9 = upper indexer motor 
 CAN ID 10 = intake motor
 CAN ID 11 = lower indexer motor 
 CAN ID 12 = rear right drive
 CAN ID 13 = front right drive
+
+
+RoboRIO:
+----------------
+Analog 0 : intake Power Cell detector (Sharp IR Sensor)
+Analog 1 : 
+Analog 2 : 
+Analog 3 :
+
+DIO 0 : Kicker Power Cell detector (IR Breakbeam sensor)
+DIO 1 :
+DIO 2 :
+DIO 3 :
+DIO 4 :
+DIO 5 :
+DIO 6 :
+DIO 7 :
+DIO 8 :
+DIO 9 :

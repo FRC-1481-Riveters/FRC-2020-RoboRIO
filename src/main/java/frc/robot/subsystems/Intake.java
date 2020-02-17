@@ -10,15 +10,20 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import irsensor.IRSensor;
 
 public class Intake extends SubsystemBase {
   private static WPI_TalonSRX m_intake = new WPI_TalonSRX(Constants.intakeMotorControllerCANId);
+
+  protected IRSensor m_powerDetectorSensor = new IRSensor(IRSensor.SensorType.GP2Y0A51SK0F, new AnalogInput(0));
+
   /**
    * Creates a new Intake.
    */
-  
+
   public void setSpeed(double Percent) {
     m_intake.set(ControlMode.PercentOutput, Percent);
   }
@@ -34,6 +39,13 @@ public class Intake extends SubsystemBase {
 
   }
 
+  /*
+   * Return the distance between the Power Cell at the end of the intake and the
+   * entrance to the indexer in centimeters.
+   */
+  public double getDistanceToPowerCell() {
+    return m_powerDetectorSensor.getRangeCm();
+  }
 
   @Override
   public void periodic() {
