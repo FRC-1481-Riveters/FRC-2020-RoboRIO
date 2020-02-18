@@ -8,13 +8,15 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.*;
 
-public class Kicker extends SubsystemBase {
+public class Kicker extends SubsystemBase implements Sendable {
   private static WPI_TalonSRX m_kicker = new WPI_TalonSRX(Constants.kickerMotorControllerCANId);
   protected DigitalInput m_powerCellDetectorDigitalInput = new DigitalInput(0);
 
@@ -56,5 +58,12 @@ public class Kicker extends SubsystemBase {
 
   @Override
   public void periodic() {
+  }
+
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+
+    builder.addBooleanProperty(".PowerCellDetected", () -> getPowerCellDetected(), null);
+    builder.addDoubleProperty(".KickerCommandedSpeed", () -> m_kicker.get(), null);
   }
 }
