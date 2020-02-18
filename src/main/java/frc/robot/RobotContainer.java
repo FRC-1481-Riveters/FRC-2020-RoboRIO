@@ -58,11 +58,12 @@ public class RobotContainer {
   private final colorsensor m_colorsensor = new colorsensor();
   private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
 
-  @SuppressWarnings("unused")
-  private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
+
   private final Shooter m_shooter = new Shooter();
   private final Kicker m_kicker = new Kicker();
   private final DriveTrain m_drive = new DriveTrain();
+
+  private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem(m_drive);
   private final Elevator m_elevator = new Elevator();
   private final Goosehook m_goosehook = new Goosehook();
   private final Indexer m_indexer = new Indexer();

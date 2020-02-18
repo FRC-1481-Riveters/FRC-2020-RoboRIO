@@ -8,37 +8,45 @@
 package frc.robot.subsystems;
 
 import java.util.ArrayList;
+import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import io.github.pseudoresonance.pixy2api.Pixy2;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
-
+import frc.robot.Constants;
 import frc.robot.fastSPILink;
 import frc.robot.commands.CameraFeeds;
 
-public class CameraSubsystem extends SubsystemBase {
+public class CameraSubsystem extends SubsystemBase implements Sendable {
 
   private Pixy2 pixycam;
   ArrayList<Block> blocks;
 
+  protected DoubleSupplier m_robotDistanceSupplier;
+
+  protected NetworkTableEntry m_currentCameraFeedNameEntry = NetworkTableInstance.getDefault().getEntry("DriverCamera");
+  protected double m_lastOdometer;
+  protected double m_lastDirectionOfTravel;
+  protected double m_odometerAtLastChangeInDirection;
+
   /**
    * Creates a new CameraSubsystem.
    */
-  public CameraSubsystem() {
+  public CameraSubsystem(DoubleSupplier robotDistanceSupplier) {
     pixycam = Pixy2.createInstance(new fastSPILink(1_500_000));
     pixycam.init(0);
 
-    // UsbCamera front = CameraServer.getInstance().startAutomaticCapture(0)
+    m_robotDistanceSupplier = robotDistanceSupplier;
   }
 
   public void selectNextDriverCameraFeed() {
 
-    NetworkTableEntry currentCameraFeedNameEntry = NetworkTableInstance.getDefault().getEntry("DriverCamera");
-
-    String currentCameraFeedName = currentCameraFeedNameEntry.getString(/* default value */ "Front");
+    String currentCameraFeedName = m_currentCameraFeedNameEntry.getString(/* default value */ "Front");
 
     /*
      * Determine the index number of the currently selected DriverCamera value by
@@ -64,15 +72,17 @@ public class CameraSubsystem extends SubsystemBase {
     if (currentFeedIndex >= 0) {
       currentFeedIndex++;
       currentFeedIndex = currentFeedIndex % CameraFeeds.names.size();
-      currentCameraFeedNameEntry.setString(CameraFeeds.names.get(currentFeedIndex));
+      m_currentCameraFeedNameEntry.setString(CameraFeeds.names.get(currentFeedIndex));
     } else {
-      currentCameraFeedNameEntry.setString(CameraFeeds.names.get(0));
+      m_currentCameraFeedNameEntry.setString(CameraFeeds.names.get(0));
     }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    updateDriverCameraFeed();
 
     int blockState = pixycam.getCCC().getBlocks(false, 255, 8); // run getBlocks with arguments to have the camera
 
@@ -95,5 +105,90 @@ public class CameraSubsystem extends SubsystemBase {
       // push to dashboard how many targets are detected
       SmartDashboard.putNumber("Pixycam blocks detected", blocks.size());
     }
+  }
+
+  protected void updateDriverCameraFeed() {
+
+    /* Get the cumulative distance the robot has travelled */
+    double currentOdometer = m_robotDistanceSupplier.getAsDouble();
+
+    /*
+     * Determine how far the robot has travelled since the last time we asked for
+     * the robot's odometer.
+     */
+    double recentDistanceTravelled = currentOdometer - m_lastOdometer;
+
+    /*
+     * We're done calculating with m_lastOdometer. Update it with the latest value
+     * of the currentOdometer so we're ready to test the *next* odometer reading
+     * later.
+     */
+    m_lastOdometer = currentOdometer;
+
+    /*
+     * Determine if we've changed our direction of travel, either
+     * forward-to-backwards or backwards-to-forwards.
+     * 
+     * The Math.signum() function returns:
+     * 
+     * -1.0 if the argument is negative (meaning we just changed from driving
+     * forward to backward)
+     * 
+     * 0.0 if the argument is a 0.0 (meaning we're not moving)
+     * 
+     * 1.0 if the argument is positive (meaning we just changed from driving
+     * backward to forward)
+     */
+    double directionSignum = Math.signum(recentDistanceTravelled);
+    if (directionSignum != m_lastDirectionOfTravel && directionSignum != 0.0) {
+      /*
+       * The robot has changed direction since the last time we looked because the
+       * recentDistanceTravelled has a different sign from the last time we did this
+       * calculation. Get a snapshot of the current odometer. It's important because
+       * we'll use it later to determine how far we've travelled since we changed
+       * direction.
+       */
+      m_odometerAtLastChangeInDirection = currentOdometer;
+
+      m_lastDirectionOfTravel = directionSignum;
+    }
+
+    /*
+     * Determine if we've driving in this direction far enough to trigger the change
+     * in the driver's camera view. We don't want quick, short changes in direction
+     * to trigger the camera view change but we don't want to delay the change any
+     * longer than necessary after we actually start moving, in earnest, in a new
+     * direction.
+     */
+    double distanceTravelledSinceLastChangeInDirection = currentOdometer - m_odometerAtLastChangeInDirection;
+
+    if (distanceTravelledSinceLastChangeInDirection > Constants.distanceToSwitchCameraFeed) {
+      /* We're definitely driving forwards. Change the camera to the front camera. */
+      pickDriverCameraFeed("Front");
+    }
+
+    if (distanceTravelledSinceLastChangeInDirection < -Constants.distanceToSwitchCameraFeed) {
+      /* We're definitely drive backwards. Change the camera to the rear camera. */
+      pickDriverCameraFeed("Rear");
+    }
+
+  }
+
+  public void pickDriverCameraFeed(String cameraFeedName) {
+    m_currentCameraFeedNameEntry.setString(cameraFeedName);
+  }
+
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+
+    builder.addDoubleProperty(".Odometer", () -> {
+      return m_lastOdometer;
+    }, null);
+    builder.addDoubleProperty(".OdometerAtLastChangeInDirection", () -> {
+      return m_odometerAtLastChangeInDirection;
+    }, null);
+    builder.addDoubleProperty(".DirectionOfTravel", () -> {
+      return m_lastDirectionOfTravel;
+    }, null);
   }
 }

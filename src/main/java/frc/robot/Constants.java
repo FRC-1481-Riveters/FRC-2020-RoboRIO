@@ -54,10 +54,10 @@ public final class Constants {
 	public static final int kickerMotorControllerCANId = 7;
 	public static final int shooterMotorControllerCANId = 1;
 	public static final double intakeMotorSpeed = .75; // percent
-	public static final double howCloseIsThePowerCell = 5; //cm
-	public static final double howCloseIsThePowerCellTolerance = 1; //cm
+	public static final double howCloseIsThePowerCell = 5; // cm
+	public static final double howCloseIsThePowerCellTolerance = 1; // cm
 	public static final double indexerMotorSpeed = 400; // RPM
-	public static final boolean kIndexerSensorPhase = true; 
+	public static final boolean kIndexerSensorPhase = true;
 	public static final double kickerMotorSpeed = -1.0; // percent
 	public static final double kickerCaptureSpeed = 0.61; // percent
 	public static final double shooterIntendedSpeed = 3500.0; // RPM
@@ -68,6 +68,8 @@ public final class Constants {
 	public static final int visionCameraPort = 0;
 	public static final int frontCamera = 1;
 	public static final int rearCamera = 2;
+	// inches to travel in one direction before auto changing camera feed
+	public static final double distanceToSwitchCameraFeed = 24.0; 
 
 	// elevator
 	public static final int maxWinchEncoderCounts = 15000; // get winch value
@@ -93,6 +95,11 @@ public final class Constants {
 	public static final double driveMotorRampRate = 0.5; // number = seconds till full speed
 	public static final double rotationInQuarter = 0.7;
 
+	// Number of inches of robot travel per revolution of the NEO (which is returned
+	// in getPosition())
+	// This must comprehend the entire drivetrain; NEO counts read from
+	// getPosition(), wheel diameter and gearbox gearing ratio
+	public static final double driveTrainInchesPerEncoderCounts = 2.3;
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2
 	 * or 3. Only the first two (0,1) are visible in web-based configuration.
