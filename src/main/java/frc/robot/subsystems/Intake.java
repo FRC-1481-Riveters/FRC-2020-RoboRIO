@@ -8,6 +8,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -45,6 +48,9 @@ public class Intake extends SubsystemBase {
    */
   public double getDistanceToPowerCell() {
     return m_powerDetectorSensor.getRangeCm();
+  }
+  public DoubleSupplier getDistanceToPowerCellMeasurer(){
+    return m_powerDetectorSensor;
   }
 
   @Override

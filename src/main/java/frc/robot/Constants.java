@@ -54,6 +54,8 @@ public final class Constants {
 	public static final int kickerMotorControllerCANId = 7;
 	public static final int shooterMotorControllerCANId = 1;
 	public static final double intakeMotorSpeed = .75; // percent
+	public static final double howCloseIsThePowerCell = 5; //cm
+	public static final double howCloseIsThePowerCellTolerance = 1; //cm
 	public static final double indexerMotorSpeed = 400; // RPM
 	public static final boolean kIndexerSensorPhase = true; 
 	public static final double kickerMotorSpeed = -1.0; // percent

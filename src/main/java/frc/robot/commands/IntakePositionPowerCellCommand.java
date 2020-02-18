@@ -7,26 +7,31 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.Kicker;
+import frc.robot.subsystems.Intake;
 
-public class KickerCaptureCommand extends CommandBase {
-  private Kicker m_kicker;
-
+public class IntakePositionPowerCellCommand extends PIDCommand {
   /**
-   * Creates a new KickerCaptureCommand.
+   * Creates a new IntakePositionPowerCellCommand.
    */
-  public KickerCaptureCommand(Kicker subsystem) {
+  public IntakePositionPowerCellCommand(double howCloseIsThePowerCell, Intake m_intake) {
+    super(new PIDController(Constants.kGains.kP, Constants.kGains.kI, Constants.kGains.kD),
+    m_intake.getDistanceToPowerCellMeasurer(),
+    howCloseIsThePowerCell,
+    output -> m_intake.setSpeed(output),
+    m_intake
+    );
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    getController()
+      .setTolerance(Constants.howCloseIsThePowerCellTolerance);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_kicker.setSpeed(Constants.kickerCaptureSpeed);
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,12 +42,11 @@ public class KickerCaptureCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_kicker.setSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-      return m_kicker.getPowerCellDetected();
+    return getController().atSetpoint();
   }
 }

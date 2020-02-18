@@ -1,0 +1,14 @@
+driver controller
+    left joystick- drive
+    right joystick- turn
+    X- raise elevator
+    A- lower elevator
+    B- wall shot
+    Y- initiation
+    left bumper- goosehook up
+    right bumper- goosehook down
+operator controller
+    X- control panel jog
+    B- control panel rotation control
+    left bumper- intake
+    right bumper- outtake
