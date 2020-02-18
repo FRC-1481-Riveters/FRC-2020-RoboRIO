@@ -23,6 +23,7 @@ public class Shooter extends SubsystemBase implements Sendable {
   private CANPIDController m_pidController;
   private CANEncoder m_encoder;
   private double m_shooterIntendedSpeed = 10000.0;
+  protected YeetDetector m_yeetDetector;
 
   /**
    * Creates a new sparkMaxTest.
@@ -63,6 +64,8 @@ public class Shooter extends SubsystemBase implements Sendable {
     m_pidController.setFF(0);
 
     setClosedLoopSpeed(0.0);
+
+    m_yeetDetector = new YeetDetector(this::isAtSpeed);
   }
 
   public double getSpeed() {
@@ -84,6 +87,8 @@ public class Shooter extends SubsystemBase implements Sendable {
      */
     m_shooterIntendedSpeed = RPM;
     m_pidController.setReference(RPM, ControlType.kVelocity);
+
+    m_yeetDetector.setNewSpeed(m_shooterIntendedSpeed);
   }
 
   public boolean isAtSpeed() {
@@ -96,13 +101,14 @@ public class Shooter extends SubsystemBase implements Sendable {
   }
 
   public long getTotalYeets() {
-    return 0;
+    return m_yeetDetector.getTotalYeets();
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
 
+    m_yeetDetector.detectYeets(getSpeed());
   }
 
   public void initSendable(SendableBuilder builder) {
