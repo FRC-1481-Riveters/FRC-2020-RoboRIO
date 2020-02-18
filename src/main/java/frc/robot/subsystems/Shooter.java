@@ -7,7 +7,8 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -17,11 +18,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends SubsystemBase implements Sendable {
   private CANSparkMax m_motor;
   private CANPIDController m_pidController;
   private CANEncoder m_encoder;
-  private double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
   private double m_shooterIntendedSpeed = 10000.0;
 
   /**
@@ -56,31 +56,11 @@ public class Shooter extends SubsystemBase {
     // Encoder object created to display position values
     m_encoder = m_motor.getEncoder();
 
-    // PID coefficients
-    kP = 5e-5;
-    kI = 1e-6;
-    kD = 0;
-    kIz = 0;
-    kFF = 0;
-    kMaxOutput = 1;
-    kMinOutput = -1;
-
     // set PID coefficients
-    m_pidController.setP(kP);
-    m_pidController.setI(kI);
-    m_pidController.setD(kD);
-    m_pidController.setIZone(kIz);
-    m_pidController.setFF(kFF);
-    m_pidController.setOutputRange(kMinOutput, kMaxOutput);
-
-    // display PID coefficients on SmartDashboard
-    SmartDashboard.putNumber("Shooter P Gain", kP);
-    SmartDashboard.putNumber("Shooter I Gain", kI);
-    SmartDashboard.putNumber("Shooter D Gain", kD);
-    SmartDashboard.putNumber("Shooter I Zone", kIz);
-    SmartDashboard.putNumber("Shooter Feed Forward", kFF);
-    SmartDashboard.putNumber("Shooter Max Output", kMaxOutput);
-    SmartDashboard.putNumber("Shooter Min Output", kMinOutput);
+    m_pidController.setP(5e-5);
+    m_pidController.setI(1e-6);
+    m_pidController.setD(0);
+    m_pidController.setFF(0);
 
     setClosedLoopSpeed(0.0);
   }
@@ -104,7 +84,6 @@ public class Shooter extends SubsystemBase {
      */
     m_shooterIntendedSpeed = RPM;
     m_pidController.setReference(RPM, ControlType.kVelocity);
-    SmartDashboard.putNumber("Shooter Intended Speed", RPM);
   }
 
   public boolean isAtSpeed() {
@@ -124,49 +103,22 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    // read PID coefficients from SmartDashboard
-    double p = SmartDashboard.getNumber("Shooter P Gain", 0);
-    double i = SmartDashboard.getNumber("Shooter I Gain", 0);
-    double d = SmartDashboard.getNumber("Shooter D Gain", 0);
-    double iz = SmartDashboard.getNumber("Shooter I Zone", 0);
-    double ff = SmartDashboard.getNumber("Shooter Feed Forward", 0);
-    double max = SmartDashboard.getNumber("Shooter Max Output", 0);
-    double min = SmartDashboard.getNumber("Shooter Min Output", 0);
+  }
 
-    // if PID coefficients on SmartDashboard have changed, write new values to
-    // controller
-    if ((p != kP)) {
-      m_pidController.setP(p);
-      kP = p;
-    }
-    if ((i != kI)) {
-      m_pidController.setI(i);
-      kI = i;
-    }
-    if ((d != kD)) {
-      m_pidController.setD(d);
-      kD = d;
-    }
-    if ((iz != kIz)) {
-      m_pidController.setIZone(iz);
-      kIz = iz;
-    }
-    if ((ff != kFF)) {
-      m_pidController.setFF(ff);
-      kFF = ff;
-    }
-    if ((max != kMaxOutput) || (min != kMinOutput)) {
-      m_pidController.setOutputRange(min, max);
-      kMinOutput = min;
-      kMaxOutput = max;
-    }
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.setActuator(true);
 
-    double currentRPM = getSpeed();
-
-    SmartDashboard.putNumber("Shooter Actual Speed", currentRPM);
-
-    SmartDashboard.putNumber("Shooter applied output percentage", m_motor.getAppliedOutput());
-
+    builder.addDoubleProperty("ClosedLoopSpeed(RPM)", this::getSpeed, this::setClosedLoopSpeed);
+    builder.addDoubleProperty("CommandedSpeed(RPM)", () -> {
+      return m_shooterIntendedSpeed;
+    }, null);
+    builder.addDoubleProperty("OpenLoopSpeed(normalized)", m_motor::get, m_motor::set);
+    builder.addDoubleProperty("kP", m_pidController::getP, m_pidController::setP);
+    builder.addDoubleProperty("kI", m_pidController::getI, m_pidController::setI);
+    builder.addDoubleProperty("kD", m_pidController::getD, m_pidController::setD);
+    builder.addDoubleProperty("kF", m_pidController::getFF, m_pidController::setFF);
+    builder.addDoubleProperty("MotorOutputDrive", m_motor::getAppliedOutput, null);
   }
 
 }
