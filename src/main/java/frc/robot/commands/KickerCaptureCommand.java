@@ -13,6 +13,7 @@ import frc.robot.subsystems.Kicker;
 
 public class KickerCaptureCommand extends CommandBase {
   private Kicker m_kicker;
+  protected boolean m_powerCellDetected;
 
   /**
    * Creates a new KickerCaptureCommand.
@@ -25,13 +26,27 @@ public class KickerCaptureCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_kicker.setSpeed(Constants.kickerCaptureSpeed);
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    /*
+     * Read the state of the Power Cell detector sensor in the kicker. If there's no
+     * Power Cell inside the kicker then activate the kicker motor and try to
+     * capture a Power Cell inside the kicker to prepare it for shooting, and to get
+     * it out of the way of the four Power Cells that might eventually follow it.
+     */
+    m_powerCellDetected = m_kicker.getPowerCellDetected();
+
+    /*
+     * If there's no Power Cell in the kicker, then start the kicker motor and try
+     * to get one into the mechanism.
+     */
+    if (!m_powerCellDetected) {
+      m_kicker.setSpeed(Constants.kickerCaptureSpeed);
+    }
+
   }
 
   // Called once the command ends or is interrupted.
@@ -43,6 +58,10 @@ public class KickerCaptureCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-      return m_kicker.getPowerCellDetected();
+    /*
+     * When a Power Cell is detected inside the kicker, the KickerCaptureCommand is
+     * done with its job and it's time to end the command.
+     */
+    return m_powerCellDetected;
   }
 }
