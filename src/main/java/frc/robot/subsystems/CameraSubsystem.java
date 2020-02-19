@@ -42,6 +42,8 @@ public class CameraSubsystem extends SubsystemBase implements Sendable {
     pixycam.init(0);
 
     m_robotDistanceSupplier = robotDistanceSupplier;
+
+    pickDriverCameraFeed("Front");
   }
 
   public void selectNextDriverCameraFeed() {
