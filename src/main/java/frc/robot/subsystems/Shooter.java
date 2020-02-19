@@ -124,6 +124,7 @@ public class Shooter extends SubsystemBase implements Sendable {
     builder.addDoubleProperty("kD", m_pidController::getD, m_pidController::setD);
     builder.addDoubleProperty("kF", m_pidController::getFF, m_pidController::setFF);
     builder.addDoubleProperty("MotorOutputDrive", m_motor::getAppliedOutput, null);
+    builder.addDoubleProperty("Detected Yeets",this::getTotalYeets,null);
   }
 
 }
