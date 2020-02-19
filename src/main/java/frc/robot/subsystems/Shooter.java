@@ -23,9 +23,8 @@ public class Shooter extends SubsystemBase implements Sendable {
   private CANPIDController m_pidController;
   private CANEncoder m_encoder;
   private double m_shooterIntendedSpeed = 10000.0;
-  protected YeetDetector m_yeetDetector;
-
-  /**
+  protected YeetDetector m_yeetDetector= new YeetDetector(this::isAtSpeed);
+    /**
    * Creates a new sparkMaxTest.
    */
   public Shooter() {
@@ -65,7 +64,7 @@ public class Shooter extends SubsystemBase implements Sendable {
 
     setClosedLoopSpeed(0.0);
 
-    m_yeetDetector = new YeetDetector(this::isAtSpeed);
+
   }
 
   public double getSpeed() {
