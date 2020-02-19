@@ -61,7 +61,7 @@ public final class Constants {
 	public static final double kickerMotorSpeed = -1.0; // percent
 	public static final double kickerCaptureSpeed = 0.61; // percent
 	public static final double shooterIntendedSpeed = 3500.0; // RPM
-	public static final double shooterIntendedSpeedTolerance = 0.05;
+	public static final double shooterIntendedSpeedTolerance = 0.02;
 	public static final double shooterYeetSpeedInitiation = 4600.0; // RPM
 	public static final double shooterYeetSpeedWall = 4000.0; // RPM
 	// TODO: find actual speeds of motors

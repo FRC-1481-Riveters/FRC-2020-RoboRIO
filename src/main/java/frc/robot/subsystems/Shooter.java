@@ -57,10 +57,10 @@ public class Shooter extends SubsystemBase implements Sendable {
     m_encoder = m_motor.getEncoder();
 
     // set PID coefficients
-    m_pidController.setP(5e-5);
-    m_pidController.setI(1e-6);
-    m_pidController.setD(0);
-    m_pidController.setFF(0);
+    m_pidController.setP(2.2e-4);
+    m_pidController.setI(.00000005);
+    m_pidController.setD(0.00001);
+    m_pidController.setFF(1.5e-4);
 
     setClosedLoopSpeed(0.0);
 
@@ -85,7 +85,12 @@ public class Shooter extends SubsystemBase implements Sendable {
      * com.revrobotics.ControlType.kVoltage
      */
     m_shooterIntendedSpeed = RPM;
+
+    if (m_shooterIntendedSpeed > 10.0) {
     m_pidController.setReference(RPM, ControlType.kVelocity);
+    } else {
+      m_motor.set(0.0);
+    }
 
     m_yeetDetector.setNewSpeed(m_shooterIntendedSpeed);
   }
