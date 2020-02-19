@@ -14,6 +14,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import io.github.pseudoresonance.pixy2api.Pixy2;
@@ -43,7 +44,8 @@ public class CameraSubsystem extends SubsystemBase implements Sendable {
 
     m_robotDistanceSupplier = robotDistanceSupplier;
 
-    pickDriverCameraFeed("Front");
+    pickDriverCameraFeed("Rear");
+
   }
 
   public void selectNextDriverCameraFeed() {
