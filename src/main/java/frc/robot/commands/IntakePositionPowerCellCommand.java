@@ -15,7 +15,7 @@ public class IntakePositionPowerCellCommand extends CommandBase {
   /**
    * Creates a new IntakePositionPowerCellCommand.
    */
-  public IntakePositionPowerCellCommand(Intake m_intake) {
+  public IntakePositionPowerCellCommand(Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
