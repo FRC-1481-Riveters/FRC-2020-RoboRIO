@@ -15,7 +15,7 @@ public class IRSensor implements Sendable, DoubleSupplier {
   protected SensorConstants m_constants;
 
   public enum SensorType {
-    GP2Y0A51SK0F, GP2Y0A41SK0F, Unknown
+    GP2Y0A51SK0F, GP2Y0A41SK0F, GP2Y0A21YK0F, Unknown
   }
 
   /*
@@ -28,10 +28,12 @@ public class IRSensor implements Sendable, DoubleSupplier {
     private static final long serialVersionUID = 1L;
 
     {/* a b c d */
-      /* 2cm to 15cm sensor */
+      /* 2cm to 15cm sensor https://docs.google.com/spreadsheets/d/1WDuqup1BjJ5tSHi0QAIiMzjmCvPXcLYf04QBY6rFUlM */
       put(SensorType.GP2Y0A51SK0F, new SensorConstants(0.09978106474, -0.2796664032, 0.4242351842, -0.06078793247));
-      /* 4cm to 30cm sensor */
+      /* 4cm to 30cm sensor https://drive.google.com/open?id=1s9VOtxFxB0CnP3QuTGNOzM41Shyhu76YyYfZ8UnlbfQ */
       put(SensorType.GP2Y0A41SK0F, new SensorConstants(0.007868008148, -0.02931278423, 0.1183284175, -0.01775494828));
+      /* 10cm to 80cm sensor https://drive.google.com/open?id=1EhguMsN7Y0s3V13kPuc1Tq-6Fl6-bCZ4UHqwouJhZaY */
+      put(SensorType.GP2Y0A21YK0F, new SensorConstants(0.003276154772, -0.008135823685, 0.04831604976, -0.006248190417));
       put(SensorType.Unknown, new SensorConstants(0.0, 0.0, 1.0, 0.0));
     }
   };
@@ -67,15 +69,18 @@ public class IRSensor implements Sendable, DoubleSupplier {
    * 
    * // for Talon SRXs:
    * 
-   * Function<WPI_TalonSRX, Double> readAna = (talon) -> (talon.getSensorCollection().getAnalogInRaw() / 310.0);
+   * Function<WPI_TalonSRX, Double> readAna = (talon) ->
+   * (talon.getSensorCollection().getAnalogInRaw() / 310.0);
    * 
    * // OR for Spark Maxs:
    * 
-   * Function<CANSparkMax,Double> readAna = (controller) ->controller.getAnalog(AnalogMode.kAbsolute).getVoltage();
+   * Function<CANSparkMax,Double> readAna = (controller)
+   * ->controller.getAnalog(AnalogMode.kAbsolute).getVoltage();
    * 
    * DoubleSupplier voltageSupplier = () -> readAna.apply(m_myMotorController);
    * 
-   * IRSensor sensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F, voltageSupplier);
+   * IRSensor sensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F,
+   * voltageSupplier);
    * 
    * double distance = sensor.getRangeCm();
    * 
@@ -93,7 +98,8 @@ public class IRSensor implements Sendable, DoubleSupplier {
    * 
    * for example:
    * 
-   * IRSensor mySensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F,0); // Use AnalogInput pin 0
+   * IRSensor mySensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F,0); // Use
+   * AnalogInput pin 0
    * 
    */
 
@@ -121,7 +127,8 @@ public class IRSensor implements Sendable, DoubleSupplier {
    * 
    * AnalogInput myAnaInput = new AnalogInput(0); // Read from input 0
    * 
-   * IRSensor mySensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F,myAnaInput);
+   * IRSensor mySensor = new
+   * IRSensor(IRSensor.SensorType.GP2Y0A41SK0F,myAnaInput);
    * 
    */
   public IRSensor(SensorType type, AnalogInput analogChannel) {
