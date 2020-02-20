@@ -70,7 +70,6 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
 
   @SuppressWarnings("unused")
-  private final PowerCellYeeterMulticommand m_powerCellYeeter = new PowerCellYeeterMulticommand();
   private final PowerCellSlurpMulticommand m_powerCellSlurp = new PowerCellSlurpMulticommand();
   private final PowerCellLoosenerMulticommand m_powerCellLoosener = new PowerCellLoosenerMulticommand();
   RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
@@ -106,7 +105,7 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kB.value)
         .whileHeld(new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
     new JoystickButton(m_driverController, Button.kB.value) //initiation linev
-        .whileHeld(new PowerCellYeeterMulticommand());
+        .whileHeld(new PowerCellYeeterInitiationMulticommand());
     new JoystickButton(m_driverController, Button.kB.value)
         .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
     new JoystickButton(m_driverController, Button.kY.value)
@@ -150,14 +149,14 @@ public class RobotContainer {
     return null;
   }
 
-  public class PowerCellYeeterMulticommand extends SequentialCommandGroup {
+  public class PowerCellYeeterInitiationMulticommand extends SequentialCommandGroup {
     /**
      * Creates a new PowerCellYeeterMulticommand.
      */
-    public PowerCellYeeterMulticommand() {
+    public PowerCellYeeterInitiationMulticommand() {
       // Add your commands in the super() call, e.g.
       // super(new FooCommand(), new BarCommand());
-      super(new ShooterYeetCommand(m_shooter, Constants.shooterIntendedSpeed), new PowerCellAdvanceMulticommand());
+      super(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedInitiation), new PowerCellAdvanceMulticommand());
       //intake, indexer, kicker, shooter
       //initiates shooter, moves everything else when shooter is at intended speed
     }
