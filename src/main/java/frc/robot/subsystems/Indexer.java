@@ -16,12 +16,14 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import irsensor.IRSensor;
 
 public class Indexer extends SubsystemBase {
   private static WPI_TalonSRX m_upperIndexer = new WPI_TalonSRX(Constants.indexerMotorControllerCANId);
   private static WPI_TalonSRX m_lowerIndexer = new WPI_TalonSRX(Constants.secondIndexerMotorControllerCANId);
   private NetworkTableEntry intakeMotors_MaxAccel;
   private NetworkTableEntry intakeMotors_MaxVel;
+  protected IRSensor m_powerCellPositionSensor;
 
   /**
    * Creates a new Indexer.
@@ -37,7 +39,10 @@ public class Indexer extends SubsystemBase {
     m_lowerIndexer.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
   }
 
-  public Indexer() {
+  public Indexer(IRSensor IntakePowerCellPositionSensor) {
+
+    m_powerCellPositionSensor = IntakePowerCellPositionSensor;
+    
     m_upperIndexer.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx,
         Constants.kTimeoutMs);
 

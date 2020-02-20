@@ -38,6 +38,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.colorsensor;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.wheelOfFortuneColorSpinny;
+import irsensor.IRSensor;
 import frc.robot.Constants;
 import edu.wpi.cscore.UsbCamera;
 import frc.robot.subsystems.Elevator;
@@ -58,7 +59,6 @@ public class RobotContainer {
   private final colorsensor m_colorsensor = new colorsensor();
   private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
 
-
   private final Shooter m_shooter = new Shooter();
   private final Kicker m_kicker = new Kicker();
   private final DriveTrain m_drive = new DriveTrain();
@@ -66,11 +66,14 @@ public class RobotContainer {
   private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem(m_drive);
   private final Elevator m_elevator = new Elevator();
   private final Goosehook m_goosehook = new Goosehook();
-  private final Indexer m_indexer = new Indexer();
-  private final Intake m_intake = new Intake();
+
+  private final IRSensor m_intakePowerCellPositionSensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F, 0);
+  private final Indexer m_indexer = new Indexer(m_intakePowerCellPositionSensor);
+  private final Intake m_intake = new Intake(m_intakePowerCellPositionSensor);
 
   @SuppressWarnings("unused")
   private final PowerCellSlurpMulticommand m_powerCellSlurp = new PowerCellSlurpMulticommand();
+  @SuppressWarnings("unused")
   private final PowerCellLoosenerMulticommand m_powerCellLoosener = new PowerCellLoosenerMulticommand();
   RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
   RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
