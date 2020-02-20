@@ -21,6 +21,20 @@ import frc.robot.Gains;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
+	public static final int driverController = 0;
+	public static final int operatorController = 1;
+
+	/* Control Panel ------------------------------ */
+	public static final int controlPanelMotorControllerCANId = 4; // find actual value
+	public static final I2C.Port i2cPortColorSensor = I2C.Port.kOnboard; // use for color sensor
+	public static final double controlPanelSpeedMax = 60.0; // RPM
+	public static final double controlPanelMaxAcceleration = 60.0; // RPM/s
+	public static final double controlPanelStopMotor = 0.0;
+	public static final int controlPanelEncoderCounts = 4000; // hypothetical value between 3-5 rotations --more than
+																// 3//
+	public static final int controlPanelVibrationTime = 1000; // miliseconds
+	public static final int acceptableErrorControlPanel = 100; // acceptable error for control panel spinning
+
 	public static double controlPanelWheelEncoderCountsToRPM(int encoderCounts) {
 		double RPM;
 		RPM = encoderCounts / 1.0; // TODO: determine current constant to use here
@@ -33,48 +47,41 @@ public final class Constants {
 		return encoderCounts;
 	}
 
-	public static final int driverController = 0;
-	public static final int operatorController = 1;
+	/**
+	 * Gains used in Position Closed Loop, to be adjusted accordingly Gains(kp, ki,
+	 * kd, kf, izone, peak output);
+	 */
+	public static final Gains kGains = new Gains(0.15, 0.0, 1.0, 0.0, 0, 1.0);
 
-	public static final int controlPanelMotorControllerCANId = 4; // find actual value
-	public static final int rotationControlButton = 5;
-	public static final int positionControlButton = 6;
-	public static final I2C.Port i2cPortColorSensor = I2C.Port.kOnboard; // use for color sensor
-	public static final double controlPanelSpeedMax = 60.0; // RPM
-	public static final double controlPanelMaxAcceleration = 60.0; // RPM/s
-	public static final double controlPanelStopMotor = 0.0;
-	public static final int controlPanelEncoderCounts = 4000; // hypothetical value between 3-5 rotations --more than
-																// 3//
-	public static final int controlPanelVibrationTime = 1000; // miliseconds
-	public static final int acceptableErrorControlPanel = 100; // acceptable error for control panel spinning
-
+	/* Intake ------------------------------------ */
 	public static final int intakeMotorControllerCANId = 10;
-	public static final int indexerMotorControllerCANId = 9;
-	public static final int secondIndexerMotorControllerCANId = 11;
-	public static final int kickerMotorControllerCANId = 7;
-	public static final int shooterMotorControllerCANId = 1;
 	public static final double intakeMotorSpeed = .75; // percent
 	public static final double howCloseIsThePowerCell = 5; // cm
 	public static final double howCloseIsThePowerCellTolerance = 1; // cm
-	public static final double indexerMotorSpeed = 400; // RPM
-	public static final boolean kIndexerSensorPhase = true;
+
+	/* Kicker ----------------------------- */
+	public static final int kickerMotorControllerCANId = 7;
 	public static final double kickerMotorSpeed = -1.0; // percent
 	public static final double kickerCaptureSpeed = 0.61; // percent
+
+	/* Shooter ------------------------------ */
+	public static final int shooterMotorControllerCANId = 1;
 	public static final double shooterIntendedSpeed = 3500.0; // RPM
 	public static final double shooterIntendedSpeedTolerance = 0.02;
 	public static final double shooterYeetSpeedInitiation = 4600.0; // RPM
 	public static final double shooterYeetSpeedWall = 4000.0; // RPM
-	// TODO: find actual speeds of motors
+
+	/* Cameras ---------------------------------------- */
 	public static final int visionCameraPort = 0;
 	public static final int frontCamera = 1;
 	public static final int rearCamera = 2;
 	// inches to travel in one direction before auto changing camera feed
-	public static final double distanceToSwitchCameraFeed = 24.0; 
+	public static final double distanceToSwitchCameraFeed = 24.0;
 
-	// elevator
+	/* Elevator ----------------------------------------- */
 	public static final int maxWinchEncoderCounts = 15000; // get winch value
 	public static final int minWinchEncoderCounts = 0;
-	// public static int winchEncoderchannel = 0;
+
 	public static final int raiseElevatorButton = 1; // get buttons value from SAD
 	public static final int lowerElevatorButton = 2;
 	public static final int engageUntitledGooseButton = 1;
@@ -92,9 +99,14 @@ public final class Constants {
 	public static final int winchMotorElevator2CANId = 6;
 	public static final int untitledGooseMotorCANId = 4; // change back to 9
 
+	/* Drive --------------------------------------- */
 	public static final double driveMotorRampRate = 0.5; // number = seconds till full speed
 	public static final double rotationInQuarter = 0.7;
-
+	public static final int frontLeftMotor = 13;
+	public static final int rearLeftMotor = 12;
+	public static final int frontRightMotor = 2;
+	public static final int rearRightMotor = 3;
+	public static final double closedLoopRampRate = 0.1; // Volts / msS
 	// Number of inches of robot travel per revolution of the NEO (which is returned
 	// in getPosition())
 	// This must comprehend the entire drivetrain; NEO counts read from
@@ -128,11 +140,12 @@ public final class Constants {
 	 */
 	public static final boolean kMotorInvert = false;
 
-	/**
-	 * Gains used in Position Closed Loop, to be adjusted accordingly Gains(kp, ki,
-	 * kd, kf, izone, peak output);
-	 */
-	public static final Gains kGains = new Gains(0.15, 0.0, 1.0, 0.0, 0, 1.0);
+
+	/* Indexer ----------------------------------- */
+	public static final int indexerMotorControllerCANId = 9;
+	public static final int secondIndexerMotorControllerCANId = 11;
+	public static final double indexerMotorSpeed = 400; // RPM
+	public static final boolean kIndexerSensorPhase = true;
 
 	/*
 	 * TalonSRX's PIDF gains are calculated base on 1023 as the maximum output,
@@ -167,11 +180,5 @@ public final class Constants {
 	 */
 
 	public static final Gains kGains_Indexer = new Gains(0.1, 0.0, 0.0, 0.0, 0, 1.0);
-
-	public static final int frontLeftMotor = 13;
-	public static final int rearLeftMotor = 12;
-	public static final int frontRightMotor = 2;
-	public static final int rearRightMotor = 3;
-	public static final double closedLoopRampRate = 0.1; // Volts / ms
 
 }
