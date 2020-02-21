@@ -153,11 +153,12 @@ public final class Constants {
 	 * Distance of the Power Cell that's in a normal position at the base of the
 	 * indexer. This is used to modify the distance the Power Cell is pulled into
 	 * the indexer to its first stacked position to compensate for the distance the
-	 * ball has already travelled. This way, the Power Cell doesn't travel too far
-	 * if it starts part of the way in the indexer when command starts.
+	 * ball has already travelled when the indexer starts moving. This way, the Power
+	 * Cell doesn't travel too far up the indexer if it starts part of the way in the
+	 * indexer when the command starts.
 	 */
 
-	public static final double distanceToPowerCellAtBaseOfIndexer = 9.0;
+	public static final double distanceToPowerCellAtBaseOfIndexer = 18.0;
 	/*
 	 * tolerated error in distance to the target when moving the belts to a fixed
 	 * position
