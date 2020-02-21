@@ -140,22 +140,37 @@ public final class Constants {
 	 */
 	public static final boolean kMotorInvert = false;
 
-
 	/* Indexer ----------------------------------- */
 	public static final int indexerMotorControllerCANId = 9;
 	public static final int secondIndexerMotorControllerCANId = 11;
 	public static final double indexerMotorSpeed = 400; // RPM
 	public static final boolean kIndexerSensorPhase = true;
 	public static final int indexerEncoderCount = 8192;
+	/*
+	 * Set MotionMagic's maximum velocity when moving from position to position to
+	 * the indexerMotorSpeed. Convert the indexerMotorSpeed from RPM to encoder
+	 * counts per 0.1 seconds.
+	 */
+	public static final int indexerMotionMagicMaxVelocity = Math
+			.toIntExact(Math.round(indexerEncoderCount * indexerMotorSpeed / 600.0));
+
+	/*
+	 * Set MotionMagic's maximum acceleration when moving from position to position
+	 * to 3000 RPM/s. Convert the acceleration from RPM/s to encoder counts per 0.1
+	 * seconds per second.
+	 */
+	public static final int indexerMotionMagicMaxAcceleration = Math
+			.toIntExact(Math.round(indexerEncoderCount * 3000.0 / 600.0));
+
 	public static final double distanceToMovePowerCellWhenLoading = 18.5; // cm
-	public static final double indexerPulleyDiameter = 6.56; // diameter of indexer pulleys in centimeters
+	public static final double indexerPulleyDiameter = 6.68528; // diameter of indexer pulleys in centimeters
 	/*
 	 * Distance of the Power Cell that's in a normal position at the base of the
 	 * indexer. This is used to modify the distance the Power Cell is pulled into
 	 * the indexer to its first stacked position to compensate for the distance the
-	 * ball has already travelled when the indexer starts moving. This way, the Power
-	 * Cell doesn't travel too far up the indexer if it starts part of the way in the
-	 * indexer when the command starts.
+	 * ball has already travelled when the indexer starts moving. This way, the
+	 * Power Cell doesn't travel too far up the indexer if it starts already part of
+	 * the way up the indexer when the command starts.
 	 */
 
 	public static final double distanceToPowerCellAtBaseOfIndexer = 18.0;
