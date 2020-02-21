@@ -14,7 +14,9 @@ import frc.robot.Constants;
 import java.util.function.DoubleSupplier;
 
 import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -34,6 +36,9 @@ public class DriveTrain extends SubsystemBase implements DoubleSupplier {
 
   protected CANEncoder m_leftDriveEncoder;
   protected CANEncoder m_rightDriveEncoder;
+
+  protected CANPIDController m_leftPIDController;
+  protected CANPIDController m_rightPIDController;
 
   /**
    * Create a new drive train subsystem.
@@ -65,6 +70,19 @@ public class DriveTrain extends SubsystemBase implements DoubleSupplier {
     m_leftDriveEncoder = m_leftLead.getEncoder();
     m_rightDriveEncoder = m_rightLead.getEncoder();
 
+    m_leftPIDController = m_leftLead.getPIDController();
+    m_rightPIDController = m_rightLead.getPIDController();
+
+    m_leftPIDController.setP(Constants.kDriveGains.kP);
+    m_leftPIDController.setI(Constants.kDriveGains.kI);
+    m_leftPIDController.setD(Constants.kDriveGains.kD);
+    m_leftPIDController.setFF(Constants.kDriveGains.kF);
+
+    m_rightPIDController.setP(Constants.kDriveGains.kP);
+    m_rightPIDController.setI(Constants.kDriveGains.kI);
+    m_rightPIDController.setD(Constants.kDriveGains.kD);
+    m_rightPIDController.setFF(Constants.kDriveGains.kF);
+
   }
 
   /**
@@ -79,6 +97,41 @@ public class DriveTrain extends SubsystemBase implements DoubleSupplier {
     m_drive.arcadeDrive(xSpeed, zRotation);
   }
 
+  /**
+   * Tank drive at a PID-driven velocity method.
+   *
+   */
+  public void driveAtSpeed(double leftSpeedInMetersPerSecond, double rightSpeedInMetersPerSecond) {
+
+    /*
+     * The Spark Maxs by default deal with speeds in RPM. So, convert the meters per
+     * second that this routine accepts for each of the motor speeds into RPM before
+     * telling each of the motors to spin at that speed.
+     */
+
+    double leftMotorRPM = meterPerSecondToRPM(leftSpeedInMetersPerSecond);
+    m_leftPIDController.setReference(leftMotorRPM, ControlType.kVelocity);
+
+    double rightMotorRPM = meterPerSecondToRPM(rightSpeedInMetersPerSecond);
+    m_rightPIDController.setReference(rightMotorRPM, ControlType.kVelocity);
+  }
+
+  protected double meterPerSecondToRPM(double metersPerSecond) {
+    double RPM;
+
+    try {
+      double metersPerMinute = metersPerSecond * 60.0;
+      double wheelRevolutionsPerMeter = 1.0 / (Constants.driveTireDiameterInMeters * Math.PI);
+
+      RPM = metersPerMinute * wheelRevolutionsPerMeter;
+
+    } catch (Exception ex) {
+      RPM = 0.0;
+    }
+
+    return RPM;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -90,14 +143,14 @@ public class DriveTrain extends SubsystemBase implements DoubleSupplier {
    * @return distanceTravelled The cumulative distance the robot has travelled.
    * Reference Constants.driveTrainInchesPerEncoderCounts for units
    * 
-   * Note that the motors and encoders on the left side of the robot are, by
+   * Note that the motors and encoders on the right side of the robot are, by
    * convention, considered to be running backwards. Compensate for this by
    * subtracing this negative number. This way, you're subtracting a negative
    * value, which is adding a positive value!
    */
   @Override
   public double getAsDouble() {
-    double averageNEORevolutionsTravelled = (m_rightDriveEncoder.getPosition() - m_leftDriveEncoder.getPosition())
+    double averageNEORevolutionsTravelled = (m_leftDriveEncoder.getPosition() - m_rightDriveEncoder.getPosition())
         / 2.0;
 
     return (averageNEORevolutionsTravelled * Constants.driveTrainInchesPerEncoderCounts);
