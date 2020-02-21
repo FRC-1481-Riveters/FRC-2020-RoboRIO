@@ -49,13 +49,42 @@ public class IndexerCarryUpCommand extends CommandBase {
      * ALREADY travelled (before we started this command)
      */
 
-    double distanceThePowerCellHasAlreadyTravelled = Math.max(0.0,
-        Constants.distanceToPowerCellAtBaseOfIndexer - m_indexer.getDistanceToPowerCell());
+    double distanceFromSensorToPowerCell = m_indexer.getDistanceToPowerCell();
 
-    double distanceToMovePowerCell = Constants.distanceToMovePowerCellWhenLoading
-        - distanceThePowerCellHasAlreadyTravelled;
+    double distanceToMovePowerCell;
+    double distanceThePowerCellHasAlreadyTravelled;
+
+    if (distanceFromSensorToPowerCell > 9.0 && distanceFromSensorToPowerCell < 25.0) {
+      /*
+       * These look like plausible numbers from our distance sensor. Let's use these
+       * numbers to offset the distance the Indexer moves *this* Power Cell into the
+       * indexer to its first stacked position (because the Power Cell has already
+       * moved a bit closer into the Indexer before we even started this command, so
+       * account for that.)
+       */
+
+      distanceThePowerCellHasAlreadyTravelled = Math.max(0.0,
+          Constants.distanceToPowerCellAtBaseOfIndexer - distanceFromSensorToPowerCell);
+
+      distanceToMovePowerCell = Constants.distanceToMovePowerCellWhenLoading - distanceThePowerCellHasAlreadyTravelled;
+
+    } else {
+      /*
+       * We're getting weird numbers from the distance sensor. Ignore its input for
+       * the purposes of computing the Power Cell's current position in the base of
+       * the Indexer. Just assume the Power Cell is there, in the right position, and
+       * ready to be sucked in by the Indexer the nominal distance required to stack
+       * the Power Cells into the indexer's first stacked position.
+       */
+
+      distanceToMovePowerCell = Constants.distanceToMovePowerCellWhenLoading;
+
+      distanceThePowerCellHasAlreadyTravelled = Double.NaN;
+    }
 
     m_indexer.moveClosedLoopDistance(distanceToMovePowerCell);
+
+    SmartDashboard.putNumber("IndexerCarryUpCommand PowerCell dist to sensor (cm)", distanceFromSensorToPowerCell);
 
     SmartDashboard.putNumber("IndexerCarryUpCommand PowerCell dist already moved (cm)",
         distanceThePowerCellHasAlreadyTravelled);
