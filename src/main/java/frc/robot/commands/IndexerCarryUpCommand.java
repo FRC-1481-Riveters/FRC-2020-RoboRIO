@@ -56,8 +56,8 @@ public class IndexerCarryUpCommand extends CommandBase {
 
     if (distanceFromSensorToPowerCell > 9.0 && distanceFromSensorToPowerCell < 25.0) {
       /*
-       * These look like plausible numbers from our distance sensor. Let's use these
-       * numbers to offset the distance the Indexer moves *this* Power Cell into the
+       * These look like a plausible number from our distance sensor. Let's use this
+       * number to offset the distance the Indexer moves *this* Power Cell into the
        * indexer to its first stacked position (because the Power Cell has already
        * moved a bit closer into the Indexer before we even started this command, so
        * account for that.)
@@ -74,7 +74,9 @@ public class IndexerCarryUpCommand extends CommandBase {
        * the purposes of computing the Power Cell's current position in the base of
        * the Indexer. Just assume the Power Cell is there, in the right position, and
        * ready to be sucked in by the Indexer the nominal distance required to stack
-       * the Power Cells into the indexer's first stacked position.
+       * the Power Cells into the indexer's first stacked position. In other words,
+       * act like we don't know where the Power Cell actually is right now, and just
+       * assume it's where it needs to be for a perfect stack.
        */
 
       distanceToMovePowerCell = Constants.distanceToMovePowerCellWhenLoading;
@@ -84,12 +86,12 @@ public class IndexerCarryUpCommand extends CommandBase {
 
     m_indexer.moveClosedLoopDistance(distanceToMovePowerCell);
 
-    SmartDashboard.putNumber("IndexerCarryUpCommand PowerCell dist to sensor (cm)", distanceFromSensorToPowerCell);
+    SmartDashboard.putNumber("IndexerCarryUpCommand PwrCell dist to sensor (cm)", distanceFromSensorToPowerCell);
 
-    SmartDashboard.putNumber("IndexerCarryUpCommand PowerCell dist already moved (cm)",
+    SmartDashboard.putNumber("IndexerCarryUpCommand PwrCell dist already moved (cm)",
         distanceThePowerCellHasAlreadyTravelled);
 
-    SmartDashboard.putNumber("IndexerCarryUpCommand Power Cell dist to move (cm)", distanceToMovePowerCell);
+    SmartDashboard.putNumber("IndexerCarryUpCommand PwrCell dist to move (cm)", distanceToMovePowerCell);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
