@@ -147,7 +147,22 @@ public final class Constants {
 	public static final double indexerMotorSpeed = 400; // RPM
 	public static final boolean kIndexerSensorPhase = true;
 	public static final int indexerEncoderCount = 8192;
-	public static final int wantedPowerCellPosition = 5; //find actual value
+	public static final double distanceToMovePowerCellWhenLoading = 18.5; // cm
+	public static final double indexerPulleyDiameter = 6.56; // diameter of indexer pulleys in centimeters
+	/*
+	 * Distance of the Power Cell that's in a normal position at the base of the
+	 * indexer. This is used to modify the distance the Power Cell is pulled into
+	 * the indexer to its first stacked position to compensate for the distance the
+	 * ball has already travelled. This way, the Power Cell doesn't travel too far
+	 * if it starts part of the way in the indexer when command starts.
+	 */
+
+	public static final double distanceToPowerCellAtBaseOfIndexer = 9.0;
+	/*
+	 * tolerated error in distance to the target when moving the belts to a fixed
+	 * position
+	 */
+	public static final double indexerToleratedPositionError = 1.0;
 	/*
 	 * TalonSRX's PIDF gains are calculated base on 1023 as the maximum output,
 	 * which is 100% duty cycle, which is all of the Talon's speed and capability.

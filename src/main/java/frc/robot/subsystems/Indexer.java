@@ -27,6 +27,8 @@ public class Indexer extends SubsystemBase {
   private NetworkTableEntry intakeMotors_MaxVel;
   protected IRSensor m_powerCellPositionSensor;
 
+  protected long m_positionSetpoint;
+
   /**
    * Creates a new Indexer.
    */
@@ -40,20 +42,85 @@ public class Indexer extends SubsystemBase {
     m_upperIndexer.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
     m_lowerIndexer.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
   }
+
+  private long cmToEncoderCounts(double cm) {
+    long encoderCounts = 0;
+
+    try {
+      encoderCounts = Math.round(((Constants.indexerEncoderCount / (Math.PI * Constants.indexerPulleyDiameter)) * cm));
+    } catch (Exception ex) {
+    }
+
+    return encoderCounts;
+  }
+
+  private double encoderCountsToCm(long encoderCounts) {
+    double cm = 0.0;
+
+    try {
+      cm = (Math.PI * Constants.indexerPulleyDiameter * encoderCounts) / Constants.indexerEncoderCount;
+    } catch (Exception ex) {
+    }
+
+    return cm;
+  }
+
   public void moveClosedLoopDistance(double cm) {
-    /**
-     * Convert RPM to units / 100ms. RPM * 8192 Units 600 100ms/min in either
-     * direction: velocity setpoint is in units/100ms
+
+    /*
+     * Since only one belt is supposed to move, stop the other belt just in case
+     * it's moving for some reason when we execute a fixed distance move
      */
-    double EncoderCountstoCm = (Constants.indexerEncoderCount / (Math.PI * 6.56)) * 2 * cm; //converts cm to encoder counts
-     
-    m_upperIndexer.set(ControlMode.Position, EncoderCountstoCm);
-    m_lowerIndexer.set(0);}
+    m_lowerIndexer.set(0.0);
+
+    /*
+     * Reset the encoder counts for this talon so the encoder is moving to a value
+     * that's based on zero. This way, we don't have to add or subtract the current
+     * encoder counts to the desired travel distance to get the new target counts.
+     */
+    m_upperIndexer.setSelectedSensorPosition(0);
+
+    /*
+     * Convert cm to encoder counts for an indexer that only moves one of its two
+     * motors when loading the indexer with a Power Cell.
+     * 
+     * The 2 factor is because the Power Cells only move at half the speed and half
+     * the distance of the single belt that's rolling them across an unmoving belt
+     * on the other side of the Power Cell.
+     */
+    m_positionSetpoint = 2 * cmToEncoderCounts(cm);
+
+    /*
+     * Command the talon to move the Power Cell to the next position based on a
+     * number of encoder counts that represents our target distance of travel, in cm
+     */
+    m_upperIndexer.set(ControlMode.MotionMagic, m_positionSetpoint);
+
+  }
+
+  public boolean isOnTarget() {
+
+    /*
+     * Try to figure out if the indexer has moved to its target position by
+     * computing the remaining distance it must travel, and comparing that to a
+     * fixed constant tolerated error. If the remaining distance is less than the
+     * tolerated error, assume the talon has moved its motor the correct distance
+     * and is either stopped or very soon will stop.
+     */
+
+    double remainingDistanceToTargetInCm = encoderCountsToCm(
+        m_positionSetpoint - m_upperIndexer.getSelectedSensorPosition());
+
+    if (Math.abs(remainingDistanceToTargetInCm) < Constants.indexerToleratedPositionError) {
+      return true;
+    }
+    return false;
+  }
 
   public Indexer(IRSensor IntakePowerCellPositionSensor) {
 
     m_powerCellPositionSensor = IntakePowerCellPositionSensor;
-    
+
     m_upperIndexer.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx,
         Constants.kTimeoutMs);
 
@@ -107,21 +174,13 @@ public class Indexer extends SubsystemBase {
 
     m_lowerIndexer.setInverted(false);
 
-
-    
   }
 
   public double getDistanceToPowerCell() {
     return m_powerCellPositionSensor.getRangeCm();
   }
-  public DoubleSupplier getDistanceToPowerCellMeasurer(){
-    return m_powerCellPositionSensor;
-  }
 
   @Override
   public void periodic() {
-
-    // This method will be called once per scheduler run
-
   }
 }
