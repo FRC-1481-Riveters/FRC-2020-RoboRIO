@@ -89,10 +89,15 @@ public class DriveTrain extends SubsystemBase implements DoubleSupplier {
    *
    * @return distanceTravelled The cumulative distance the robot has travelled.
    * Reference Constants.driveTrainInchesPerEncoderCounts for units
+   * 
+   * Note that the motors and encoders on the left side of the robot are, by
+   * convention, considered to be running backwards. Compensate for this by
+   * subtracing this negative number. This way, you're subtracting a negative
+   * value, which is adding a positive value!
    */
   @Override
   public double getAsDouble() {
-    double averageNEORevolutionsTravelled = (m_leftDriveEncoder.getPosition() + m_rightDriveEncoder.getPosition())
+    double averageNEORevolutionsTravelled = (m_rightDriveEncoder.getPosition() - m_leftDriveEncoder.getPosition())
         / 2.0;
 
     return (averageNEORevolutionsTravelled * Constants.driveTrainInchesPerEncoderCounts);
