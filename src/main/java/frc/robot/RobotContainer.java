@@ -198,7 +198,7 @@ public class RobotContainer {
   }
   public class PowerCellIndexMulticommand extends ParallelCommandGroup{
     public PowerCellIndexMulticommand(){
-      super(new IntakeRunForABit(m_intake), new IndexerCarryUpCommand(m_indexer));
+      super(new IntakeRunForABit(m_intake, .75), new IndexerCarryUpCommand(m_indexer));
     }
   }
 }
