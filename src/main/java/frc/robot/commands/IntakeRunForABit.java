@@ -8,21 +8,26 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
-public class IntakePositionPowerCellCommand extends CommandBase {
+public class IntakeRunForABit extends CommandBase {
+  private Intake m_intake;
+  private double m_intakeRunTime;
+  private int tick;
   /**
-   * Creates a new IntakePositionPowerCellCommand.
+   * Creates a new IntakeRunForABit.
    */
-  public IntakePositionPowerCellCommand(Intake intake) {
+  public IntakeRunForABit(Intake subsystem, double intakeRunTime) {
+    m_intake = subsystem;
+    m_intakeRunTime = intakeRunTime;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    tick = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,11 +38,15 @@ public class IntakePositionPowerCellCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_intake.setSpeed(0.0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (tick ++ > m_intakeRunTime/0.02){
+      return true;
+    }
+    else return false;
   }
 }

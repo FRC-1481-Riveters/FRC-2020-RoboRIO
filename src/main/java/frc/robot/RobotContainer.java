@@ -21,7 +21,9 @@ import frc.robot.commands.IndexerCarryUpCommand;
 import frc.robot.commands.IndexerSpitOutCommand;
 import frc.robot.commands.IntakeDropOffCommand;
 import frc.robot.commands.IntakePickupCommand;
+import frc.robot.commands.IntakeRunForABit;
 import frc.robot.commands.KickerAdvanceCommand;
+import frc.robot.commands.KickerCaptureCommand;
 import frc.robot.commands.PositionControlPanelCommand;
 import frc.robot.commands.RotateOrJogControlPanelCommand;
 import frc.robot.commands.ShooterYeetCommand;
@@ -134,7 +136,7 @@ public class RobotContainer {
     new  JoystickButton(m_driverController, Button.kBumperRight.value)
         .whileHeld(new GoosehookDisengage(m_goosehook));
     new JoystickButton (m_operatorController, Button.kBumperLeft.value)
-        .whileHeld(new PowerCellSlurpMulticommand());
+        .whileHeld(new PowerCellAdvanceMulticommand());
     new JoystickButton (m_operatorController, Button.kBumperRight.value)
         .whileHeld(new PowerCellLoosenerMulticommand());
 
@@ -176,15 +178,15 @@ public class RobotContainer {
       //initiates shooter, moves everything else when shooter is at intended speed
     }
   }
-  public class PowerCellSlurpMulticommand extends ParallelCommandGroup{
+  public class PowerCellSlurpMulticommand extends SequentialCommandGroup{
     public PowerCellSlurpMulticommand() {
-      super(new IntakePickupCommand(m_intake), new IndexerCarryUpCommand(m_indexer));
+      super(new IntakePickupCommand(m_intake), new PowerCellIndexMulticommand());
     }
-    //intake and indexer: brings power cells up to kicker, stores until ready to be shot
+    //intake and indexer: begins after power cell detected, carried thru indexer
   }
   public class PowerCellAdvanceMulticommand extends ParallelCommandGroup{
     public PowerCellAdvanceMulticommand(){
-      super (new IntakePickupCommand(m_intake), new IndexerCarryUpCommand(m_indexer), new KickerAdvanceCommand(m_kicker, m_shooter));
+      super (new PowerCellSlurpMulticommand(), new KickerCaptureCommand(m_kicker));
     }
     //intake, indexer, and kicker: used in PowerCellYeeterMulticommand to advance balls to shooter
   }
@@ -193,5 +195,10 @@ public class RobotContainer {
       super(new IntakeDropOffCommand(m_intake), new IndexerSpitOutCommand(m_indexer));
     }
     //intake and indexer: used to prevent jams in indexer and intake(but especially indexer)
+  }
+  public class PowerCellIndexMulticommand extends ParallelCommandGroup{
+    public PowerCellIndexMulticommand(){
+      super(new IntakeRunForABit(m_intake), new IndexerCarryUpCommand(m_indexer));
+    }
   }
 }
