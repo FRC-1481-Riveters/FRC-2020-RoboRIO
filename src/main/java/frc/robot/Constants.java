@@ -146,7 +146,8 @@ public final class Constants {
 	public static final int secondIndexerMotorControllerCANId = 11;
 	public static final double indexerMotorSpeed = 400; // RPM
 	public static final boolean kIndexerSensorPhase = true;
-
+	public static final int indexerEncoderCount = 8192;
+	public static final int wantedPowerCellPosition = 5; //find actual value
 	/*
 	 * TalonSRX's PIDF gains are calculated base on 1023 as the maximum output,
 	 * which is 100% duty cycle, which is all of the Talon's speed and capability.

@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -38,6 +40,15 @@ public class Indexer extends SubsystemBase {
     m_upperIndexer.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
     m_lowerIndexer.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
   }
+  public void moveClosedLoopDistance(double cm) {
+    /**
+     * Convert RPM to units / 100ms. RPM * 8192 Units 600 100ms/min in either
+     * direction: velocity setpoint is in units/100ms
+     */
+    double EncoderCountstoCm = (Constants.indexerEncoderCount / (Math.PI * 6.56)) * 2 * cm; //converts cm to encoder counts
+     
+    m_upperIndexer.set(ControlMode.Position, EncoderCountstoCm);
+    m_lowerIndexer.set(0);}
 
   public Indexer(IRSensor IntakePowerCellPositionSensor) {
 
@@ -96,6 +107,15 @@ public class Indexer extends SubsystemBase {
 
     m_lowerIndexer.setInverted(false);
 
+
+    
+  }
+
+  public double getDistanceToPowerCell() {
+    return m_powerCellPositionSensor.getRangeCm();
+  }
+  public DoubleSupplier getDistanceToPowerCellMeasurer(){
+    return m_powerCellPositionSensor;
   }
 
   @Override

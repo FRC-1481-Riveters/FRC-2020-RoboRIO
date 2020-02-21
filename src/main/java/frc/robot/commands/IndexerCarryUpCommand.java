@@ -7,9 +7,12 @@
 
 package frc.robot.commands;
 
+import javax.annotation.meta.When;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Indexer;
+import irsensor.IRSensor;
 
 public class IndexerCarryUpCommand extends CommandBase {
   private Indexer m_upperIndexer;
@@ -25,23 +28,25 @@ public class IndexerCarryUpCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_upperIndexer.setClosedLoopSpeed(Constants.indexerMotorSpeed);
+  //m_upperIndexer.setClosedLoopPosition();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+  //when ir sensor detects [distance] of balls, the indexer spins
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_upperIndexer.setClosedLoopSpeed(0.0);
+    m_upperIndexer.setClosedLoopSpeed(0.0); 
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+  //when encoder count reaches [number], indexer stops
+  // Returns true when the command should end.
+  return false;
   }
-}
+  }
