@@ -148,7 +148,7 @@ public class RobotContainer {
       // Add your commands in the super() call, e.g.
       // super(new FooCommand(), new BarCommand());
       super(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedInitiation),
-          new PowerCellAdvanceMulticommand());
+          new PowerCellTemporaryAdvanceMulticommand());
       // intake, indexer, kicker, shooter
       // initiates shooter, moves everything else when shooter is at intended speed
     }
@@ -161,7 +161,7 @@ public class RobotContainer {
     public PowerCellYeeterWallMulticommand() {
       // Add your commands in the super() call, e.g.
       // super(new FooCommand(), new BarCommand());
-      super(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall), new PowerCellAdvanceMulticommand());
+      super(new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall), new PowerCellTemporaryAdvanceMulticommand());
       // intake, indexer, kicker, shooter
       // initiates shooter, moves everything else when shooter is at intended speed
     }
@@ -193,6 +193,11 @@ public class RobotContainer {
   public class PowerCellIndexMulticommand extends ParallelCommandGroup {
     public PowerCellIndexMulticommand() {
       super(new IntakeRunForABit(m_intake, .75), new IndexerCarryUpCommand(m_indexer));
+    }
+  }
+  public class PowerCellTemporaryAdvanceMulticommand extends ParallelCommandGroup{
+    public PowerCellTemporaryAdvanceMulticommand(){
+      super(new IndexerCarryUpCommand(m_indexer), new KickerAdvanceCommand(m_kicker, m_shooter));
     }
   }
 }
