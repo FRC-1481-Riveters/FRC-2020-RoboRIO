@@ -18,8 +18,10 @@ import frc.robot.commands.CycleCameraFeedCommand;
 import frc.robot.commands.GoosehookDisengage;
 import frc.robot.commands.GoosehookEngage;
 import frc.robot.commands.IndexerCarryUpCommand;
+import frc.robot.commands.IndexerJoystickCommand;
 import frc.robot.commands.IndexerSpitOutCommand;
 import frc.robot.commands.IntakeDropOffCommand;
+import frc.robot.commands.IntakeJoystickCommand;
 import frc.robot.commands.IntakePickupCommand;
 import frc.robot.commands.IntakeRunForABit;
 import frc.robot.commands.KickerAdvanceCommand;
@@ -141,6 +143,8 @@ public class RobotContainer {
         .whileHeld(new PowerCellLoosenerMulticommand());
 
     m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
+    m_intake.setDefaultCommand(new IntakeJoystickCommand(m_intake, m_operatorController));
+    m_indexer.setDefaultCommand(new IndexerJoystickCommand(m_indexer, m_operatorController));
   }
 
   
