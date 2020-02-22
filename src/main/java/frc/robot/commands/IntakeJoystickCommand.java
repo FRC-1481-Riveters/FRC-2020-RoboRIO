@@ -40,7 +40,7 @@ public class IntakeJoystickCommand extends CommandBase {
     m_leftJoystickValue = m_RumbleTimerJoystick.getY(Hand.kLeft);
 
 
-    m_intake.setSpeed(m_leftJoystickValue);
+    m_intake.setSpeed(-m_leftJoystickValue);
   }
 
   // Called once the command ends or is interrupted.

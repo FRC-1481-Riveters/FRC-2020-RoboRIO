@@ -38,7 +38,7 @@ public class IndexerJoystickCommand extends CommandBase {
 
     m_rightJoystickValue = m_RumbleTimerJoystick.getY(Hand.kRight);
 
-    m_indexer.setClosedLoopSpeed(m_rightJoystickValue * Constants.indexerMotorSpeed);
+    m_indexer.setClosedLoopSpeed(-m_rightJoystickValue * Constants.indexerMotorSpeed);
   }
 
   // Called once the command ends or is interrupted.
