@@ -20,6 +20,7 @@ public class KickerCaptureCommand extends CommandBase {
    */
   public KickerCaptureCommand(Kicker subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_kicker = subsystem;
     addRequirements(subsystem);
   }
 

@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Gains;
 
 /**
@@ -107,6 +108,11 @@ public final class Constants {
 	public static final int frontRightMotor = 2;
 	public static final int rearRightMotor = 3;
 	public static final double closedLoopRampRate = 0.1; // Volts / msS
+	public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(14.0 /* ft/s */);
+	public static final double kMaxAccelerationMetersPerSecondSquared = Units.feetToMeters(3.0 /* ft/s^2 */);
+	public static final double driveTireDiameterInMeters = Units.inchesToMeters(8.0);
+
+	public static final Gains kDriveGains = new Gains(2.2e-4, .00000005, 0.00001, 1.5e-4, 0, 1.0);
 	// Number of inches of robot travel per revolution of the NEO (which is returned
 	// in getPosition())
 	// This must comprehend the entire drivetrain; NEO counts read from
@@ -140,14 +146,45 @@ public final class Constants {
 	 */
 	public static final boolean kMotorInvert = false;
 
-
 	/* Indexer ----------------------------------- */
 	public static final int indexerMotorControllerCANId = 9;
 	public static final int secondIndexerMotorControllerCANId = 11;
 	public static final double indexerMotorSpeed = 400; // RPM
 	public static final boolean kIndexerSensorPhase = true;
 	public static final int indexerEncoderCount = 8192;
-	public static final int wantedPowerCellPosition = 5; //find actual value
+	/*
+	 * Set MotionMagic's maximum velocity when moving from position to position to
+	 * the indexerMotorSpeed. Convert the indexerMotorSpeed from RPM to encoder
+	 * counts per 0.1 seconds.
+	 */
+	public static final int indexerMotionMagicMaxVelocity = Math
+			.toIntExact(Math.round(indexerEncoderCount * indexerMotorSpeed / 600.0));
+
+	/*
+	 * Set MotionMagic's maximum acceleration when moving from position to position
+	 * to 3000 RPM/s. Convert the acceleration from RPM/s to encoder counts per 0.1
+	 * seconds per second.
+	 */
+	public static final int indexerMotionMagicMaxAcceleration = Math
+			.toIntExact(Math.round(indexerEncoderCount * 3000.0 / 600.0));
+
+	public static final double distanceToMovePowerCellWhenLoading = 18.5; // cm
+	public static final double indexerPulleyDiameter = 6.68528; // diameter of indexer pulleys in centimeters
+	/*
+	 * Distance of the Power Cell that's in a normal position at the base of the
+	 * indexer. This is used to modify the distance the Power Cell is pulled into
+	 * the indexer to its first stacked position to compensate for the distance the
+	 * ball has already travelled when the indexer starts moving. This way, the
+	 * Power Cell doesn't travel too far up the indexer if it starts already part of
+	 * the way up the indexer when the command starts.
+	 */
+
+	public static final double distanceToPowerCellAtBaseOfIndexer = 18.0;
+	/*
+	 * tolerated error in distance to the target when moving the belts to a fixed
+	 * position
+	 */
+	public static final double indexerToleratedPositionError = 1.0;
 	/*
 	 * TalonSRX's PIDF gains are calculated base on 1023 as the maximum output,
 	 * which is 100% duty cycle, which is all of the Talon's speed and capability.
