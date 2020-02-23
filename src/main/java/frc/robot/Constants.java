@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Gains;
 
@@ -52,7 +53,8 @@ public final class Constants {
 	 * Gains used in Position Closed Loop, to be adjusted accordingly Gains(kp, ki,
 	 * kd, kf, izone, peak output);
 	 */
-	public static final Gains kGains = new Gains(2.0, 0.0, 1.0, 0.0, 0, 1.0);
+		public static final Gains kGains = new Gains(0.25, 0.0, 0.0, 0.0, 0, 1.0);
+
 
 	/* Intake ------------------------------------ */
 	public static final int intakeMotorControllerCANId = 10;
@@ -98,6 +100,7 @@ public final class Constants {
 	public static final int winchMotorElevatorCANId = 8;
 	public static final int winchMotorElevator2CANId = 6;
 	public static final int untitledGooseMotorCANId = 4; // change back to 9
+	public static final int relayElevatorSolenoid = 0;
 
 	/* Drive --------------------------------------- */
 	public static final double driveMotorRampRate = 0.5; // number = seconds till full speed
