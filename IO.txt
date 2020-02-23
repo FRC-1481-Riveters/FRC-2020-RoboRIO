@@ -19,7 +19,7 @@ Relay port 2 = elevator solenoid
 
 RoboRIO:
 ----------------
-Analog 0 : intake Power Cell detector (Sharp IR Sensor)
+Analog 0 : intake Power Cell detector (Sharp IR Sensor GP2Y0A41SK0F)
 Analog 1 : 
 Analog 2 : 
 Analog 3 :

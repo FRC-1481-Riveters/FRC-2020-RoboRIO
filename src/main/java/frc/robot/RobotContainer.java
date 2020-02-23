@@ -88,6 +88,7 @@ public class RobotContainer {
 
     SmartDashboard.putData(new CycleCameraFeedCommand(m_cameraSubsystem));
     SmartDashboard.putData(new IndexerCarryUpCommand(m_indexer).withTimeout(5.0));
+    SmartDashboard.putData(m_intakePowerCellPositionSensor);
   }
 
   /**
