@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Gains;
 
@@ -99,6 +100,7 @@ public final class Constants {
 	public static final int winchMotorElevatorCANId = 8;
 	public static final int winchMotorElevator2CANId = 6;
 	public static final int untitledGooseMotorCANId = 4; // change back to 9
+	public static final int relayElevatorSolenoid = 0;
 
 	/* Drive --------------------------------------- */
 	public static final double driveMotorRampRate = 0.5; // number = seconds till full speed

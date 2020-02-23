@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -20,6 +21,7 @@ public class Elevator extends SubsystemBase {
   (Constants.winchMotorElevatorCANId);
   private static WPI_TalonSRX m_elevator2 = new WPI_TalonSRX
   (Constants.winchMotorElevator2CANId);
+  private static Relay m_elevatorSolenoid = new Relay(Constants.relayElevatorSolenoid);
   public int m_currentElevatorPosition;
   /**
    * Creates a new Elevator.
@@ -61,6 +63,12 @@ public class Elevator extends SubsystemBase {
      * to rotate.
      */
     return m_elevator.getSelectedSensorPosition();
+  }
+  public void elevatorSolenoidOn() {
+    m_elevatorSolenoid.set(Relay.Value.kOn);
+  }
+  public void elevatorSolenoidOff() {
+    m_elevatorSolenoid.set(Relay.Value.kOff);
   }
   @Override
   public void periodic() {

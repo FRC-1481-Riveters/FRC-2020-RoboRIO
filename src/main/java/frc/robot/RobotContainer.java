@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.BreakInGearboxCommand;
 import frc.robot.commands.CycleCameraFeedCommand;
+import frc.robot.commands.ElevatorSolenoidPullIn;
+import frc.robot.commands.ElevatorSolenoidPullOut;
 import frc.robot.commands.GoosehookDisengage;
 import frc.robot.commands.GoosehookEngage;
 import frc.robot.commands.IndexerCarryUpCommand;
@@ -154,9 +156,11 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kA.value).whileHeld(new lowerElevator(m_elevator));
     new JoystickButton(m_driverController, Button.kBumperLeft.value).whileHeld(new GoosehookEngage(m_goosehook));
     new JoystickButton(m_driverController, Button.kBumperRight.value).whileHeld(new GoosehookDisengage(m_goosehook));
+    new JoystickButton (m_operatorController, Button.kStart.value).whenPressed(new ElevatorSolenoidPullIn(m_elevator));
+    new JoystickButton (m_operatorController, Button.kBack.value).whenPressed(new ElevatorSolenoidPullOut(m_elevator));
 
     m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
-    m_intake.setDefaultCommand(new IntakeJoystickCommand(m_intake, m_operatorController));
+    m_intake.setDefaultCommand(new IntakeJoystickCommand(m_intake, m_operatorController));  
     m_indexer.setDefaultCommand(new IndexerJoystickCommand(m_indexer, m_operatorController));
   }
 
