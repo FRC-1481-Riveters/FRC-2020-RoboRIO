@@ -14,11 +14,12 @@ CAN ID 10 = intake motor
 CAN ID 11 = lower indexer motor 
 CAN ID 12 = rear right drive
 CAN ID 13 = front right drive
+Relay port 2 = elevator solenoid 
 
 
 RoboRIO:
 ----------------
-Analog 0 : intake Power Cell detector (Sharp IR Sensor)
+Analog 0 : intake Power Cell detector (Sharp IR Sensor GP2Y0A41SK0F)
 Analog 1 : 
 Analog 2 : 
 Analog 3 :
