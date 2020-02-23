@@ -29,7 +29,7 @@ public final class Constants {
 	public static final int controlPanelMotorControllerCANId = 5; // find actual value
 	public static final I2C.Port i2cPortColorSensor = I2C.Port.kOnboard; // use for color sensor
 	public static final double controlPanelSpeedMax = 60.0; // RPM
-	public static final double controlPanelMaxAcceleration = 60.0; // RPM/s
+	public static final double controlPanelMaxAcceleration = 200.0; // RPM/s
 	public static final double controlPanelStopMotor = 0.0;
 	public static final int controlPanelEncoderCounts = 4000; // hypothetical value between 3-5 rotations --more than
 																// 3//
@@ -52,7 +52,7 @@ public final class Constants {
 	 * Gains used in Position Closed Loop, to be adjusted accordingly Gains(kp, ki,
 	 * kd, kf, izone, peak output);
 	 */
-	public static final Gains kGains = new Gains(0.15, 0.0, 1.0, 0.0, 0, 1.0);
+	public static final Gains kGains = new Gains(2.0, 0.0, 1.0, 0.0, 0, 1.0);
 
 	/* Intake ------------------------------------ */
 	public static final int intakeMotorControllerCANId = 10;
@@ -68,8 +68,8 @@ public final class Constants {
 	/* Shooter ------------------------------ */
 	public static final int shooterMotorControllerCANId = 1;
 	public static final double shooterIntendedSpeedTolerance = 0.02;
-	public static final double shooterYeetSpeedInitiation = 3100.0; // RPM
-	public static final double shooterYeetSpeedWall = 4000.0; // RPM
+	public static final double shooterYeetSpeedInitiation = 4200.0; // RPM  3100:40in
+	public static final double shooterYeetSpeedWall = 3800.0; // RPM
 
 	/* Cameras ---------------------------------------- */
 	public static final int visionCameraPort = 0;
