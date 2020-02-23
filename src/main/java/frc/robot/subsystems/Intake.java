@@ -14,6 +14,7 @@ import java.util.function.DoubleSupplier;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import irsensor.IRSensor;
@@ -51,12 +52,15 @@ public class Intake extends SubsystemBase {
   public double getDistanceToPowerCell() {
     return m_powerDetectorSensor.getRangeCm();
   }
-  public DoubleSupplier getDistanceToPowerCellMeasurer(){
+
+  public DoubleSupplier getDistanceToPowerCellMeasurer() {
     return m_powerDetectorSensor;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Intake Power Cell detector range (cm)", m_powerDetectorSensor.getRangeCm());
+
   }
 }

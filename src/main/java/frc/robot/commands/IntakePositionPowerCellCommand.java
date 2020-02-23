@@ -12,10 +12,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 public class IntakePositionPowerCellCommand extends CommandBase {
+  private Intake m_intake;
   /**
    * Creates a new IntakePositionPowerCellCommand.
    */
   public IntakePositionPowerCellCommand(Intake intake) {
+    m_intake = intake;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intake);
   }
@@ -23,6 +25,7 @@ public class IntakePositionPowerCellCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_intake.setSpeed(Constants.intakeMotorSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,11 +36,15 @@ public class IntakePositionPowerCellCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    //nothing here intentionally: will then run IntakeRunForABit
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(m_intake.getDistanceToPowerCell() < Constants.howCloseIsThePowerCell){
+      return true;
+    }
+    else return false;
   }
 }
