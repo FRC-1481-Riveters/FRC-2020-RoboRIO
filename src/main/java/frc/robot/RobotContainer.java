@@ -134,11 +134,11 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kBumperLeft.value).whileHeld( //
         new ParallelCommandGroup( //
             new SequentialCommandGroup( //
-                new IntakePickupCommand(m_intake), //
+                new IntakePickupCommand(m_intake), // Pull in a Power Cell with the intake
                 new ParallelCommandGroup( //
-                    new IntakeRunForABit(m_intake, .75), //
-                    new IndexerCarryUpCommand(m_indexer))), //
-            new KickerCaptureCommand(m_kicker) //
+                    new IntakeRunForABit(m_intake, .75), // Pin the Power Cell against the indexer
+                    new IndexerCarryUpCommand(m_indexer))), // Life the Power Cell to its first stack position
+            new KickerCaptureCommand(m_kicker) // Load a single Power Cell into the kicker, when it gets there
         ) //
     );
 
@@ -154,7 +154,6 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kA.value).whileHeld(new lowerElevator(m_elevator));
     new JoystickButton(m_driverController, Button.kBumperLeft.value).whileHeld(new GoosehookEngage(m_goosehook));
     new JoystickButton(m_driverController, Button.kBumperRight.value).whileHeld(new GoosehookDisengage(m_goosehook));
-
 
     m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
     m_intake.setDefaultCommand(new IntakeJoystickCommand(m_intake, m_operatorController));
