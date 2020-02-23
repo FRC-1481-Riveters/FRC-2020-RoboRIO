@@ -29,8 +29,13 @@ public final class Constants {
 	/* Control Panel ------------------------------ */
 	public static final int controlPanelMotorControllerCANId = 5; // find actual value
 	public static final I2C.Port i2cPortColorSensor = I2C.Port.kOnboard; // use for color sensor
+<<<<<<< HEAD
 	public static final double controlPanelSpeedMax = 200.0; // RPM
 	public static final double controlPanelMaxAcceleration = 60.0; // RPM/s
+=======
+	public static final double controlPanelSpeedMax = 60.0; // RPM
+	public static final double controlPanelMaxAcceleration = 200.0; // RPM/s
+>>>>>>> 329acd382d28fb16b89f163d7fde0f4a29b9ffff
 	public static final double controlPanelStopMotor = 0.0;
 	public static final int controlPanelEncoderCounts = 4000; // hypothetical value between 3-5 rotations --more than
 																// 3//
@@ -53,24 +58,35 @@ public final class Constants {
 	 * Gains used in Position Closed Loop, to be adjusted accordingly Gains(kp, ki,
 	 * kd, kf, izone, peak output);
 	 */
+<<<<<<< HEAD
 	public static final Gains kGains = new Gains(2.0, 0.0, 0.0, 0.0, 0, 1.0);
+=======
+		public static final Gains kGains = new Gains(0.25, 0.0, 0.0, 0.0, 0, 1.0);
+
+>>>>>>> 329acd382d28fb16b89f163d7fde0f4a29b9ffff
 
 	/* Intake ------------------------------------ */
 	public static final int intakeMotorControllerCANId = 10;
 	public static final double intakeMotorSpeed = .75; // percent
-	public static final double howCloseIsThePowerCell = 5; // cm
+	public static final double intakeRunMotorSpeed = .325;
+	public static final double howCloseIsThePowerCell = 18.6; // cm
 	public static final double howCloseIsThePowerCellTolerance = 1; // cm
 
 	/* Kicker ----------------------------- */
 	public static final int kickerMotorControllerCANId = 7;
 	public static final double kickerMotorSpeed = -1.0; // percent
-	public static final double kickerCaptureSpeed = 0.61; // percent
+	public static final double kickerCaptureSpeed = -0.30; // percent
 
 	/* Shooter ------------------------------ */
 	public static final int shooterMotorControllerCANId = 1;
 	public static final double shooterIntendedSpeedTolerance = 0.02;
+<<<<<<< HEAD
 	public static final double shooterYeetSpeedInitiation = 5600.0; // RPM 3100
 	public static final double shooterYeetSpeedWall = 4000.0; // RPM
+=======
+	public static final double shooterYeetSpeedInitiation = 4200.0; // RPM  3100:40in
+	public static final double shooterYeetSpeedWall = 3800.0; // RPM
+>>>>>>> 329acd382d28fb16b89f163d7fde0f4a29b9ffff
 
 	/* Cameras ---------------------------------------- */
 	public static final int visionCameraPort = 0;
@@ -169,7 +185,7 @@ public final class Constants {
 	public static final int indexerMotionMagicMaxAcceleration = Math
 			.toIntExact(Math.round(indexerEncoderCount * 3000.0 / 600.0));
 
-	public static final double distanceToMovePowerCellWhenLoading = 18.5; // cm
+	public static final double distanceToMovePowerCellWhenLoading = 19; // cm
 	public static final double indexerPulleyDiameter = 6.68528; // diameter of indexer pulleys in centimeters
 	/*
 	 * Distance of the Power Cell that's in a normal position at the base of the
@@ -185,7 +201,7 @@ public final class Constants {
 	 * tolerated error in distance to the target when moving the belts to a fixed
 	 * position
 	 */
-	public static final double indexerToleratedPositionError = 1.0;
+	public static final double indexerToleratedPositionError = 1.5;
 	/*
 	 * TalonSRX's PIDF gains are calculated base on 1023 as the maximum output,
 	 * which is 100% duty cycle, which is all of the Talon's speed and capability.
@@ -218,6 +234,6 @@ public final class Constants {
 	 * Kp = 0.75
 	 */
 
-	public static final Gains kGains_Indexer = new Gains(0.1, 0.0, 0.0, 0.0, 0, 1.0);
+	public static final Gains kGains_Indexer = new Gains(0.15, 0.0, 0.0, 0.0, 0, 1.0);
 
 }

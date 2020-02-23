@@ -22,9 +22,11 @@ import frc.robot.commands.GoosehookEngage;
 import frc.robot.commands.IndexerCarryUpCommand;
 import frc.robot.commands.IndexerJoystickCommand;
 import frc.robot.commands.IndexerSpitOutCommand;
+import frc.robot.commands.IndexerStackOnePowerCell;
 import frc.robot.commands.IntakeDropOffCommand;
 import frc.robot.commands.IntakeJoystickCommand;
 import frc.robot.commands.IntakePickupCommand;
+import frc.robot.commands.IntakePositionPowerCellCommand;
 import frc.robot.commands.IntakeRunForABit;
 import frc.robot.commands.KickerAdvanceCommand;
 import frc.robot.commands.KickerCaptureCommand;
@@ -38,6 +40,7 @@ import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -135,12 +138,12 @@ public class RobotContainer {
     new JoystickButton(m_operatorController, Button.kA.value).whenReleased(new IndexerSpitOutCommand(m_indexer));
 
     new JoystickButton(m_operatorController, Button.kBumperLeft.value).whileHeld( //
-        new ParallelCommandGroup( //
+        new ParallelDeadlineGroup( //
             new SequentialCommandGroup( //
-                new IntakePickupCommand(m_intake), // Pull in a Power Cell with the intake
+                new IntakePositionPowerCellCommand(m_intake), // Pull in a Power Cell with the intake
                 new ParallelCommandGroup( //
                     new IntakeRunForABit(m_intake, .75), // Pin the Power Cell against the indexer
-                    new IndexerCarryUpCommand(m_indexer))), // Life the Power Cell to its first stack position
+                    new IndexerStackOnePowerCell(m_indexer))), // Life the Power Cell to its first stack position
             new KickerCaptureCommand(m_kicker) // Load a single Power Cell into the kicker, when it gets there
         ) //
     );
