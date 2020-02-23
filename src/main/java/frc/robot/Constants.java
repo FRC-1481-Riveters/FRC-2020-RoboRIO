@@ -67,7 +67,6 @@ public final class Constants {
 
 	/* Shooter ------------------------------ */
 	public static final int shooterMotorControllerCANId = 1;
-	public static final double shooterIntendedSpeed = 3500.0; // RPM
 	public static final double shooterIntendedSpeedTolerance = 0.02;
 	public static final double shooterYeetSpeedInitiation = 4600.0; // RPM
 	public static final double shooterYeetSpeedWall = 4000.0; // RPM
@@ -80,7 +79,7 @@ public final class Constants {
 	public static final double distanceToSwitchCameraFeed = 24.0;
 
 	/* Elevator ----------------------------------------- */
-	public static final int maxWinchEncoderCounts = 15000; // get winch value
+	public static final int maxWinchEncoderCounts = 18000; // get winch value
 	public static final int minWinchEncoderCounts = 0;
 
 	public static final int raiseElevatorButton = 1; // get buttons value from SAD
