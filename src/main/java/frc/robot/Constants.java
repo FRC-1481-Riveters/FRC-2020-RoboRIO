@@ -57,13 +57,14 @@ public final class Constants {
 	/* Intake ------------------------------------ */
 	public static final int intakeMotorControllerCANId = 10;
 	public static final double intakeMotorSpeed = .75; // percent
-	public static final double howCloseIsThePowerCell = 5; // cm
+	public static final double intakeRunMotorSpeed = .325;
+	public static final double howCloseIsThePowerCell = 18.6; // cm
 	public static final double howCloseIsThePowerCellTolerance = 1; // cm
 
 	/* Kicker ----------------------------- */
 	public static final int kickerMotorControllerCANId = 7;
 	public static final double kickerMotorSpeed = -1.0; // percent
-	public static final double kickerCaptureSpeed = 0.61; // percent
+	public static final double kickerCaptureSpeed = -0.30; // percent
 
 	/* Shooter ------------------------------ */
 	public static final int shooterMotorControllerCANId = 1;
@@ -167,7 +168,7 @@ public final class Constants {
 	public static final int indexerMotionMagicMaxAcceleration = Math
 			.toIntExact(Math.round(indexerEncoderCount * 3000.0 / 600.0));
 
-	public static final double distanceToMovePowerCellWhenLoading = 18.5; // cm
+	public static final double distanceToMovePowerCellWhenLoading = 19; // cm
 	public static final double indexerPulleyDiameter = 6.68528; // diameter of indexer pulleys in centimeters
 	/*
 	 * Distance of the Power Cell that's in a normal position at the base of the
@@ -183,7 +184,7 @@ public final class Constants {
 	 * tolerated error in distance to the target when moving the belts to a fixed
 	 * position
 	 */
-	public static final double indexerToleratedPositionError = 1.0;
+	public static final double indexerToleratedPositionError = 1.5;
 	/*
 	 * TalonSRX's PIDF gains are calculated base on 1023 as the maximum output,
 	 * which is 100% duty cycle, which is all of the Talon's speed and capability.
@@ -216,6 +217,6 @@ public final class Constants {
 	 * Kp = 0.75
 	 */
 
-	public static final Gains kGains_Indexer = new Gains(0.1, 0.0, 0.0, 0.0, 0, 1.0);
+	public static final Gains kGains_Indexer = new Gains(0.15, 0.0, 0.0, 0.0, 0, 1.0);
 
 }
