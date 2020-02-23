@@ -26,7 +26,7 @@ public final class Constants {
 	public static final int operatorController = 1;
 
 	/* Control Panel ------------------------------ */
-	public static final int controlPanelMotorControllerCANId = 4; // find actual value
+	public static final int controlPanelMotorControllerCANId = 5; // find actual value
 	public static final I2C.Port i2cPortColorSensor = I2C.Port.kOnboard; // use for color sensor
 	public static final double controlPanelSpeedMax = 60.0; // RPM
 	public static final double controlPanelMaxAcceleration = 60.0; // RPM/s
@@ -68,7 +68,7 @@ public final class Constants {
 	/* Shooter ------------------------------ */
 	public static final int shooterMotorControllerCANId = 1;
 	public static final double shooterIntendedSpeedTolerance = 0.02;
-	public static final double shooterYeetSpeedInitiation = 4600.0; // RPM
+	public static final double shooterYeetSpeedInitiation = 3100.0; // RPM
 	public static final double shooterYeetSpeedWall = 4000.0; // RPM
 
 	/* Cameras ---------------------------------------- */
