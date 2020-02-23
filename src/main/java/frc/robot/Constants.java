@@ -53,7 +53,7 @@ public final class Constants {
 	 * Gains used in Position Closed Loop, to be adjusted accordingly Gains(kp, ki,
 	 * kd, kf, izone, peak output);
 	 */
-	public static final Gains kGains = new Gains(0.15, 0.0, 1.0, 0.0, 0, 1.0);
+	public static final Gains kGains = new Gains(0.25, 0.0, 0.0, 0.0, 0, 1.0);
 
 	/* Intake ------------------------------------ */
 	public static final int intakeMotorControllerCANId = 10;
