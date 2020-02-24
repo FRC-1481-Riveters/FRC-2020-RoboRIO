@@ -94,7 +94,7 @@ public class PositionControlPanelCommand extends CommandBase {
       // Code for no data received yet
       // TODO: offset to be added
     }
-    m_targetPosition = new Constants().controlPanelWheelAngleToEncoderCounts(angleToRotate);
+    m_targetPosition = Constants.controlPanelWheelAngleToEncoderCounts(angleToRotate);
     m_wheelOfFortuneColorSpinny.spinToPosition(m_targetPosition);
   }
 
