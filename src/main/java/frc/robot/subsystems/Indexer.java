@@ -21,22 +21,125 @@ import irsensor.IRSensor;
 public class Indexer extends SubsystemBase {
   private static WPI_TalonSRX m_upperIndexer = new WPI_TalonSRX(Constants.indexerMotorControllerCANId);
   private static WPI_TalonSRX m_lowerIndexer = new WPI_TalonSRX(Constants.secondIndexerMotorControllerCANId);
+
   private NetworkTableEntry intakeMotors_MaxAccel;
   private NetworkTableEntry intakeMotors_MaxVel;
   protected IRSensor m_powerCellPositionSensor;
 
   protected long m_positionSetpoint;
 
-  /**
-   * Creates a new Indexer.
-   */
+  public Indexer(IRSensor IntakePowerCellPositionSensor) {
+
+    /*
+     * Setup the Talons to support Velocity control (which uses a PID in each talon
+     * to achieve the velocity).
+     */
+    m_upperIndexer.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx,
+        Constants.kTimeoutMs);
+
+    m_upperIndexer.config_kF(0, Constants.kGains_Indexer.kF);
+    m_upperIndexer.config_kP(0, Constants.kGains_Indexer.kP);
+    m_upperIndexer.config_kI(0, Constants.kGains_Indexer.kI);
+    m_upperIndexer.config_kD(0, Constants.kGains_Indexer.kD);
+
+    m_lowerIndexer.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx,
+        Constants.kTimeoutMs);
+
+    m_lowerIndexer.config_kF(0, Constants.kGains_Indexer.kF);
+    m_lowerIndexer.config_kP(0, Constants.kGains_Indexer.kP);
+    m_lowerIndexer.config_kI(0, Constants.kGains_Indexer.kI);
+    m_lowerIndexer.config_kD(0, Constants.kGains_Indexer.kD);
+
+    /* Setup electrical data for each of the Talon's encoders. */
+    m_upperIndexer.setSensorPhase(Constants.kIndexerSensorPhase);
+    m_lowerIndexer.setSensorPhase(Constants.kIndexerSensorPhase);
+
+    /*
+     * Setup the basic geometry of each of the motors. The upper indexer motor has
+     * to spin backwards, and the lower indexer motor spins forwards to coordinate
+     * movement of a Power Cell
+     */
+    m_upperIndexer.setInverted(true);
+    m_lowerIndexer.setInverted(false);
+
+    /*
+     * Save a reference to the IR Sensor so we can use it later to measure where the
+     * Power Cell is located inside the Intake area.
+     */
+    m_powerCellPositionSensor = IntakePowerCellPositionSensor;
+
+    /*
+     * Setup the MotionMagic profile and SmartDashboard tuning hooks for each motor
+     * to support fixed position mode (moveClosedLoopDistance())
+     * 
+     * This is NOT for velocity mode!
+     * 
+     * This also relies on the PID setup in each talon.
+     */
+
+    intakeMotors_MaxAccel = NetworkTableInstance.getDefault().getTable("SmartDashboard")
+        .getEntry("IntakeMotorMaxAccel");
+    intakeMotors_MaxVel = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("IntakeMotorMaxVel");
+
+    intakeMotors_MaxAccel.setDouble(Constants.indexerMotionMagicMaxAcceleration);
+    intakeMotors_MaxVel.setDouble(Constants.indexerMotionMagicMaxVelocity);
+    /*
+     * This is the maximum velocity of the indexer in units of encoder counts per
+     * 100 ms (a decisecond)
+     */
+    m_upperIndexer
+        .configMotionCruiseVelocity((int) intakeMotors_MaxVel.getDouble(Constants.indexerMotionMagicMaxVelocity));
+
+    /*
+     * This is the maximum acceleration of the indexer in units of encoder counts
+     * per 100 ms (a decisecond) per second
+     * 
+     */
+    m_upperIndexer
+        .configMotionAcceleration((int) intakeMotors_MaxAccel.getDouble(Constants.indexerMotionMagicMaxAcceleration));
+
+    /*
+     * Setup SmartDashboard debugging hooks that update and reconfigure the Talons
+     * with the tuning values we send using SmartDashboard and Shuffleboard the
+     * instant they arrive into the RoboRIO.
+     * 
+     * Since the Upper Indexer belt is the only one that moves using Motion Magic,
+     * don't bother updating the Lower Indexer belt's talon with Motion Magic stuff
+     * it won't use.
+     */
+    intakeMotors_MaxAccel.addListener(event -> {
+      m_upperIndexer
+          .configMotionAcceleration((int) intakeMotors_MaxAccel.getDouble(Constants.indexerMotionMagicMaxAcceleration));
+    }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+
+    intakeMotors_MaxVel.addListener(event -> {
+      m_upperIndexer
+          .configMotionCruiseVelocity((int) intakeMotors_MaxVel.getDouble(Constants.indexerMotionMagicMaxVelocity));
+    }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+
+  }
 
   public void setClosedLoopSpeed(double RPM) {
-    /**
-     * Convert RPM to units / 100ms. RPM * 8192 Units 600 100ms/min in either
-     * direction: velocity setpoint is in units/100ms
+    /*
+     * Start the Indexer moving at a fixed speed. This moves both Indexers, in the
+     * relative and correct direction, at the same speed such that a Power Cell is
+     * carried between the belts up to the Kicker and Shooter.
+     * 
+     * Positive RPM moves the Power Cell up toward the Kicker and Shooter.
+     * 
+     * Negative RPM moves the Power Cell down toward the Intake.
      */
-    double targetVelocity_UnitsPer100ms = RPM * 8192 / 600;
+
+    /*
+     * Convert RPM to encoder units / 0.1s.
+     * 
+     * Encoder counters per 0.1s is the basic unit of velocity in the Talons.
+     * 
+     * Encoder counts per 100 ms = RPM * indexerEncoderCount / 600
+     * 
+     * Either direction: velocity setpoint is in units/100ms
+     */
+    double targetVelocity_UnitsPer100ms = RPM * Constants.indexerEncoderCount / 600;
     m_upperIndexer.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
     m_lowerIndexer.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
   }
@@ -113,71 +216,6 @@ public class Indexer extends SubsystemBase {
       return true;
     }
     return false;
-  }
-
-  public Indexer(IRSensor IntakePowerCellPositionSensor) {
-
-    m_powerCellPositionSensor = IntakePowerCellPositionSensor;
-
-    m_upperIndexer.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx,
-        Constants.kTimeoutMs);
-
-    m_upperIndexer.config_kF(0, Constants.kGains_Indexer.kF);
-    m_upperIndexer.config_kP(0, Constants.kGains_Indexer.kP);
-    m_upperIndexer.config_kI(0, Constants.kGains_Indexer.kI);
-    m_upperIndexer.config_kD(0, Constants.kGains_Indexer.kD);
-
-    m_upperIndexer.setSensorPhase(Constants.kIndexerSensorPhase);
-
-    m_upperIndexer.setInverted(true);
-
-    intakeMotors_MaxAccel = NetworkTableInstance.getDefault().getTable("SmartDashboard")
-        .getEntry("IntakeMotorMaxAccel");
-    intakeMotors_MaxVel = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("IntakeMotorMaxVel");
-
-    intakeMotors_MaxAccel.setDouble(Constants.indexerMotionMagicMaxAcceleration);
-    intakeMotors_MaxVel.setDouble(Constants.indexerMotionMagicMaxVelocity);
-    /*
-     * This is the maximum velocity of the indexer in units of encoder counts per
-     * 100 ms (a decisecond)
-     */
-    m_upperIndexer
-        .configMotionCruiseVelocity((int) intakeMotors_MaxVel.getDouble(Constants.indexerMotionMagicMaxVelocity));
-
-    /*
-     * This is the maximum acceleration of the indexer in units of encoder counts
-     * per 100 ms (a decisecond) per second
-     * 
-     */
-    m_upperIndexer
-        .configMotionAcceleration((int) intakeMotors_MaxAccel.getDouble(Constants.indexerMotionMagicMaxAcceleration));
-
-    intakeMotors_MaxAccel.addListener(event -> {
-      m_upperIndexer
-          .configMotionAcceleration((int) intakeMotors_MaxAccel.getDouble(Constants.indexerMotionMagicMaxAcceleration));
-      m_lowerIndexer
-          .configMotionAcceleration((int) intakeMotors_MaxAccel.getDouble(Constants.indexerMotionMagicMaxAcceleration));
-    }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
-
-    intakeMotors_MaxVel.addListener(event -> {
-      m_upperIndexer
-          .configMotionCruiseVelocity((int) intakeMotors_MaxVel.getDouble(Constants.indexerMotionMagicMaxVelocity));
-      m_lowerIndexer
-          .configMotionCruiseVelocity((int) intakeMotors_MaxVel.getDouble(Constants.indexerMotionMagicMaxVelocity));
-    }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
-
-    m_lowerIndexer.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.kPIDLoopIdx,
-        Constants.kTimeoutMs);
-
-    m_lowerIndexer.config_kF(0, Constants.kGains_Indexer.kF);
-    m_lowerIndexer.config_kP(0, Constants.kGains_Indexer.kP);
-    m_lowerIndexer.config_kI(0, Constants.kGains_Indexer.kI);
-    m_lowerIndexer.config_kD(0, Constants.kGains_Indexer.kD);
-
-    m_lowerIndexer.setSensorPhase(Constants.kIndexerSensorPhase);
-
-    m_lowerIndexer.setInverted(false);
-
   }
 
   public double getDistanceToPowerCell() {
