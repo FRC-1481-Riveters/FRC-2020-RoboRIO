@@ -62,119 +62,128 @@ import frc.robot.subsystems.Intake;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final colorsensor m_colorsensor = new colorsensor();
-  private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
+    // The robot's subsystems and commands are defined here...
+    private final colorsensor m_colorsensor = new colorsensor();
+    private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
 
-  private final Shooter m_shooter = new Shooter();
-  private final Kicker m_kicker = new Kicker();
-  private final DriveTrain m_drive = new DriveTrain();
+    private final Shooter m_shooter = new Shooter();
+    private final Kicker m_kicker = new Kicker();
+    private final DriveTrain m_drive = new DriveTrain();
 
-  private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem(m_drive);
-  private final Elevator m_elevator = new Elevator();
-  private final Goosehook m_goosehook = new Goosehook();
+    private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem(m_drive);
+    private final Elevator m_elevator = new Elevator();
+    private final Goosehook m_goosehook = new Goosehook();
 
-  private final IRSensor m_intakePowerCellPositionSensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F, 0);
-  private final Indexer m_indexer = new Indexer(m_intakePowerCellPositionSensor);
-  private final Intake m_intake = new Intake(m_intakePowerCellPositionSensor);
+    private final IRSensor m_intakePowerCellPositionSensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F, 0);
+    private final Indexer m_indexer = new Indexer(m_intakePowerCellPositionSensor);
+    private final Intake m_intake = new Intake(m_intakePowerCellPositionSensor);
 
-  RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
-  RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
+    RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
+    RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
 
-  public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
+    public RobotContainer() {
+        // Configure the button bindings
+        configureButtonBindings();
 
-    SmartDashboard.putData(new CycleCameraFeedCommand(m_cameraSubsystem));
-    SmartDashboard.putData(new IndexerCarryUpCommand(m_indexer).withTimeout(5.0));
-    SmartDashboard.putData(m_intakePowerCellPositionSensor);
-  }
+        SmartDashboard.putData(new CycleCameraFeedCommand(m_cameraSubsystem));
+        SmartDashboard.putData(new IndexerCarryUpCommand(m_indexer).withTimeout(5.0));
+        SmartDashboard.putData(m_intakePowerCellPositionSensor);
+    }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by instantiating a {@link GenericHID} or one of its subclasses
-   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
+    /**
+     * Use this method to define your button->command mappings. Buttons can be
+     * created by instantiating a {@link GenericHID} or one of its subclasses
+     * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+     * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    private void configureButtonBindings() {
 
-    /* Wheel of Fortune */
-    new JoystickButton(m_operatorController, Button.kX.value)
-        .whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController));
-    new JoystickButton(m_operatorController, Button.kB.value)
-        .whileHeld(new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
+        /* Wheel of Fortune */
+        new JoystickButton(m_operatorController, Button.kX.value)
+                .whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController));
+        new JoystickButton(m_operatorController, Button.kB.value).whileHeld(
+                new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
 
-    /* Shoot Power Cells */
-    new JoystickButton(m_driverController, Button.kB.value).whileHeld(// initiation linev
-        new SequentialCommandGroup( //
-            new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedInitiation), //
-            new ParallelCommandGroup( //
-                new IndexerCarryUpCommand(m_indexer), //
-                new KickerAdvanceCommand(m_kicker, m_shooter) //
-            ) //
-        ) //
-    );
+        /* Shoot Power Cells */
+        new JoystickButton(m_driverController, Button.kB.value).whileHeld(// initiation linev
+                new SequentialCommandGroup( //
+                        new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedInitiation), //
+                        new ParallelCommandGroup( //
+                                new IndexerCarryUpCommand(m_indexer), //
+                                new KickerAdvanceCommand(m_kicker, m_shooter) //
+                        ) //
+                ) //
+        );
 
-    new JoystickButton(m_driverController, Button.kB.value).whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
+        new JoystickButton(m_driverController, Button.kB.value).whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
 
-    new JoystickButton(m_driverController, Button.kY.value).whileHeld( //
-        new SequentialCommandGroup( //
-            new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall), //
-            new ParallelCommandGroup( //
-                new IndexerCarryUpCommand(m_indexer), //
-                new KickerAdvanceCommand(m_kicker, m_shooter) //
-            ) //
-        ) //
-    );
+        new JoystickButton(m_driverController, Button.kY.value).whileHeld( //
+                new SequentialCommandGroup( //
+                        new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall), //
+                        new ParallelCommandGroup( //
+                                new IndexerCarryUpCommand(m_indexer), //
+                                new KickerAdvanceCommand(m_kicker, m_shooter) //
+                        ) //
+                ) //
+        );
 
-    new JoystickButton(m_driverController, Button.kY.value).whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
+        new JoystickButton(m_driverController, Button.kY.value).whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
 
-    /* Load Power Cells */
-    new JoystickButton(m_operatorController, Button.kY.value).whileHeld(new IndexerCarryUpCommand(m_indexer));
-    new JoystickButton(m_operatorController, Button.kA.value).whenReleased(new IndexerSpitOutCommand(m_indexer));
+        /* Load Power Cells */
+        new JoystickButton(m_operatorController, Button.kY.value).whileHeld(new IndexerCarryUpCommand(m_indexer));
+        new JoystickButton(m_operatorController, Button.kA.value).whenReleased(new IndexerSpitOutCommand(m_indexer));
 
-    new JoystickButton(m_operatorController, Button.kBumperLeft.value).whileHeld( //
-        new ParallelDeadlineGroup( //
-            new SequentialCommandGroup( //
-                new IntakePositionPowerCellCommand(m_intake), // Pull in a Power Cell with the intake
+        new JoystickButton(m_operatorController, Button.kBumperLeft.value).whileHeld( //
+                new ParallelDeadlineGroup( // Run until the Intake and Indexer are done and end even if the kicker
+                                           // hasn't yet detected a power cell
+                        new SequentialCommandGroup( //
+                                new IntakePositionPowerCellCommand(m_intake), // Pull in a Power Cell with the intake
+                                new ParallelCommandGroup( //
+                                        new IntakeRunForABit(m_intake, .75), // Pin the Power Cell against the indexer
+                                        new IndexerStackOnePowerCell(m_indexer)
+                                                .withTimeout(Constants.indexerStack1PwrCellTimeout))), // Lift the Power
+                                                                                                       // Cell to its
+                                                                                                       // first stack
+                                                                                                       // position
+                        new KickerCaptureCommand(m_kicker) // Load a single Power Cell into the kicker, when it gets
+                                                           // there
+                ) //
+        );
+
+        new JoystickButton(m_operatorController, Button.kBumperRight.value).whileHeld( //
                 new ParallelCommandGroup( //
-                    new IntakeRunForABit(m_intake, .75), // Pin the Power Cell against the indexer
-                    new IndexerStackOnePowerCell(m_indexer))), // Life the Power Cell to its first stack position
-            new KickerCaptureCommand(m_kicker) // Load a single Power Cell into the kicker, when it gets there
-        ) //
-    );
+                        new IntakeDropOffCommand(m_intake), //
+                        new IndexerSpitOutCommand(m_indexer) //
+                ) //
+        );
 
-    new JoystickButton(m_operatorController, Button.kBumperRight.value).whileHeld( //
-        new ParallelCommandGroup( //
-            new IntakeDropOffCommand(m_intake), //
-            new IndexerSpitOutCommand(m_indexer) //
-        ) //
-    );
+        /* Elevator and goosehook */
+        new JoystickButton(m_driverController, Button.kX.value).whileHeld(new raiseElevator(m_elevator));
+        new JoystickButton(m_driverController, Button.kA.value).whileHeld(new lowerElevator(m_elevator));
+        new JoystickButton(m_driverController, Button.kBumperLeft.value).whileHeld(new GoosehookEngage(m_goosehook));
+        new JoystickButton(m_driverController, Button.kBumperRight.value)
+                .whileHeld(new GoosehookDisengage(m_goosehook));
+        new JoystickButton(m_operatorController, Button.kStart.value)
+                .whenPressed(new ElevatorSolenoidPullIn(m_elevator));
+        new JoystickButton(m_operatorController, Button.kBack.value)
+                .whenPressed(new ElevatorSolenoidPullOut(m_elevator));
 
-    /* Elevator and goosehook */
-    new JoystickButton(m_driverController, Button.kX.value).whileHeld(new raiseElevator(m_elevator));
-    new JoystickButton(m_driverController, Button.kA.value).whileHeld(new lowerElevator(m_elevator));
-    new JoystickButton(m_driverController, Button.kBumperLeft.value).whileHeld(new GoosehookEngage(m_goosehook));
-    new JoystickButton(m_driverController, Button.kBumperRight.value).whileHeld(new GoosehookDisengage(m_goosehook));
-    new JoystickButton (m_operatorController, Button.kStart.value).whenPressed(new ElevatorSolenoidPullIn(m_elevator));
-    new JoystickButton (m_operatorController, Button.kBack.value).whenPressed(new ElevatorSolenoidPullOut(m_elevator));
+        m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
+        m_intake.setDefaultCommand(new IntakeJoystickCommand(m_intake, m_operatorController));
+        m_indexer.setDefaultCommand(new IndexerJoystickCommand(m_indexer, m_operatorController));
+    }
 
-    m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
-    m_intake.setDefaultCommand(new IntakeJoystickCommand(m_intake, m_operatorController));  
-    m_indexer.setDefaultCommand(new IndexerJoystickCommand(m_indexer, m_operatorController));
-  }
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-
-    return null;
-  }
+        return null;
+    }
 }

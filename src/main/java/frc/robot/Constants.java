@@ -53,8 +53,7 @@ public final class Constants {
 	 * Gains used in Position Closed Loop, to be adjusted accordingly Gains(kp, ki,
 	 * kd, kf, izone, peak output);
 	 */
-		public static final Gains kGains = new Gains(0.25, 0.0, 0.0, 0.0, 0, 1.0);
-
+	public static final Gains kGains = new Gains(0.25, 0.0, 0.0, 0.0, 0, 1.0);
 
 	/* Intake ------------------------------------ */
 	public static final int intakeMotorControllerCANId = 10;
@@ -71,7 +70,7 @@ public final class Constants {
 	/* Shooter ------------------------------ */
 	public static final int shooterMotorControllerCANId = 1;
 	public static final double shooterIntendedSpeedTolerance = 0.02;
-	public static final double shooterYeetSpeedInitiation = 4200.0; // RPM  3100:40in
+	public static final double shooterYeetSpeedInitiation = 4200.0; // RPM 3100:40in
 	public static final double shooterYeetSpeedWall = 3800.0; // RPM
 
 	/* Cameras ---------------------------------------- */
@@ -170,6 +169,12 @@ public final class Constants {
 	 */
 	public static final int indexerMotionMagicMaxAcceleration = Math
 			.toIntExact(Math.round(indexerEncoderCount * 3000.0 / 600.0));
+
+	/*
+	 * This is the maximum time the indexer will wait to stack a single power cell
+	 * during automatic stacking while loading the indexer.
+	 */
+	public static final double indexerStack1PwrCellTimeout = 5.0; // seconds
 
 	public static final double distanceToMovePowerCellWhenLoading = 19; // cm
 	public static final double indexerPulleyDiameter = 6.68528; // diameter of indexer pulleys in centimeters
