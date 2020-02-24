@@ -8,7 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.Gains;
 

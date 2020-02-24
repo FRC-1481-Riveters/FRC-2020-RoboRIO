@@ -7,13 +7,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.BreakInGearboxCommand;
 import frc.robot.commands.CycleCameraFeedCommand;
 import frc.robot.commands.ElevatorSolenoidPullIn;
 import frc.robot.commands.ElevatorSolenoidPullOut;
@@ -25,7 +23,6 @@ import frc.robot.commands.IndexerSpitOutCommand;
 import frc.robot.commands.IndexerStackOnePowerCell;
 import frc.robot.commands.IntakeDropOffCommand;
 import frc.robot.commands.IntakeJoystickCommand;
-import frc.robot.commands.IntakePickupCommand;
 import frc.robot.commands.IntakePositionPowerCellCommand;
 import frc.robot.commands.IntakeRunForABit;
 import frc.robot.commands.KickerAdvanceCommand;
@@ -42,7 +39,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.colorsensor;
 import frc.robot.subsystems.Shooter;
