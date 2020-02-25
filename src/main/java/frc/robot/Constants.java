@@ -112,6 +112,7 @@ public final class Constants {
 	public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(14.0 /* ft/s */);
 	public static final double kMaxAccelerationMetersPerSecondSquared = Units.feetToMeters(3.0 /* ft/s^2 */);
 	public static final double driveTireDiameterInMeters = Units.inchesToMeters(8.0);
+	public static final double minJoystickActiveValue = 0.05; 
 
 	public static final Gains kDriveGains = new Gains(2.2e-4, .00000005, 0.00001, 1.5e-4, 0, 1.0);
 	// Number of inches of robot travel per revolution of the NEO (which is returned
