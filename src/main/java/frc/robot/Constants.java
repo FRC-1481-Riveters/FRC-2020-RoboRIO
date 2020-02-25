@@ -65,6 +65,9 @@ public final class Constants {
 	public static final int kickerMotorControllerCANId = 7;
 	public static final double kickerMotorSpeed = -1.0; // percent
 	public static final double kickerCaptureSpeed = -0.30; // percent
+	public static final boolean kKickerSensorPhase = false;
+	public static final int kickerEncoderCount = 4096; //RPM
+	public static final int kickerClosedLoopSpeed = -8000; //RPM
 
 	/* Shooter ------------------------------ */
 	public static final int shooterMotorControllerCANId = 1;
@@ -225,5 +228,6 @@ public final class Constants {
 	 */
 
 	public static final Gains kGains_Indexer = new Gains(0.15, 0.0, 0.0, 0.0, 0, 1.0);
+	public static final Gains kGains_Kicker = new Gains(0.01, 0.0, 0.0, 0.0, 0, 1.0);
 
 }
