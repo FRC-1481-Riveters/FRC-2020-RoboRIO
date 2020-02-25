@@ -191,7 +191,7 @@ public final class Constants {
 	 * tolerated error in distance to the target when moving the belts to a fixed
 	 * position
 	 */
-	public static final double indexerToleratedPositionError = 1.5;
+	public static final double indexerToleratedPositionError = 0.5;
 	/*
 	 * TalonSRX's PIDF gains are calculated base on 1023 as the maximum output,
 	 * which is 100% duty cycle, which is all of the Talon's speed and capability.
@@ -224,6 +224,6 @@ public final class Constants {
 	 * Kp = 0.75
 	 */
 
-	public static final Gains kGains_Indexer = new Gains(0.15, 0.0, 0.0, 0.0, 0, 1.0);
+	public static final Gains kGains_Indexer = new Gains(0.15, 0.00003, 0.0001, 0.01, 0, 1.0);
 
 }
