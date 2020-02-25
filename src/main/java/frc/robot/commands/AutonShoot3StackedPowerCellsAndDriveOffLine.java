@@ -35,7 +35,7 @@ public class AutonShoot3StackedPowerCellsAndDriveOffLine extends SequentialComma
         new KickerAdvanceCommand(kicker, shooter).withTimeout(1.0), // Shoot the third Power Cell
         new ParallelCommandGroup( // run some commands in parallel so we don't delay before moving
             new ShooterYeetCommand(shooter, 0.0), // Shut down the shooter, we don't need it any longer
-            new AutonRobotDriveDistance(drive, 4.0) // Move the robot off the initiation line
+            new AutonRobotDriveDistance(drive, -4.0) // Move the robot off the initiation line
         ) //
     );
   }
