@@ -35,28 +35,37 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.  
   @Override
   public void execute() {
+    final double m_leftJoystickRawValue;
+    final double m_rightJoystickRawValue;
+
     final double m_leftJoystickValue;
     final double m_rightJoystickValue;
+    
     final double m_leftJoystickSquare;
     final double m_rightJoystickQuarter;
   //  final double m_rightJoystickSquare;
-    m_leftJoystickValue = m_RumbleTimerJoystick.getY(Hand.kLeft);
-    m_rightJoystickValue = -m_RumbleTimerJoystick.getX(Hand.kRight);
+    m_leftJoystickRawValue = m_RumbleTimerJoystick.getY(Hand.kLeft);
+    // Create a deadband in the joystick
+    if(m_leftJoystickRawValue < Constants.minJoystickActiveValue){
+      m_leftJoystickValue = 0;
+    }
+    else {
+      m_leftJoystickValue = m_leftJoystickRawValue;
+    }
+
+    m_rightJoystickRawValue = -m_RumbleTimerJoystick.getX(Hand.kRight);
+    // Create a deadband in the joystick
+    if(m_rightJoystickRawValue < Constants.minJoystickActiveValue){
+      m_rightJoystickValue = 0;
+    }
+    else {
+      m_rightJoystickValue = m_leftJoystickRawValue;
+    }
     if (m_leftJoystickValue >= 0){
     m_leftJoystickSquare = m_leftJoystickValue * m_leftJoystickValue; }
     else {
-    m_leftJoystickSquare = -(m_leftJoystickValue * m_leftJoystickValue); 
+    m_leftJoystickSquare = -(m_leftJoystickValue * m_leftJoystickValue);}
   }
-  /*  if (m_rightJoystickValue >= 0){
-    m_rightJoystickSquare = m_rightJoystickValue * m_rightJoystickValue;}
-    else {
-    m_rightJoystickSquare = -(m_rightJoystickValue * m_rightJoystickValue);
-  } */
-  m_rightJoystickQuarter = m_rightJoystickValue  * Constants.rotationInQuarter;
-    m_drivetrain.drive(m_leftJoystickSquare, m_rightJoystickQuarter);
- 
-  }
-
  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
