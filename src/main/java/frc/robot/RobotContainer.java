@@ -103,7 +103,9 @@ public class RobotContainer {
                  * 
                  * 
                  * The command that that is selected on the dashboard will be reported by
-                 * m_shooter.getSelected(), and returned by getAutonomousCommand().
+                 * m_shooter.getSelected(), and returned by
+                 * RobotContainer.getAutonomousCommand() and executed (scheduled) during
+                 * Autonomous in Robot.autonomousInit().
                  */
 
                 m_chooser.setDefaultOption("Shoot 3, back robot off line",
