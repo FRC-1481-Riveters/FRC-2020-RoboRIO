@@ -112,8 +112,8 @@ public final class Constants {
 	public static final int frontRightMotor = 2;
 	public static final int rearRightMotor = 3;
 	public static final double closedLoopRampRate = 0.1; // Volts / msS
-	public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(14.0 /* ft/s */);
-	public static final double kMaxAccelerationMetersPerSecondSquared = Units.feetToMeters(3.0 /* ft/s^2 */);
+	public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(7.0 /* ft/s */);
+	public static final double kMaxAccelerationMetersPerSecondSquared = Units.feetToMeters(2.0 /* ft/s^2 */);
 	public static final double driveTireDiameterInMeters = Units.inchesToMeters(8.0);
 	public static final double minJoystickActiveValue = 0.05; 
 
@@ -195,7 +195,7 @@ public final class Constants {
 	 * tolerated error in distance to the target when moving the belts to a fixed
 	 * position
 	 */
-	public static final double indexerToleratedPositionError = 1.5;
+	public static final double indexerToleratedPositionError = 0.5;
 	/*
 	 * TalonSRX's PIDF gains are calculated base on 1023 as the maximum output,
 	 * which is 100% duty cycle, which is all of the Talon's speed and capability.
@@ -228,7 +228,11 @@ public final class Constants {
 	 * Kp = 0.75
 	 */
 
+<<<<<<< HEAD
 	public static final Gains kGains_Indexer = new Gains(0.15, 0.0, 0.0, 0.0, 0, 1.0);
 	public static final Gains kGains_Kicker = new Gains(0.01, 0.0, 0.0, 0.0, 0, 1.0);
+=======
+	public static final Gains kGains_Indexer = new Gains(0.15, 0.00003, 0.0001, 0.01, 0, 1.0);
+>>>>>>> eb222fb452482d6ed660dbabdb57905029134929
 
 }

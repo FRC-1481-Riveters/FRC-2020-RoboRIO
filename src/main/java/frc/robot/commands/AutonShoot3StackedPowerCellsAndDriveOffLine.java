@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
@@ -25,17 +26,27 @@ public class AutonShoot3StackedPowerCellsAndDriveOffLine extends SequentialComma
   public AutonShoot3StackedPowerCellsAndDriveOffLine(Shooter shooter, Indexer indexer, Kicker kicker,
       DriveTrain drive) {
     addCommands( //
+        // Spin up the shooter and reposition the stack of Power Cells to keep them from
+        // jamming
         new ParallelCommandGroup( //
             new ShooterYeetCommand(shooter, Constants.shooterYeetSpeedInitiation), //
             new IndexerShearFixedDistance(indexer, -2.0) // Unpack the Power Cells if they're too tightly packed in the
                                                          // Indexer by moving them away from the Kicker a little bit
-        ).withTimeout(5.0), //
-        new KickerAdvanceCommand(kicker, shooter).withTimeout(2.0), // Shoot the first Power Cell
-        new KickerAdvanceCommand(kicker, shooter).withTimeout(1.0), // Shoot the second Power Cell
-        new KickerAdvanceCommand(kicker, shooter).withTimeout(1.0), // Shoot the third Power Cell
-        new ParallelCommandGroup( // run some commands in parallel so we don't delay before moving
-            new ShooterYeetCommand(shooter, 0.0), // Shut down the shooter, we don't need it any longer
-            new AutonRobotDriveDistance(drive, 4.0) // Move the robot off the initiation line
+        ).withTimeout(5.0), // Don't wait too long for the shooter to spin up or the indexer to reposition
+                            // the stack. The Auton *must* continue and end with movement before auton
+                            // expires
+
+        new KickerMoveAtFixedSpeed(kicker, -5000.0).withTimeout(1.0), // Start the kicker moving
+
+        // Sequence the indexer to feed all the balls into the kicker (and shooter).
+        new IndexerMoveAtFixedSpeed(indexer, Constants.indexerMotorSpeed).withTimeout(5.0),
+
+        new ParallelDeadlineGroup( //
+            new AutonRobotDriveDistance(drive, -4.0), // Move the robot off the initiation line, Deadline Command!
+
+            new ShooterYeetCommand(shooter, 0.0), // Shut down the shooter, we don't need it any longer.
+            new IndexerMoveAtFixedSpeed(indexer, 0.0), // Shutdown the indexer. We don't need it any longer.
+            new KickerMoveAtFixedSpeed(kicker, 0.0) //
         ) //
     );
   }
