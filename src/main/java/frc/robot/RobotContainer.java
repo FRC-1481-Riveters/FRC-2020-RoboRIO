@@ -10,8 +10,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.AutonRobotDriveDistance;
+import frc.robot.commands.AutonShoot3StackedPowerCellsAndDriveOffLine;
 import frc.robot.commands.CycleCameraFeedCommand;
 import frc.robot.commands.ElevatorSolenoidPullIn;
 import frc.robot.commands.ElevatorSolenoidPullOut;
@@ -77,17 +80,23 @@ public class RobotContainer {
     RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
     RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
 
+    SendableChooser<Command> m_chooser = new SendableChooser<>();
+
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
 
     public RobotContainer() {
+        m_chooser.addOption("Auton Drive Distance", new AutonRobotDriveDistance(m_drive, Constants.autonFeetValue));
+        m_chooser.addOption("Auton Power Cell Shoot", new AutonShoot3StackedPowerCellsAndDriveOffLine(m_shooter, m_indexer, m_kicker,
+        m_drive));
         // Configure the button bindings
         configureButtonBindings();
 
         SmartDashboard.putData(new CycleCameraFeedCommand(m_cameraSubsystem));
         SmartDashboard.putData(new IndexerCarryUpCommand(m_indexer).withTimeout(5.0));
         SmartDashboard.putData(m_intakePowerCellPositionSensor);
+        SmartDashboard.putData("Auto mode", m_chooser);
     }
 
     /**

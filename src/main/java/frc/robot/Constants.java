@@ -114,6 +114,8 @@ public final class Constants {
 	public static final double driveTireDiameterInMeters = Units.inchesToMeters(8.0);
 	public static final double minJoystickActiveValue = 0.05; 
 
+	public static final double autonFeetValue = 4.0;
+
 	public static final Gains kDriveGains = new Gains(2.2e-4, .00000005, 0.00001, 1.5e-4, 0, 1.0);
 	// Number of inches of robot travel per revolution of the NEO (which is returned
 	// in getPosition())
