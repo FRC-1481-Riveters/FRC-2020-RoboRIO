@@ -24,6 +24,12 @@ public class Indexer extends SubsystemBase {
 
   private NetworkTableEntry intakeMotors_MaxAccel;
   private NetworkTableEntry intakeMotors_MaxVel;
+
+  private NetworkTableEntry intakeMotors_kP;
+  private NetworkTableEntry intakeMotors_kI;
+  private NetworkTableEntry intakeMotors_kD;
+  private NetworkTableEntry intakeMotors_kF;
+
   protected IRSensor m_powerCellPositionSensor;
 
   protected long m_positionSetpoint;
@@ -81,8 +87,18 @@ public class Indexer extends SubsystemBase {
         .getEntry("IntakeMotorMaxAccel");
     intakeMotors_MaxVel = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("IntakeMotorMaxVel");
 
+    intakeMotors_kP = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("IntakeMotorKP");
+    intakeMotors_kI = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("IntakeMotorKI");
+    intakeMotors_kD = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("IntakeMotorKD");
+    intakeMotors_kF = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("IntakeMotorKF");
+
     intakeMotors_MaxAccel.setDouble(Constants.indexerMotionMagicMaxAcceleration);
     intakeMotors_MaxVel.setDouble(Constants.indexerMotionMagicMaxVelocity);
+    intakeMotors_kP.setDouble(Constants.kGains_Indexer.kP);
+    intakeMotors_kI.setDouble(Constants.kGains_Indexer.kI);
+    intakeMotors_kD.setDouble(Constants.kGains_Indexer.kD);
+    intakeMotors_kF.setDouble(Constants.kGains_Indexer.kF);
+
     /*
      * This is the maximum velocity of the indexer in units of encoder counts per
      * 100 ms (a decisecond)
@@ -110,12 +126,28 @@ public class Indexer extends SubsystemBase {
     intakeMotors_MaxAccel.addListener(event -> {
       m_upperIndexer
           .configMotionAcceleration((int) intakeMotors_MaxAccel.getDouble(Constants.indexerMotionMagicMaxAcceleration));
-    }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+    }, EntryListenerFlags.kUpdate);
 
     intakeMotors_MaxVel.addListener(event -> {
       m_upperIndexer
           .configMotionCruiseVelocity((int) intakeMotors_MaxVel.getDouble(Constants.indexerMotionMagicMaxVelocity));
-    }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+    }, EntryListenerFlags.kUpdate);
+
+    intakeMotors_kP.addListener(event -> {
+      m_upperIndexer.config_kP(0, intakeMotors_kP.getDouble(0));
+    }, EntryListenerFlags.kUpdate);
+
+    intakeMotors_kI.addListener(event -> {
+      m_upperIndexer.config_kI(0, intakeMotors_kI.getDouble(0));
+    }, EntryListenerFlags.kUpdate);
+    
+    intakeMotors_kD.addListener(event -> {
+      m_upperIndexer.config_kD(0, intakeMotors_kD.getDouble(0));
+    }, EntryListenerFlags.kUpdate);
+
+    intakeMotors_kF.addListener(event -> {
+      m_upperIndexer.config_kF(0, intakeMotors_kF.getDouble(0));
+    }, EntryListenerFlags.kUpdate);
 
   }
 

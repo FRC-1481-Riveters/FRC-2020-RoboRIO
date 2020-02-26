@@ -65,6 +65,10 @@ public final class Constants {
 	public static final int kickerMotorControllerCANId = 7;
 	public static final double kickerMotorSpeed = -1.0; // percent
 	public static final double kickerCaptureSpeed = -0.30; // percent
+	public static final boolean kKickerSensorPhase = false;
+	public static final int kickerEncoderCount = 4096; //RPM
+	public static final int kickerClosedLoopSpeed = -8000; //RPM
+	public static final Gains kGains_Kicker = new Gains(0.0, 0.0, 0.0, 0.0086518, 0, 0.0);
 
 	/* Shooter ------------------------------ */
 	public static final int shooterMotorControllerCANId = 1;
@@ -109,8 +113,8 @@ public final class Constants {
 	public static final int frontRightMotor = 2;
 	public static final int rearRightMotor = 3;
 	public static final double closedLoopRampRate = 0.1; // Volts / msS
-	public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(14.0 /* ft/s */);
-	public static final double kMaxAccelerationMetersPerSecondSquared = Units.feetToMeters(3.0 /* ft/s^2 */);
+	public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(10.0 /* ft/s */);
+	public static final double kMaxAccelerationMetersPerSecondSquared = Units.feetToMeters(1.0 /* ft/s^2 */);
 	public static final double driveTireDiameterInMeters = Units.inchesToMeters(8.0);
 	public static final double minJoystickActiveValue = 0.05; 
 
@@ -194,7 +198,7 @@ public final class Constants {
 	 * tolerated error in distance to the target when moving the belts to a fixed
 	 * position
 	 */
-	public static final double indexerToleratedPositionError = 1.5;
+	public static final double indexerToleratedPositionError = 0.5;
 	/*
 	 * TalonSRX's PIDF gains are calculated base on 1023 as the maximum output,
 	 * which is 100% duty cycle, which is all of the Talon's speed and capability.
@@ -227,6 +231,6 @@ public final class Constants {
 	 * Kp = 0.75
 	 */
 
-	public static final Gains kGains_Indexer = new Gains(0.15, 0.0, 0.0, 0.0, 0, 1.0);
+	public static final Gains kGains_Indexer = new Gains(0.15, 0.00003, 0.0001, 0.01, 0, 1.0);
 
 }

@@ -22,6 +22,13 @@ public class AutonRobotDriveDistance extends TrapezoidProfileCommand {
 
   /**
    * Creates a new AutonRobotDriveDistance.
+   * 
+   * Positive values of distanceToTravelInFeet travel forward, which is toward the
+   * direction of the shooter's shoot trajectory, which is the side the battery is
+   * on.
+   * 
+   * Negative values of distanceToTravelInFeet travel backward, which is away from
+   * the shooter's trajectory which is the side the Power Cell intake is on.
    */
   public AutonRobotDriveDistance(DriveTrain driveTrain, double distanceToTravelInFeet) {
     super(

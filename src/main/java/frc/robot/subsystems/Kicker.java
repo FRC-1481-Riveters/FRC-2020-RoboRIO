@@ -24,6 +24,15 @@ public class Kicker extends SubsystemBase implements Sendable {
    * Creates a new Kicker.
    */
   public Kicker() {
+    m_kicker.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
+        Constants.kTimeoutMs);
+
+    m_kicker.config_kF(0, Constants.kGains_Kicker.kF);
+    m_kicker.config_kP(0, Constants.kGains_Kicker.kP);
+    m_kicker.config_kI(0, Constants.kGains_Kicker.kI);
+    m_kicker.config_kD(0, Constants.kGains_Kicker.kD);
+
+    m_kicker.setSensorPhase(Constants.kKickerSensorPhase);
 
     m_kicker.configNominalOutputForward(0, Constants.kTimeoutMs);
     m_kicker.configNominalOutputReverse(0, Constants.kTimeoutMs);
@@ -33,11 +42,23 @@ public class Kicker extends SubsystemBase implements Sendable {
     m_kicker.setInverted(Constants.kMotorInvert);
 
   }
-
   public void setSpeed(double Percent) {
-
     m_kicker.set(ControlMode.PercentOutput, Percent);
   }
+  public void setClosedLoopSpeed(double RPM) {
+    /*
+     * Convert RPM to encoder units / 0.1s.
+     * 
+     * Encoder counters per 0.1s is the basic unit of velocity in the Talons.
+     * 
+     * Encoder counts per 100 ms = RPM * indexerEncoderCount / 600
+     * 
+     * Either direction: velocity setpoint is in units/100ms
+     */
+    double targetVelocity_UnitsPer100ms = RPM * Constants.kickerEncoderCount / 600;
+    m_kicker.set(ControlMode.Velocity, targetVelocity_UnitsPer100ms);
+  }
+
 
   public boolean getPowerCellDetected() {
     boolean powerCellDetected;
