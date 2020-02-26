@@ -112,7 +112,11 @@ public class DriveTrain extends SubsystemBase implements DoubleSupplier {
     double leftMotorRPM = meterPerSecondToRPM(leftSpeedInMetersPerSecond);
     m_leftPIDController.setReference(leftMotorRPM, ControlType.kVelocity);
 
-    double rightMotorRPM = meterPerSecondToRPM(rightSpeedInMetersPerSecond);
+    /*
+     * By convention, the Right motor is inverted. So, invert this motor while under
+     * direction control of this PID
+     */
+    double rightMotorRPM = meterPerSecondToRPM(-1.0 * rightSpeedInMetersPerSecond);
     m_rightPIDController.setReference(rightMotorRPM, ControlType.kVelocity);
   }
 
