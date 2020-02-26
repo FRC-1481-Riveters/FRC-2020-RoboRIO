@@ -113,8 +113,8 @@ public final class Constants {
 	public static final int frontRightMotor = 2;
 	public static final int rearRightMotor = 3;
 	public static final double closedLoopRampRate = 0.1; // Volts / msS
-	public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(14.0 /* ft/s */);
-	public static final double kMaxAccelerationMetersPerSecondSquared = Units.feetToMeters(7.0 /* ft/s^2 */);
+	public static final double kMaxSpeedMetersPerSecond = Units.feetToMeters(10.0 /* ft/s */);
+	public static final double kMaxAccelerationMetersPerSecondSquared = Units.feetToMeters(1.0 /* ft/s^2 */);
 	public static final double driveTireDiameterInMeters = Units.inchesToMeters(8.0);
 	public static final double minJoystickActiveValue = 0.05; 
 

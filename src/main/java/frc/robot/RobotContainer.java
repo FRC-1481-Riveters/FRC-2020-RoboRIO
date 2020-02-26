@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.AutonRobotDriveDistance;
 import frc.robot.commands.AutonShoot3StackedPowerCellsAndDriveOffLine;
 import frc.robot.commands.CycleCameraFeedCommand;
 import frc.robot.commands.ElevatorSolenoidPullIn;
@@ -94,6 +95,7 @@ public class RobotContainer {
                 SmartDashboard.putData(new CycleCameraFeedCommand(m_cameraSubsystem));
                 SmartDashboard.putData(new IndexerCarryUpCommand(m_indexer).withTimeout(5.0));
                 SmartDashboard.putData(m_intakePowerCellPositionSensor);
+                SmartDashboard.putData(new AutonRobotDriveDistance(m_drive, -4.0));
 
                 /*
                  * Add more Autonomous commands to the Dashboard's "Auto Mode" drop down
