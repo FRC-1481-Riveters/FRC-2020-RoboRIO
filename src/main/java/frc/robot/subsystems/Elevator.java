@@ -33,7 +33,7 @@ public class Elevator extends SubsystemBase {
         Constants.kPIDLoopIdx, Constants.kTimeoutMs);
 
         m_elevator.config_kF(0, 0.0);
-        m_elevator.config_kP(0, 0.1);
+        m_elevator.config_kP(0, 0.8);
         m_elevator.config_kI(0, 0.0);
         m_elevator.config_kD(0, 0.0);
             /* Ensure sensor is positive when output is positive */

@@ -63,94 +63,6 @@ import frc.robot.subsystems.Intake;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-<<<<<<< HEAD
-    // The robot's subsystems and commands are defined here...
-    private final colorsensor m_colorsensor = new colorsensor();
-    private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
-
-    private final Shooter m_shooter = new Shooter();
-    private final Kicker m_kicker = new Kicker();
-    private final DriveTrain m_drive = new DriveTrain();
-
-    private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem(m_drive);
-    private final Elevator m_elevator = new Elevator();
-    private final Goosehook m_goosehook = new Goosehook();
-
-    private final IRSensor m_intakePowerCellPositionSensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F, 0);
-    private final Indexer m_indexer = new Indexer(m_intakePowerCellPositionSensor);
-    private final Intake m_intake = new Intake(m_intakePowerCellPositionSensor);
-
-    RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
-    RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
-
-    SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
-
-    public RobotContainer() {
-        m_chooser.addOption("Auton Drive Distance", new AutonRobotDriveDistance(m_drive, Constants.autonFeetValue));
-        m_chooser.addOption("Auton Power Cell Shoot", new AutonShoot3StackedPowerCellsAndDriveOffLine(m_shooter, m_indexer, m_kicker,
-        m_drive));
-        // Configure the button bindings
-        configureButtonBindings();
-
-        SmartDashboard.putData(new CycleCameraFeedCommand(m_cameraSubsystem));
-        SmartDashboard.putData(new IndexerCarryUpCommand(m_indexer).withTimeout(5.0));
-        SmartDashboard.putData(m_intakePowerCellPositionSensor);
-        SmartDashboard.putData("Auto mode", m_chooser);
-    }
-
-    /**
-     * Use this method to define your button->command mappings. Buttons can be
-     * created by instantiating a {@link GenericHID} or one of its subclasses
-     * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-     * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-     */
-    private void configureButtonBindings() {
-
-        /* Wheel of Fortune */
-        new JoystickButton(m_operatorController, Button.kX.value)
-                .whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController));
-        new JoystickButton(m_operatorController, Button.kB.value).whileHeld(
-                new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
-
-        /* Shoot Power Cells */
-        new JoystickButton(m_driverController, Button.kB.value).whileHeld(// initiation linev
-                new SequentialCommandGroup( //
-                        new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedInitiation), //
-                        new ParallelCommandGroup( //
-                                new IndexerCarryUpCommand(m_indexer), //
-                                new KickerAdvanceCommand(m_kicker, m_shooter) //
-                        ) //
-                ) //
-        );
-
-        new JoystickButton(m_driverController, Button.kB.value).whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
-
-        new JoystickButton(m_driverController, Button.kY.value).whileHeld( //
-                new SequentialCommandGroup( //
-                        new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall), //
-                        new ParallelCommandGroup( //
-                                new IndexerCarryUpCommand(m_indexer), //
-                                new KickerAdvanceCommand(m_kicker, m_shooter) //
-                        ) //
-                ) //
-        );
-
-        new JoystickButton(m_driverController, Button.kY.value).whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
-
-        /* Load Power Cells */
-        new JoystickButton(m_operatorController, Button.kY.value).whileHeld(new IndexerCarryUpCommand(m_indexer));
-        new JoystickButton(m_operatorController, Button.kA.value).whenReleased(new IndexerSpitOutCommand(m_indexer));
-
-        new JoystickButton(m_operatorController, Button.kBumperLeft.value).whileHeld( //
-                new ParallelDeadlineGroup( // Run until the Intake and Indexer are done and end even if the kicker
-                                           // hasn't yet detected a power cell
-                        new SequentialCommandGroup( //
-                                new IntakePositionPowerCellCommand(m_intake), // Pull in a Power Cell with the intake
-=======
         // The robot's subsystems and commands are defined here...
         private final colorsensor m_colorsensor = new colorsensor();
         private final wheelOfFortuneColorSpinny m_wheelOfFortuneColorSpinny = new wheelOfFortuneColorSpinny();
@@ -291,7 +203,6 @@ public class RobotContainer {
                 );
 
                 new JoystickButton(m_operatorController, Button.kBumperRight.value).whileHeld( //
->>>>>>> 05ba160e5537280ae0f6f6bdc12586c8a649b25a
                                 new ParallelCommandGroup( //
                                                 new IntakeDropOffCommand(m_intake), //
                                                 new IndexerSpitOutCommand(m_indexer) //

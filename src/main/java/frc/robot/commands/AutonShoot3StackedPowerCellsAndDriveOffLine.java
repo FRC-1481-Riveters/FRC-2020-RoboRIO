@@ -42,7 +42,7 @@ public class AutonShoot3StackedPowerCellsAndDriveOffLine extends SequentialComma
         new IndexerMoveAtFixedSpeed(indexer, Constants.indexerMotorSpeed).withTimeout(3.0),
 
         new ParallelDeadlineGroup( //
-            new AutonRobotDriveDistance(drive, -4.0), // Back the robot off the line. Deadline Command!
+            new AutonRobotDriveDistance(drive, -2.0), // Back the robot off the line. Deadline Command!
 
             new ShooterYeetCommand(shooter, 0.0), // Shut down the shooter, we don't need it any longer.
             new IndexerMoveAtFixedSpeed(indexer, 0.0), // Shutdown the indexer. We don't need it any longer.
