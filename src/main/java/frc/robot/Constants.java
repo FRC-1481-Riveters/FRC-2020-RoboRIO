@@ -229,6 +229,6 @@ public final class Constants {
 	 * Kp = 0.75
 	 */
 
-	public static final Gains kGains_Indexer = new Gains(0.15, 0.00003, 0.0001, 0.01, 0, 1.0);
+	public static final Gains kGains_Indexer = new Gains(0.15, 0.0, 0.0001, 0.01, 0, 1.0);
 
 }
