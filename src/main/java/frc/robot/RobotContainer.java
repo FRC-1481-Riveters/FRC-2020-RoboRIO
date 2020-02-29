@@ -36,6 +36,7 @@ import frc.robot.commands.ShooterYeetCommand;
 import frc.robot.commands.lowerElevator;
 import frc.robot.commands.raiseElevator;
 import frc.robot.subsystems.Kicker;
+import frc.robot.subsystems.AutoAssistSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -78,6 +79,7 @@ public class RobotContainer {
         private final IRSensor m_intakePowerCellPositionSensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F, 0);
         private final Indexer m_indexer = new Indexer(m_intakePowerCellPositionSensor);
         private final Intake m_intake = new Intake(m_intakePowerCellPositionSensor);
+        private final AutoAssistSubsystem m_autoAssist = new AutoAssistSubsystem();
 
         RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
         RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
