@@ -123,7 +123,8 @@ public final class Constants {
 	// in getPosition())
 	// This must comprehend the entire drivetrain; NEO counts read from
 	// getPosition(), wheel diameter and gearbox gearing ratio
-	public static final double driveTrainInchesPerEncoderCounts = 2.3;
+	// https://docs.google.com/spreadsheets/d/1rN380BPdNN7R-A33ZGI04Qf2YBzT-yf55BytnU8w0zM/edit?usp=sharing
+	public static final double driveTrainInchesPerEncoderCounts = 2.207129124;
 	/**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from 0,1,2
 	 * or 3. Only the first two (0,1) are visible in web-based configuration.
