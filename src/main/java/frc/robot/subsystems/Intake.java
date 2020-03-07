@@ -20,6 +20,7 @@ import irsensor.IRSensor;
 
 public class Intake extends SubsystemBase {
   private static WPI_TalonSRX m_intake = new WPI_TalonSRX(Constants.intakeMotorControllerCANId);
+  private static WPI_TalonSRX m_intakeDoubleRoller = new WPI_TalonSRX(Constants.intakeDoubleRollerMotorControllerCANId);
 
   protected IRSensor m_powerDetectorSensor;
 
@@ -29,6 +30,7 @@ public class Intake extends SubsystemBase {
 
   public void setSpeed(double Percent) {
     m_intake.set(ControlMode.PercentOutput, Percent);
+    m_intakeDoubleRoller.set(ControlMode.PercentOutput, Percent);
   }
 
   public Intake(IRSensor IntakePowerCellPositionSensor) {
@@ -36,9 +38,14 @@ public class Intake extends SubsystemBase {
     m_intake.configNominalOutputReverse(0, Constants.kTimeoutMs);
     m_intake.configPeakOutputForward(1, Constants.kTimeoutMs);
     m_intake.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+    m_intakeDoubleRoller.configNominalOutputForward(0, Constants.kTimeoutMs);
+    m_intakeDoubleRoller.configNominalOutputReverse(0, Constants.kTimeoutMs);
+    m_intakeDoubleRoller.configPeakOutputForward(1, Constants.kTimeoutMs);
+    m_intakeDoubleRoller.configPeakOutputReverse(-1, Constants.kTimeoutMs);
 
     setSpeed(0.0);
     m_intake.setInverted(true);
+    m_intakeDoubleRoller.setInverted(true);
 
     m_powerDetectorSensor = IntakePowerCellPositionSensor;
 

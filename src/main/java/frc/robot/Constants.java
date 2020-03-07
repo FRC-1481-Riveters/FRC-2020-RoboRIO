@@ -56,6 +56,7 @@ public final class Constants {
 
 	/* Intake ------------------------------------ */
 	public static final int intakeMotorControllerCANId = 10;
+	public static final int intakeDoubleRollerMotorControllerCANId = 14;
 	public static final double intakeMotorSpeed = .75; // percent
 	public static final double intakeRunMotorSpeed = .325;
 	public static final double howCloseIsThePowerCell = 18.6; // cm
@@ -231,5 +232,8 @@ public final class Constants {
 	 */
 
 	public static final Gains kGains_Indexer = new Gains(0.15, 0.0, 0.0001, 0.01, 0, 1.0);
+
+	/* Ultrasonic Sensor ----------------------------------- */
+	public static final int ultrasonicAnalogChannel = 1;
 
 }
