@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -48,6 +49,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.colorsensor;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.UltrasonicSensor;
 import frc.robot.subsystems.wheelOfFortuneColorSpinny;
 import irsensor.IRSensor;
 import frc.robot.Constants;
@@ -80,13 +82,14 @@ public class RobotContainer {
         private final Indexer m_indexer = new Indexer(m_intakePowerCellPositionSensor);
         private final Intake m_intake = new Intake(m_intakePowerCellPositionSensor);
         private final AutoAssistSubsystem m_autoAssist = new AutoAssistSubsystem();
+        private final UltrasonicSensor m_ultrasonicSensor = new UltrasonicSensor();
 
         RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
         RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);
 
         SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-        /**
+        /**6jr5
          * The container for the robot. Contains subsystems, OI devices, and commands.
          */
 
