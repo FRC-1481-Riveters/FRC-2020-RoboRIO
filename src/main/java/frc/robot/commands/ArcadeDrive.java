@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.Constants;
 import frc.robot.RumbleTimerJoystick;
+import frc.robot.commands.JoystickDeadband;
 
 /**
  * Have the robot drive tank style.
@@ -19,7 +20,7 @@ import frc.robot.RumbleTimerJoystick;
 public class ArcadeDrive extends CommandBase {
   private final DriveTrain m_drivetrain;
   RumbleTimerJoystick m_RumbleTimerJoystick;
-
+  final JoystickDeadband m_deadbander = new JoystickDeadband();
   /**
    * Creates a new ExampleCommand.
    *
@@ -39,6 +40,8 @@ public class ArcadeDrive extends CommandBase {
     final double m_rightJoystickValue;
     final double m_leftJoystickSquare;
     final double m_rightJoystickQuarter;
+    
+  
   //  final double m_rightJoystickSquare;
     m_leftJoystickValue = m_RumbleTimerJoystick.getY(Hand.kLeft);
     m_rightJoystickValue = -m_RumbleTimerJoystick.getX(Hand.kRight);
@@ -53,10 +56,10 @@ public class ArcadeDrive extends CommandBase {
     m_rightJoystickSquare = -(m_rightJoystickValue * m_rightJoystickValue);
   } */
   m_rightJoystickQuarter = m_rightJoystickValue  * Constants.rotationInQuarter;
-    m_drivetrain.drive(m_leftJoystickSquare, m_rightJoystickQuarter);
- 
-  }
+    m_drivetrain.drive(m_deadbander.deadband(m_leftJoystickSquare), m_deadbander.deadband(m_rightJoystickQuarter));
 
+  }
+  
  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

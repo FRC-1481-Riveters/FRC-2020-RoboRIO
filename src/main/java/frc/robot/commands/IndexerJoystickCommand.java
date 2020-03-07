@@ -16,6 +16,8 @@ import frc.robot.subsystems.Indexer;
 public class IndexerJoystickCommand extends CommandBase {
   private Indexer m_indexer;
   RumbleTimerJoystick m_RumbleTimerJoystick;
+  final JoystickDeadband m_deadbander = new JoystickDeadband();
+
   /**
    * Creates a new IndexerJoystickCommand.
    */
@@ -35,10 +37,8 @@ public class IndexerJoystickCommand extends CommandBase {
   @Override
   public void execute() {
     final double m_rightJoystickValue;
-
     m_rightJoystickValue = m_RumbleTimerJoystick.getY(Hand.kRight);
-
-    m_indexer.setClosedLoopSpeed(-m_rightJoystickValue * Constants.indexerMotorSpeed);
+    m_indexer.setClosedLoopSpeed(m_deadbander.deadband(-m_rightJoystickValue) * Constants.indexerMotorSpeed);
   }
 
   // Called once the command ends or is interrupted.

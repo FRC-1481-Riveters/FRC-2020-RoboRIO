@@ -15,6 +15,7 @@ import frc.robot.subsystems.Intake;
 public class IntakeJoystickCommand extends CommandBase {
   private Intake m_intake;
   RumbleTimerJoystick m_RumbleTimerJoystick;
+  final JoystickDeadband m_deadbander = new JoystickDeadband();
   /**
    * Creates a new IntakeIndexerJoystickCommand.
    */
@@ -38,7 +39,7 @@ public class IntakeJoystickCommand extends CommandBase {
     m_leftJoystickValue = m_RumbleTimerJoystick.getY(Hand.kLeft);
 
 
-    m_intake.setSpeed(-m_leftJoystickValue);
+    m_intake.setSpeed(m_deadbander.deadband(-m_leftJoystickValue));
   }
 
   // Called once the command ends or is interrupted.
