@@ -59,8 +59,8 @@ public final class Constants {
 	public static final int intakeDoubleRollerMotorControllerCANId = 14;
 	public static final double intakeMotorSpeed = .75; // percent
 	public static final double intakeRunMotorSpeed = .325;
-	public static final double howCloseIsThePowerCell = 18.6; // cm
-	public static final double howCloseIsThePowerCellTolerance = 1; // cm
+	public static final double howCloseIsThePowerCell = 21.0; // cm
+
 
 	/* Kicker ----------------------------- */
 	public static final int kickerMotorControllerCANId = 7;
