@@ -37,6 +37,7 @@ import frc.robot.commands.ShooterYeetCommand;
 import frc.robot.commands.lowerElevator;
 import frc.robot.commands.raiseElevator;
 import frc.robot.subsystems.Kicker;
+import frc.robot.subsystems.PowerCellArm;
 import frc.robot.subsystems.AutoAssistSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DriveTrain;
@@ -81,6 +82,7 @@ public class RobotContainer {
         private final IRSensor m_intakePowerCellPositionSensor = new IRSensor(IRSensor.SensorType.GP2Y0A41SK0F, 0);
         private final Indexer m_indexer = new Indexer(m_intakePowerCellPositionSensor);
         private final Intake m_intake = new Intake(m_intakePowerCellPositionSensor);
+        private final PowerCellArm m_powerCellArm = new PowerCellArm();
         private final AutoAssistSubsystem m_autoAssist = new AutoAssistSubsystem();
         private final UltrasonicSensor m_ultrasonicSensor = new UltrasonicSensor();
 

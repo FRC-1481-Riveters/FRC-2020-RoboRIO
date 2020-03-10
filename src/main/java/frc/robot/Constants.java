@@ -235,5 +235,10 @@ public final class Constants {
 
 	/* Ultrasonic Sensor ----------------------------------- */
 	public static final int ultrasonicAnalogChannel = 1;
-
+	/* Power Cell Arm ----------------------------------- */
+	public static final int powerCellArmLeadCANId = 15;
+	public static final int powerCellArmFollowCANId = 5;
+	public static final int powerCellArmSpeedCounts = 2;
+	public static final int powerCellArmDownMax = 100;
+	public static final int powerCellArmUpMax = 0;
 }

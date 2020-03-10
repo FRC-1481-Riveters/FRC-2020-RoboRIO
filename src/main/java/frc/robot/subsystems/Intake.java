@@ -45,7 +45,7 @@ public class Intake extends SubsystemBase {
 
     setSpeed(0.0);
     m_intake.setInverted(true);
-    m_intakeDoubleRoller.setInverted(true);
+    //m_intakeDoubleRoller.setInverted(true);
 
     m_powerDetectorSensor = IntakePowerCellPositionSensor;
 
