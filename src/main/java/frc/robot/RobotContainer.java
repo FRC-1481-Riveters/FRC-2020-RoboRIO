@@ -91,7 +91,7 @@ public class RobotContainer {
 
         SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-        /**6jr5
+        /**
          * The container for the robot. Contains subsystems, OI devices, and commands.
          */
 
@@ -117,11 +117,8 @@ public class RobotContainer {
                  * Autonomous in Robot.autonomousInit().
                  */
 
-                m_chooser.setDefaultOption("Shoot 3, back robot off line",
-                                new AutonShoot3StackedPowerCellsAndDriveOffLine(m_shooter, m_indexer, m_kicker,
-                                                m_drive));
-                m_chooser.addOption("-= Do nothing =-", new SequentialCommandGroup(
-                                new PrintCommand("Do nothing selected for auton."), new WaitCommand(5.0)));
+                m_chooser.setDefaultOption("Shoot 3, back robot off line", new AutonShoot3StackedPowerCellsAndDriveOffLine(m_shooter, m_indexer, m_kicker, m_drive));
+                m_chooser.addOption("-= Do nothing =-", new SequentialCommandGroup(new PrintCommand("Do nothing selected for auton."), new WaitCommand(5.0)));
 
                 SmartDashboard.putData("Auto mode", m_chooser);
 
@@ -136,97 +133,69 @@ public class RobotContainer {
         private void configureButtonBindings() {
 
                 /* Wheel of Fortune */
-                new JoystickButton(m_operatorController, Button.kX.value).whileHeld(
-                                new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController));
-                new JoystickButton(m_operatorController, Button.kB.value).whileHeld(new PositionControlPanelCommand(
-                                m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
+                new JoystickButton(m_operatorController, Button.kX.value).whileHeld(new RotateOrJogControlPanelCommand(m_wheelOfFortuneColorSpinny, m_operatorController));
+                new JoystickButton(m_operatorController, Button.kB.value).whileHeld(new PositionControlPanelCommand(m_wheelOfFortuneColorSpinny, m_colorsensor, m_operatorController));
 
                 /* Shoot Power Cells */
                 new JoystickButton(m_driverController, Button.kB.value).whileHeld(// initiation linev
-                                new SequentialCommandGroup( //
-                                                new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedInitiation), //
-                                                new ParallelCommandGroup( //
-                                                                new IndexerCarryUpCommand(m_indexer), //
-                                                                new KickerAdvanceCommand(m_kicker, m_shooter) //
-                                                ) //
+                        new SequentialCommandGroup( //
+                                new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedInitiation), //
+                                new ParallelCommandGroup( //
+                                        new IndexerCarryUpCommand(m_indexer), //
+                                        new KickerAdvanceCommand(m_kicker, m_shooter) //
                                 ) //
+                        ) //
                 );
 
-                new JoystickButton(m_driverController, Button.kB.value)
-                                .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
+                new JoystickButton(m_driverController, Button.kB.value).whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
 
                 new JoystickButton(m_driverController, Button.kY.value).whileHeld( //
-                                new SequentialCommandGroup( //
-                                                new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall), //
-                                                new ParallelCommandGroup( //
-                                                                new IndexerCarryUpCommand(m_indexer), //
-                                                                new KickerAdvanceCommand(m_kicker, m_shooter) //
-                                                ) //
+                        new SequentialCommandGroup( //
+                                new ShooterYeetCommand(m_shooter, Constants.shooterYeetSpeedWall), //
+                                new ParallelCommandGroup( //
+                                        new IndexerCarryUpCommand(m_indexer), //
+                                        new KickerAdvanceCommand(m_kicker, m_shooter) //
                                 ) //
+                        ) //
                 );
 
-                new JoystickButton(m_driverController, Button.kY.value)
-                                .whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
+                new JoystickButton(m_driverController, Button.kY.value).whenReleased(new ShooterYeetCommand(m_shooter, 0.0));
 
                 /* Load Power Cells */
-                new JoystickButton(m_operatorController, Button.kY.value)
-                                .whileHeld(new IndexerCarryUpCommand(m_indexer));
-                new JoystickButton(m_operatorController, Button.kA.value)
-                                .whenReleased(new IndexerSpitOutCommand(m_indexer));
+                new JoystickButton(m_operatorController, Button.kY.value).whileHeld(new IndexerCarryUpCommand(m_indexer));
+                new JoystickButton(m_operatorController, Button.kA.value).whenReleased(new IndexerSpitOutCommand(m_indexer));
 
                 new JoystickButton(m_operatorController, Button.kBumperLeft.value).whileHeld( //
-                                new ParallelDeadlineGroup( // Run until the Intake and Indexer are done and end even if
-                                                           // the kicker
-                                                           // hasn't yet detected a power cell
-                                                new SequentialCommandGroup( //
-                                                                new IntakePositionPowerCellCommand(m_intake), // Pull in
-                                                                                                              // a Power
-                                                                                                              // Cell
-                                                                                                              // with
-                                                                                                              // the
-                                                                                                              // intake
-                                                                new ParallelCommandGroup( //
-                                                                                new IntakeRunForABit(m_intake, .75), // Pin
-                                                                                                                     // the
-                                                                                                                     // Power
-                                                                                                                     // Cell
-                                                                                                                     // against
-                                                                                                                     // the
-                                                                                                                     // indexer
-                                                                                new IndexerStackOnePowerCell(m_indexer)
-                                                                                                .withTimeout(Constants.indexerStack1PwrCellTimeout))), // Lift
-                                                                                                                                                       // the
-                                                                                                                                                       // Power
-                                                                                                                                                       // Cell
-                                                                                                                                                       // to
-                                                                                                                                                       // its
-                                                                                                                                                       // first
-                                                                                                                                                       // stack
-                                                                                                                                                       // position
-                                                new KickerCaptureCommand(m_kicker) // Load a single Power Cell into the
-                                                                                   // kicker, when it gets
-                                                                                   // there
-                                ) //
+                        new ParallelDeadlineGroup( // Run until the Intake and Indexer are done and end even if the
+                                                   // kicker hasn't yet detected a power cell
+                                new SequentialCommandGroup( //
+                                        new IntakePositionPowerCellCommand(m_intake), // Pull in a PowerCell with the intake
+                                        new ParallelCommandGroup( //
+                                                new IntakeRunForABit(m_intake, .75), // Pin the Power Cell against the indexer
+                                                new IndexerStackOnePowerCell(m_indexer) //
+                                                        .withTimeout(Constants.indexerStack1PwrCellTimeout) // Lift the Power Cell
+                                                                                                            // to its first stack
+                                                                                                            // position
+                                        ) //
+                                ), //
+                                new KickerCaptureCommand(m_kicker) // Load a single Power Cell into the kicker, when it gets there
+                        ) //
                 );
 
                 new JoystickButton(m_operatorController, Button.kBumperRight.value).whileHeld( //
-                                new ParallelCommandGroup( //
-                                                new IntakeDropOffCommand(m_intake), //
-                                                new IndexerSpitOutCommand(m_indexer) //
-                                ) //
+                        new ParallelCommandGroup( //
+                                new IntakeDropOffCommand(m_intake), //
+                                new IndexerSpitOutCommand(m_indexer) //
+                        ) //
                 );
 
                 /* Elevator and goosehook */
                 new JoystickButton(m_driverController, Button.kX.value).whileHeld(new raiseElevator(m_elevator));
                 new JoystickButton(m_driverController, Button.kA.value).whileHeld(new lowerElevator(m_elevator));
-                new JoystickButton(m_driverController, Button.kBumperLeft.value)
-                                .whileHeld(new GoosehookEngage(m_goosehook));
-                new JoystickButton(m_driverController, Button.kBumperRight.value)
-                                .whileHeld(new GoosehookDisengage(m_goosehook));
-                new JoystickButton(m_operatorController, Button.kStart.value)
-                                .whenPressed(new ElevatorSolenoidPullIn(m_elevator));
-                new JoystickButton(m_operatorController, Button.kBack.value)
-                                .whenPressed(new ElevatorSolenoidPullOut(m_elevator));
+                new JoystickButton(m_driverController, Button.kBumperLeft.value).whileHeld(new GoosehookEngage(m_goosehook));
+                new JoystickButton(m_driverController, Button.kBumperRight.value).whileHeld(new GoosehookDisengage(m_goosehook));
+                new JoystickButton(m_operatorController, Button.kStart.value).whenPressed(new ElevatorSolenoidPullIn(m_elevator));
+                new JoystickButton(m_operatorController, Button.kBack.value).whenPressed(new ElevatorSolenoidPullOut(m_elevator));
 
                 m_drive.setDefaultCommand(new ArcadeDrive(m_drive, m_driverController));
                 m_intake.setDefaultCommand(new IntakeJoystickCommand(m_intake, m_operatorController));
