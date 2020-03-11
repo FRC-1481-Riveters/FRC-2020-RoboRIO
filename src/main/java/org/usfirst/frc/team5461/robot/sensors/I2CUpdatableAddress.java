@@ -224,13 +224,7 @@ public class I2CUpdatableAddress {
      */
     public synchronized boolean writeBulk(ByteBuffer data, int size) throws NACKException {
         if (data.hasArray()) {
-            boolean aborted = writeBulk(data.array(), size);
-            try {
-                destroyDirectByteBuffer(data);
-            }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-            return aborted;
+            return writeBulk(data.array(), size);
         }
         if (!data.isDirect()) {
             throw new IllegalArgumentException("must be a direct buffer");
@@ -240,13 +234,7 @@ public class I2CUpdatableAddress {
                     "buffer is too small, must be at least " + size);
         }
 
-        boolean aborted = I2CJNI.i2CWrite(m_port, (byte) m_deviceAddress, data, (byte) size) < 0;
-        try {
-            destroyDirectByteBuffer(data);
-        }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return aborted;
+        return I2CJNI.i2CWrite(m_port, (byte) m_deviceAddress, data, (byte) size) < 0;
     }
 
     /**
@@ -295,15 +283,7 @@ public class I2CUpdatableAddress {
         }
 
         if (buffer.hasArray()) {
-            boolean aborted = read(registerAddress, count, buffer.array());
-
-            try {
-                destroyDirectByteBuffer(buffer);
-            }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            return aborted;
+            return read(registerAddress, count, buffer.array());
         }
 
         if (!buffer.isDirect()) {
@@ -367,14 +347,7 @@ public class I2CUpdatableAddress {
         }
 
         if (buffer.hasArray()) {
-            boolean aborted = readOnly(buffer.array(), count);
-            try {
-                destroyDirectByteBuffer(buffer);
-            }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            return aborted;
+            return readOnly(buffer.array(), count);
         }
 
         if (!buffer.isDirect()) {
@@ -389,13 +362,7 @@ public class I2CUpdatableAddress {
         if (aborted) {
             throw new NACKException();
         }
-
-        try {
-            destroyDirectByteBuffer(buffer);
-        }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
+        
         return false;
     }
 
@@ -447,14 +414,7 @@ public class I2CUpdatableAddress {
         }
         return true;
     }
-
-    public static void destroyDirectByteBuffer(ByteBuffer toBeDestroyed) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        /*
-         * ByteBuffer does not need to be explicitly destroyed. The Java Garbage
-         * Collector will free this memmory when it gets around to it.
-         */
-        }
-        
+      
         public class NACKException extends IOException{
         
         /**

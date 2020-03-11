@@ -11,6 +11,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import org.usfirst.frc.team5461.robot.sensors.VL53L0XSensors;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DistanceSensorSubsystem extends SubsystemBase {
@@ -34,19 +35,17 @@ public class DistanceSensorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    StringBuilder sb = new StringBuilder();
+    Double[] distances = new Double[distance.arrayBlockingQueueList.size()];
+
     int i = 0;
     for (ArrayBlockingQueue<Integer> queue : distance.arrayBlockingQueueList) {
-      Object result = queue.poll();
+      Integer result = queue.poll();
       if (result != null) {
-        sb.append("Range");
-        sb.append(Integer.toString(i++));
-        sb.append(": ");
-        sb.append(Integer.toString((int) result));
-        sb.append(" ");
+        distances[i] = Double.valueOf(result);
       }
+      i++;
     }
-    sb.append("\n");
-    // System.out.println(sb.toString());
+
+    SmartDashboard.putNumberArray("distanceSensorValues", distances);
   }
 }

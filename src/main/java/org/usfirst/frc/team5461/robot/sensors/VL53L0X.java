@@ -9,58 +9,51 @@ import static org.usfirst.frc.team5461.robot.sensors.VL53L0X_Constants.*;
 
 public class VL53L0X extends I2CUpdatableAddress {
 	
-	private Port m_port = Port.kOnboard;
-	//Store address given when the class is initialized.
-	
+
 	private static final int DEFAULT_ADDRESS = 0x29;
-	// The value of the address above the default address.
-	private int deviceAddress;
+
 	private byte stop_variable;
 	private int measurement_timing_budget_us;
 	private int timeout_start_ms;
 	private int io_timeout = 0;
-	private boolean did_timeout;
 	
 	private enum BYTE_SIZE {
-		SINGLE(1),
-		DOUBLE(2);
-		
+		SINGLE(1), DOUBLE(2);
+
 		public int value;
-		
+
 		BYTE_SIZE(int value) {
 			this.value = value;
 		}
 	}
-	
+
 	public enum vcselPeriodType {
 		VcselPeriodPreRange, VcselPeriodFinalRange
 	}
-	
-	private class SequenceStepEnables
-    {
-      byte tcc, msrc, dss, pre_range, final_range;
-    }
 
-    private class SequenceStepTimeouts
-    {
-      short pre_range_vcsel_period_pclks, final_range_vcsel_period_pclks;
+	private class SequenceStepEnables {
+		byte tcc, msrc, dss, pre_range, final_range;
+	}
 
-      short msrc_dss_tcc_mclks, pre_range_mclks, final_range_mclks;
-      int msrc_dss_tcc_us,    pre_range_us,    final_range_us;
-    };
-    
-    private class BooleanCarrier {
-    	boolean value = false;
-    	BooleanCarrier(boolean inValue) {
-    		this.value = inValue;
-    	}
-    }
+	private class SequenceStepTimeouts {
+		short pre_range_vcsel_period_pclks, final_range_vcsel_period_pclks;
+
+		short msrc_dss_tcc_mclks, pre_range_mclks, final_range_mclks;
+		int msrc_dss_tcc_us, pre_range_us, final_range_us;
+	};
+
+	private class BooleanCarrier {
+		boolean value = false;
+
+		BooleanCarrier(boolean inValue) {
+			this.value = inValue;
+		}
+	}
 
 	public VL53L0X(int deviceAddress) throws NACKException {
 		super(Port.kOnboard, DEFAULT_ADDRESS, DEFAULT_ADDRESS + deviceAddress);
-        this.did_timeout = false;
 	}
-	  
+
 	public final boolean init(boolean io_2v8) throws NACKException {
 		// sensor uses 1V8 mode for I/O by default; switch to 2V8 mode if necessary
 		if (io_2v8) {
@@ -79,8 +72,10 @@ public class VL53L0X extends I2CUpdatableAddress {
 		write(0xFF, 0x00);
 		write(0x80, 0x00);
 
-		// disable SIGNAL_RATE_MSRC (bit 1) and SIGNAL_RATE_PRE_RANGE (bit 4) limit checks
-		write(VL53L0X_Constants.MSRC_CONFIG_CONTROL.value, read(VL53L0X_Constants.MSRC_CONFIG_CONTROL.value).get() | 0x12);
+		// disable SIGNAL_RATE_MSRC (bit 1) and SIGNAL_RATE_PRE_RANGE (bit 4) limit
+		// checks
+		write(VL53L0X_Constants.MSRC_CONFIG_CONTROL.value,
+				read(VL53L0X_Constants.MSRC_CONFIG_CONTROL.value).get() | 0x12);
 
 		// set final range signal rate limit to 0.25 MCPS (million counts per second)
 		setSignalRateLimit(0.25f);
@@ -89,7 +84,9 @@ public class VL53L0X extends I2CUpdatableAddress {
 
 		byte[] spad_count = new byte[1];
 		BooleanCarrier spad_type_is_aperture = new BooleanCarrier(false);
-		if (!getSpadInfo(spad_count, spad_type_is_aperture)) { return false; }
+		if (!getSpadInfo(spad_count, spad_type_is_aperture)) {
+			return false;
+		}
 
 		// The SPAD map (RefGoodSpadMap) is read by VL53L0X_get_info_from_device() in
 		// the API, but the same data seems to be more easily readable from
@@ -113,8 +110,7 @@ public class VL53L0X extends I2CUpdatableAddress {
 				// This bit is lower than the first one that should be enabled, or
 				// (reference_spad_count) bits have already been enabled, so zero this bit
 				ref_spad_map_array[i / 8] &= ~(1 << (i % 8));
-			}
-			else if (((ref_spad_map_array[i / 8] >> (i % 8)) & 0x1) == 0x01) {
+			} else if (((ref_spad_map_array[i / 8] >> (i % 8)) & 0x1) == 0x01) {
 				spads_enabled++;
 			}
 		}
@@ -215,9 +211,9 @@ public class VL53L0X extends I2CUpdatableAddress {
 		write(0xFF, 0x00);
 		write(0x80, 0x00);
 
-
 		write(VL53L0X_Constants.SYSTEM_INTERRUPT_CONFIG_GPIO.value, 0x04);
-		write(VL53L0X_Constants.GPIO_HV_MUX_ACTIVE_HIGH.value, read(VL53L0X_Constants.GPIO_HV_MUX_ACTIVE_HIGH.value).get() & ~0x10); // active low
+		write(VL53L0X_Constants.GPIO_HV_MUX_ACTIVE_HIGH.value,
+				read(VL53L0X_Constants.GPIO_HV_MUX_ACTIVE_HIGH.value).get() & ~0x10); // active low
 		write(VL53L0X_Constants.SYSTEM_INTERRUPT_CLEAR.value, 0x01);
 
 		// -- VL53L0X_SetGpioConfig() end
@@ -243,14 +239,18 @@ public class VL53L0X extends I2CUpdatableAddress {
 		// -- VL53L0X_perform_vhv_calibration() begin
 
 		write(VL53L0X_Constants.SYSTEM_SEQUENCE_CONFIG.value, 0x01);
-		if (!performSingleRefCalibration((byte) 0x40)) { return false; }
+		if (!performSingleRefCalibration((byte) 0x40)) {
+			return false;
+		}
 
 		// -- VL53L0X_perform_vhv_calibration() end
 
 		// -- VL53L0X_perform_phase_calibration() begin
 
 		write(VL53L0X_Constants.SYSTEM_SEQUENCE_CONFIG.value, 0x02);
-		if (!performSingleRefCalibration((byte) 0x00)) { return false; }
+		if (!performSingleRefCalibration((byte) 0x00)) {
+			return false;
+		}
 
 		// -- VL53L0X_perform_phase_calibration() end
 
@@ -259,60 +259,52 @@ public class VL53L0X extends I2CUpdatableAddress {
 
 		// VL53L0X_PerformRefCalibration() end
 
-        // Set this last section for long range
-//        setLongRange();
+		// Set this last section for long range
+		// setLongRange();
 
 		return true;
 	}
 
 	void setLongRange() throws NACKException {
-        setSignalRateLimit(0.1f);
-        // increase laser pulse periods (defaults are 14 and 10 PCLKs)
-        setVcselPulsePeriod(VcselPeriodPreRange, (byte)18);
-        setVcselPulsePeriod(VcselPeriodFinalRange, (byte)14);
-    }
-	
+		setSignalRateLimit(0.1f);
+		// increase laser pulse periods (defaults are 14 and 10 PCLKs)
+		setVcselPulsePeriod(VcselPeriodPreRange, (byte) 18);
+		setVcselPulsePeriod(VcselPeriodFinalRange, (byte) 14);
+	}
+
 	// Performs a single-shot range measurement and returns the reading in
 	// millimeters
 	// based on VL53L0X_PerformSingleRangingMeasurement()
-	public int readRangeSingleMillimeters() throws NACKException
-	{
-	  write(0x80, 0x01);
-	  write(0xFF, 0x01);
-	  write(0x00, 0x00);
-	  write(0x91, stop_variable);
-	  write(0x00, 0x01);
-	  write(0xFF, 0x00);
-	  write(0x80, 0x00);
+	public int readRangeSingleMillimeters() throws NACKException {
+		write(0x80, 0x01);
+		write(0xFF, 0x01);
+		write(0x00, 0x00);
+		write(0x91, stop_variable);
+		write(0x00, 0x01);
+		write(0xFF, 0x00);
+		write(0x80, 0x00);
 
-	  write(VL53L0X_Constants.SYSRANGE_START.value, 0x01);
+		write(VL53L0X_Constants.SYSRANGE_START.value, 0x01);
 
-	  // "Wait until start bit has been cleared"
-	  startTimeout();
-	  while ((read(VL53L0X_Constants.SYSRANGE_START.value).get() & 0x01) == 0x01)
-	  {
-	    if (checkTimeoutExpired())
-	    {
-	      did_timeout = true;
-	      return 65535;
-	    }
-	  }
+		// "Wait until start bit has been cleared"
+		startTimeout();
+		while ((read(VL53L0X_Constants.SYSRANGE_START.value).get() & 0x01) == 0x01) {
+			if (checkTimeoutExpired()) {
+				return 65535;
+			}
+		}
 
-	  return readRangeContinuousMillimeters();
+		return readRangeContinuousMillimeters();
 	}
-	
+
 	// Returns a range reading in millimeters when continuous mode is active
 	// (readRangeSingleMillimeters() also calls this function after starting a
 	// single-shot range measurement)
-	public int readRangeContinuousMillimeters() throws NACKException
-	{
+	public int readRangeContinuousMillimeters() throws NACKException {
 		startTimeout();
-		while ((read(VL53L0X_Constants.RESULT_INTERRUPT_STATUS.value).get() & 0x07) == 0)
-		{
-		  if (checkTimeoutExpired())
-		  {
-			did_timeout = true;
-			return 65535;
+		while ((read(VL53L0X_Constants.RESULT_INTERRUPT_STATUS.value).get() & 0x07) == 0) {
+			if (checkTimeoutExpired()) {
+				return 65535;
 		  }
 		}
 
