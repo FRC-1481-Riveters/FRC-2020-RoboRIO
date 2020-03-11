@@ -5,17 +5,18 @@ import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
+import frc.robot.Constants;
 
 /**
  *
  */
 public class VL53L0XSensors {
     private boolean initialized = false;
-    private List<VL53L0X> vl53l0xArray = new ArrayList();
+    private List<VL53L0X> vl53l0xArray = new ArrayList<>();
     // Set up synchronized results buffers
     public List<ArrayBlockingQueue<Integer>> arrayBlockingQueueList = null;
     // Respective DIO
-    private List<DigitalOutput> doArray = Arrays.asList(new DigitalOutput(5));
+    private List<DigitalOutput> doArray = Arrays.asList(new DigitalOutput(Constants.intakeDistanceSensorDIO));
     private Timer distanceTimer = null;
 
     public VL53L0XSensors() {
@@ -155,6 +156,11 @@ public class VL53L0XSensors {
     }
 
     public class NotInitalizedException extends IOException {
+
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
     }
 
 }

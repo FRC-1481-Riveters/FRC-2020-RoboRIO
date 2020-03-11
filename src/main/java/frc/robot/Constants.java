@@ -60,7 +60,9 @@ public final class Constants {
 	public static final double intakeMotorSpeed = .75; // percent
 	public static final double intakeRunMotorSpeed = .325;
 	public static final double howCloseIsThePowerCell = 21.0; // cm
-
+	
+	/* This is the DigitalOutput port of the intake's LASER distance sensor. */
+	public static final int intakeDistanceSensorDIO = 5;
 
 	/* Kicker ----------------------------- */
 	public static final int kickerMotorControllerCANId = 7;

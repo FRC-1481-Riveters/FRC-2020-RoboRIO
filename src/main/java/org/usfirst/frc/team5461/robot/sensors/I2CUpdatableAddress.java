@@ -449,7 +449,17 @@ public class I2CUpdatableAddress {
     }
 
     public static void destroyDirectByteBuffer(ByteBuffer toBeDestroyed) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        /*
+         * ByteBuffer does not need to be explicitly destroyed. The Java Garbage
+         * Collector will free this memmory when it gets around to it.
+         */
+        }
+        
+        public class NACKException extends IOException{
+        
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
     }
-
-    public class NACKException extends IOException{}
 }

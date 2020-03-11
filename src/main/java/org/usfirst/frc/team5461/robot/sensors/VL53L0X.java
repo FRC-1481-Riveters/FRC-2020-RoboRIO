@@ -306,27 +306,28 @@ public class VL53L0X extends I2CUpdatableAddress {
 	// single-shot range measurement)
 	public int readRangeContinuousMillimeters() throws NACKException
 	{
-	  startTimeout();
-	  while ((read(VL53L0X_Constants.RESULT_INTERRUPT_STATUS.value).get() & 0x07) == 0)
-	  {
-	    if (checkTimeoutExpired())
-	    {
-	      did_timeout = true;
-	      return 65535;
-	    }
-	  }
+		startTimeout();
+		while ((read(VL53L0X_Constants.RESULT_INTERRUPT_STATUS.value).get() & 0x07) == 0)
+		{
+		  if (checkTimeoutExpired())
+		  {
+			did_timeout = true;
+			return 65535;
+		  }
+		}
 
-	  // assumptions: Linearity Corrective Gain is 1000 (default);
-	  // fractional ranging is not enabled
-//	  ByteBuffer byte_buffer_range = read16(VL53L0X_Constants.RESULT_RANGE_STATUS.value + 10);
-	  
-	  short range = read16(VL53L0X_Constants.RESULT_RANGE_STATUS.value + 10).getShort();
+		// assumptions: Linearity Corrective Gain is 1000 (default);
+		// fractional ranging is not enabled
+		//	  ByteBuffer byte_buffer_range = read16(VL53L0X_Constants.RESULT_RANGE_STATUS.value + 10);
 
-	  write(VL53L0X_Constants.SYSTEM_INTERRUPT_CLEAR.value, 0x01);
-//	  byte_buffer_range.clear();
-	  return range;
+		short range = read16(VL53L0X_Constants.RESULT_RANGE_STATUS.value + 10).getShort();
+
+		write(VL53L0X_Constants.SYSTEM_INTERRUPT_CLEAR.value, 0x01);
+		//	  byte_buffer_range.clear();
+		return range;
 	}
 	
+	@SuppressWarnings("unused")
 	private int getAddressFromDevice() throws NACKException {
 		ByteBuffer deviceAddress = ByteBuffer.allocateDirect(BYTE_SIZE.SINGLE.value);
 		read(VL53L0X_Constants.I2C_SLAVE_DEVICE_ADDRESS.value, BYTE_SIZE.SINGLE.value, deviceAddress);

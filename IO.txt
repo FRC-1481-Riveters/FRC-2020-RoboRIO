@@ -29,7 +29,7 @@ DIO 1 :
 DIO 2 :
 DIO 3 :
 DIO 4 :
-DIO 5 : VL53L0X distance sensor reprogramming line
+DIO 5 : VL53L0X distance sensor reprogramming line (Constants.intakeDistanceSensorDIO)
 DIO 6 :
 DIO 7 :
 DIO 8 :
