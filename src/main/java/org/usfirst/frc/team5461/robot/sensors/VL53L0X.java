@@ -53,7 +53,11 @@ public class VL53L0X extends I2CUpdatableAddress {
 	public VL53L0X(int deviceAddress) throws NACKException {
 		super(Port.kOnboard, DEFAULT_ADDRESS, DEFAULT_ADDRESS + deviceAddress);
 	}
-
+		// The SPAD map (RefGoodSpadMap) is read by VL53L0X_get_info_from_device() in
+		// the API, but the same data seems to be more easily readable from
+		// GLOBAL_CONFIG_SPAD_ENABLES_REF_0 through _6, so read it from there
+	ByteBuffer m_ref_spad_map = ByteBuffer.allocateDirect(6);
+		
 	public final boolean init(boolean io_2v8) throws NACKException {
 		// sensor uses 1V8 mode for I/O by default; switch to 2V8 mode if necessary
 		if (io_2v8) {
@@ -88,11 +92,8 @@ public class VL53L0X extends I2CUpdatableAddress {
 			return false;
 		}
 
-		// The SPAD map (RefGoodSpadMap) is read by VL53L0X_get_info_from_device() in
-		// the API, but the same data seems to be more easily readable from
-		// GLOBAL_CONFIG_SPAD_ENABLES_REF_0 through _6, so read it from there
-		ByteBuffer ref_spad_map = ByteBuffer.allocateDirect(6);
-		read(VL53L0X_Constants.GLOBAL_CONFIG_SPAD_ENABLES_REF_0.value, 6, ref_spad_map);
+
+		read(VL53L0X_Constants.GLOBAL_CONFIG_SPAD_ENABLES_REF_0.value, 6, m_ref_spad_map);
 
 		write(0xFF, 0x01);
 		write(VL53L0X_Constants.DYNAMIC_SPAD_REF_EN_START_OFFSET.value, 0x00);
@@ -104,7 +105,7 @@ public class VL53L0X extends I2CUpdatableAddress {
 		byte spads_enabled = 0;
 
 		byte[] ref_spad_map_array = new byte[6];
-		ref_spad_map.get(ref_spad_map_array);
+		m_ref_spad_map.get(ref_spad_map_array);
 		for (byte i = 0; i < 48; ++i) {
 			if (i < first_spad_to_enable || spads_enabled == spad_count[0]) {
 				// This bit is lower than the first one that should be enabled, or
@@ -305,7 +306,7 @@ public class VL53L0X extends I2CUpdatableAddress {
 		while ((read(VL53L0X_Constants.RESULT_INTERRUPT_STATUS.value).get() & 0x07) == 0) {
 			if (checkTimeoutExpired()) {
 				return 65535;
-		  }
+			}
 		}
 
 		// assumptions: Linearity Corrective Gain is 1000 (default);
@@ -319,41 +320,43 @@ public class VL53L0X extends I2CUpdatableAddress {
 		return range;
 	}
 	
+	ByteBuffer m_deviceAddressBuffer = ByteBuffer.allocateDirect(BYTE_SIZE.SINGLE.value);
 	@SuppressWarnings("unused")
 	private int getAddressFromDevice() throws NACKException {
-		ByteBuffer deviceAddress = ByteBuffer.allocateDirect(BYTE_SIZE.SINGLE.value);
-		read(VL53L0X_Constants.I2C_SLAVE_DEVICE_ADDRESS.value, BYTE_SIZE.SINGLE.value, deviceAddress);
-		return deviceAddress.get();
+
+		read(VL53L0X_Constants.I2C_SLAVE_DEVICE_ADDRESS.value, BYTE_SIZE.SINGLE.value, m_deviceAddressBuffer);
+		return m_deviceAddressBuffer.get();
 	}
 	
 	// Writing two bytes of data back-to-back is a special case of writeBulk
+	ByteBuffer m_registerWithDataToSendBufferWrite16 = ByteBuffer.allocateDirect(3);
+
 	private synchronized boolean write16(int registerAddress, short data) throws NACKException {
-		ByteBuffer registerWithDataToSendBuffer = ByteBuffer.allocateDirect(3);
-		registerWithDataToSendBuffer.put((byte) registerAddress);
-		registerWithDataToSendBuffer.putShort(1, data);
-		return writeBulk(registerWithDataToSendBuffer, 3);
+		m_registerWithDataToSendBufferWrite16.put((byte) registerAddress);
+		m_registerWithDataToSendBufferWrite16.putShort(1, data);
+		return writeBulk(m_registerWithDataToSendBufferWrite16, 3);
 	}
-	
+
+	ByteBuffer m_registerWithDataToSendBufferWriteBulk = ByteBuffer.allocateDirect(4096);
 	private synchronized boolean writeBulk(int registerAddress, byte[] data, int size) throws NACKException {
-		ByteBuffer registerWithDataToSendBuffer = ByteBuffer.allocateDirect(size + 1);
-		registerWithDataToSendBuffer.put((byte) registerAddress);
+		m_registerWithDataToSendBufferWriteBulk.put((byte) registerAddress);
 		for (int i=0; i < size; ++i) {
-		    registerWithDataToSendBuffer.put(i+1, data[i]);
+		    m_registerWithDataToSendBufferWriteBulk.put(i+1, data[i]);
         }
-		return writeBulk(registerWithDataToSendBuffer, size + 1);
+		return writeBulk(m_registerWithDataToSendBufferWriteBulk, size + 1);
 	}
 	
+	ByteBuffer m_readBufferResults = ByteBuffer.allocateDirect(BYTE_SIZE.SINGLE.value);
 	private ByteBuffer read(int registerAddress) throws NACKException {
-		ByteBuffer bufferResults = ByteBuffer.allocateDirect(BYTE_SIZE.SINGLE.value);
-		read(registerAddress, BYTE_SIZE.SINGLE.value, bufferResults);
-		return bufferResults;
+		read(registerAddress, BYTE_SIZE.SINGLE.value, m_readBufferResults);
+		return m_readBufferResults;
 	}
 	
 	// Reading two bytes of data back-to-back is a special, 2-byte case of read
+	ByteBuffer m_read16BufferResults = ByteBuffer.allocateDirect(BYTE_SIZE.DOUBLE.value);
 	private ByteBuffer read16(int registerAddress) throws NACKException {
-		ByteBuffer bufferResults = ByteBuffer.allocateDirect(BYTE_SIZE.DOUBLE.value);
-		read(registerAddress, BYTE_SIZE.DOUBLE.value, bufferResults);
-		return bufferResults;
+		read(registerAddress, BYTE_SIZE.DOUBLE.value, m_read16BufferResults);
+		return m_read16BufferResults;
 	}
 	
 	// Set the return signal rate limit check value in units of MCPS (mega counts
@@ -581,6 +584,7 @@ public class VL53L0X extends I2CUpdatableAddress {
 	// based on get_sequence_step_timeout(),
 	// but gets all timeouts instead of just the requested one, and also stores
 	// intermediate values
+	ByteBuffer m_sequenceStepTimeoutsResult = ByteBuffer.allocateDirect(2);
 	private void getSequenceStepTimeouts(SequenceStepEnables enables, SequenceStepTimeouts timeouts) throws NACKException
 	{
 	  timeouts.pre_range_vcsel_period_pclks = getVcselPulsePeriod(VcselPeriodPreRange);
@@ -590,18 +594,17 @@ public class VL53L0X extends I2CUpdatableAddress {
 	    timeoutMclksToMicroseconds(timeouts.msrc_dss_tcc_mclks,
 	                               timeouts.pre_range_vcsel_period_pclks);
 	  
-	  ByteBuffer result = ByteBuffer.allocateDirect(2);
-	  read(VL53L0X_Constants.PRE_RANGE_CONFIG_TIMEOUT_MACROP_HI.value, 2, result);
+	  read(VL53L0X_Constants.PRE_RANGE_CONFIG_TIMEOUT_MACROP_HI.value, 2, m_sequenceStepTimeoutsResult);
 	  timeouts.pre_range_mclks =
-	    decodeTimeout(result.get());
+	    decodeTimeout(m_sequenceStepTimeoutsResult.get());
 	  timeouts.pre_range_us =
 	    timeoutMclksToMicroseconds(timeouts.pre_range_mclks,
 	                               timeouts.pre_range_vcsel_period_pclks);
 
 	  timeouts.final_range_vcsel_period_pclks = getVcselPulsePeriod(vcselPeriodType.VcselPeriodFinalRange);
-	  read(VL53L0X_Constants.FINAL_RANGE_CONFIG_TIMEOUT_MACROP_HI.value, 2, result);
+	  read(VL53L0X_Constants.FINAL_RANGE_CONFIG_TIMEOUT_MACROP_HI.value, 2, m_sequenceStepTimeoutsResult);
 	  timeouts.final_range_mclks =
-	    decodeTimeout(result.get());
+	    decodeTimeout(m_sequenceStepTimeoutsResult.get());
 
 	  if (enables.pre_range == 0x01)
 	  {
