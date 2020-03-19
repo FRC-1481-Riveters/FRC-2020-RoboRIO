@@ -112,7 +112,7 @@ public class RobotContainer {
                  * 
                  * 
                  * The command that that is selected on the dashboard will be reported by
-                 * m_shooter.getSelected(), and returned by
+                 * m_chooser.getSelected(), and returned by
                  * RobotContainer.getAutonomousCommand() and executed (scheduled) during
                  * Autonomous in Robot.autonomousInit().
                  */
