@@ -14,6 +14,7 @@ CAN ID 10 = intake motor
 CAN ID 11 = lower indexer motor 
 CAN ID 12 = rear right drive
 CAN ID 13 = front right drive
+CAN ID 14 = Intake motor 2
 Relay port 2 = elevator solenoid 
 
 

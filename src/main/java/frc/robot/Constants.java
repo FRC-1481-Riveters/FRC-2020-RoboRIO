@@ -57,7 +57,7 @@ public final class Constants {
 	/* Intake ------------------------------------ */
 	public static final int intakeMotorControllerCANId = 10;
 	public static final int intakeDoubleRollerMotorControllerCANId = 14;
-	public static final double intakeMotorSpeed = .75; // percent
+	public static final double intakeMotorSpeed = .35; // percent .75
 	public static final double intakeRunMotorSpeed = .325;
 	public static final double howCloseIsThePowerCell = 21.0; // cm
 
@@ -75,7 +75,7 @@ public final class Constants {
 	public static final int shooterMotorControllerCANId = 1;
 	public static final double shooterIntendedSpeedTolerance = 0.02;
 	public static final double shooterYeetSpeedInitiation = 4100.0; // RPM
-	public static final double shooterYeetSpeedWall = 3800.0; // RPM
+	public static final double shooterYeetSpeedWall = 5000.0; // RPM
 
 	/* Cameras ---------------------------------------- */
 	public static final int visionCameraPort = 0;
