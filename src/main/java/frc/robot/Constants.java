@@ -60,7 +60,9 @@ public final class Constants {
 	public static final double intakeMotorSpeed = .35; // percent .75
 	public static final double intakeRunMotorSpeed = .325;
 	public static final double howCloseIsThePowerCell = 21.0; // cm
-
+	
+	/* This is the DigitalOutput port of the intake's LASER distance sensor. */
+	public static final int intakeDistanceSensorDIO = 5;
 
 	/* Kicker ----------------------------- */
 	public static final int kickerMotorControllerCANId = 7;
@@ -231,9 +233,14 @@ public final class Constants {
 	 * Kp = 0.75
 	 */
 
-	public static final Gains kGains_Indexer = new Gains(0.15, 0.0, 0.0001, 0.01, 0, 1.0);
+	public static final Gains kGains_Indexer = new Gains(0.15, 0.00003, 0.0001, 0.01, 0, 1.0);
 
 	/* Ultrasonic Sensor ----------------------------------- */
 	public static final int ultrasonicAnalogChannel = 1;
-
+	/* Power Cell Arm ----------------------------------- */
+	public static final int powerCellArmLeadCANId = 15;
+	public static final int powerCellArmFollowCANId = 5;
+	public static final int powerCellArmSpeedCounts = 2;
+	public static final int powerCellArmDownMax = 100;
+	public static final int powerCellArmUpMax = 0;
 }

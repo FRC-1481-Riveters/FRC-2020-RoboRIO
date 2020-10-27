@@ -7,23 +7,18 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RumbleTimerJoystick;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.PowerCellArm;
 
-public class IntakeJoystickCommand extends CommandBase {
-  private Intake m_intake;
-  RumbleTimerJoystick m_RumbleTimerJoystick;
-  final JoystickDeadband m_deadbander = new JoystickDeadband(0.15);
+public class PowerCellArmUpJog extends CommandBase {
+  public PowerCellArm m_powerCellArm;
   /**
-   * Creates a new IntakeIndexerJoystickCommand.
+   * Creates a new PowerCellArmUpJog.
    */
-  public IntakeJoystickCommand(Intake intake, RumbleTimerJoystick Joystick) {
-    m_intake = intake;
+  public PowerCellArmUpJog(PowerCellArm subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_RumbleTimerJoystick = Joystick;
-    addRequirements(intake);
+    m_powerCellArm = subsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -34,12 +29,6 @@ public class IntakeJoystickCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    final double m_leftJoystickValue;
-
-    m_leftJoystickValue = m_RumbleTimerJoystick.getY(Hand.kLeft);
-
-
-    m_intake.setSpeed(m_deadbander.deadband(-m_leftJoystickValue));
   }
 
   // Called once the command ends or is interrupted.
