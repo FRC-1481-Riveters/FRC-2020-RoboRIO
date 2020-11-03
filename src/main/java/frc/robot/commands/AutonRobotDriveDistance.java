@@ -18,7 +18,7 @@ import frc.robot.subsystems.DriveTrain;
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class AutonRobotDriveDistance extends TrapezoidProfileCommand {
 
-  protected DriveTrain m_driveTrain;
+//  protected DriveTrain m_driveTrain;
 
   /**
    * Creates a new AutonRobotDriveDistance.

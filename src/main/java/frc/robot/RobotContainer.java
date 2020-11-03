@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonRobotDriveDistance;
 import frc.robot.commands.AutonShoot3StackedPowerCellsAndDriveOffLine;
+import frc.robot.commands.AutonSuperTrenchSequence;
 import frc.robot.commands.CycleCameraFeedCommand;
 import frc.robot.commands.ElevatorSolenoidPullIn;
 import frc.robot.commands.ElevatorSolenoidPullOut;
@@ -117,7 +118,8 @@ public class RobotContainer {
                  * Autonomous in Robot.autonomousInit().
                  */
 
-                m_chooser.setDefaultOption("Shoot 3, back robot off line", new AutonShoot3StackedPowerCellsAndDriveOffLine(m_shooter, m_indexer, m_kicker, m_drive));
+                //m_chooser.setDefaultOption("Shoot 3, back robot off line", new AutonShoot3StackedPowerCellsAndDriveOffLine(m_shooter, m_indexer, m_kicker, m_drive));
+                m_chooser.setDefaultOption("Shoot 3, back robot off line", new AutonSuperTrenchSequence(m_shooter, m_indexer, m_kicker, m_drive, m_intake));
                 m_chooser.addOption("-= Do nothing =-", new SequentialCommandGroup(new PrintCommand("Do nothing selected for auton."), new WaitCommand(5.0)));
 
                 SmartDashboard.putData("Auto mode", m_chooser);
