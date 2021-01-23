@@ -58,6 +58,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Goosehook;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.CyanSus;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -85,6 +86,7 @@ public class RobotContainer {
         private final PowerCellArm m_powerCellArm = new PowerCellArm();
         private final AutoAssistSubsystem m_autoAssist = new AutoAssistSubsystem();
         private final UltrasonicSensor m_ultrasonicSensor = new UltrasonicSensor();
+        //public final CyanSus m_cyanSus = new CyanSus();
 
         RumbleTimerJoystick m_driverController = new RumbleTimerJoystick(Constants.driverController);
         RumbleTimerJoystick m_operatorController = new RumbleTimerJoystick(Constants.operatorController);

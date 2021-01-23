@@ -24,7 +24,7 @@ import frc.robot.Gains;
 public final class Constants {
 	public static final int driverController = 0;
 	public static final int operatorController = 1;
-
+	public static final int winchMotorCyanSusCANId = 20;
 	/* Control Panel ------------------------------ */
 	public static final int controlPanelMotorControllerCANId = 5; // find actual value
 	public static final I2C.Port i2cPortColorSensor = I2C.Port.kOnboard; // use for color sensor
@@ -77,7 +77,7 @@ public final class Constants {
 	public static final int shooterMotorControllerCANId = 1;
 	public static final double shooterIntendedSpeedTolerance = 0.02;
 	public static final double shooterYeetSpeedInitiation = 4100.0; // RPM
-	public static final double shooterYeetSpeedWall = 5000.0; // RPM
+	public static final double shooterYeetSpeedWall = 5000.0; // RPM; OG 5000.0; max motor speed 5676
 
 	/* Cameras ---------------------------------------- */
 	public static final int visionCameraPort = 0;
